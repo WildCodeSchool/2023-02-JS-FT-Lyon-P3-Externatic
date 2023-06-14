@@ -2,7 +2,7 @@ const express = require("express");
 
 const routerApplication = express.Router();
 
-const applicationControllers = require("../controllers/user.Controllers");
+const applicationControllers = require("../controllers/userControllers");
 
 routerApplication.get("/application", applicationControllers.browse);
 routerApplication.get("/application/:id", applicationControllers.read);
