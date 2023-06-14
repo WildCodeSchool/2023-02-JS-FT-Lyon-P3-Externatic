@@ -1,5 +1,4 @@
 // import some node modules for later
-
 const fs = require("node:fs");
 const path = require("node:path");
 
@@ -37,6 +36,10 @@ app.use(routerCandidate);
 const routerJob = require("./Routers/routerJob");
 
 app.use(routerJob);
+
+const routerCompany = require("./Routers/routerCompany");
+
+app.use(routerCompany);
 
 // serve the `backend/public` folder for public resources
 
