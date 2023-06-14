@@ -32,6 +32,10 @@ const routerCandidate = require("./Routers/routerCandidate");
 
 app.use(routerCandidate);
 
+const routerJob = require("./Routers/routerJob");
+
+app.use(routerJob);
+
 // serve the `backend/public` folder for public resources
 
 app.use(express.static(path.join(__dirname, "../public")));
