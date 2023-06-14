@@ -25,8 +25,10 @@ app.use(
 // import and mount the API routes
 
 const router = require("./Routers/router");
+const usersRouter = require("./Routers/UserRouter");
 
 app.use(router);
+app.use(usersRouter);
 
 // serve the `backend/public` folder for public resources
 
