@@ -31,12 +31,15 @@ const models = {};
 
 const ItemManager = require("./ItemManager");
 const UserManager = require("./UserManager");
+const ApplicationManager = require("./ApplicationManager");
 
 models.item = new ItemManager();
 models.user = new UserManager();
+models.aplication = new ApplicationManager();
 
 models.item.setDatabase(pool);
 models.user.setDatabase(pool);
+models.aplication.setDatabase(pool);
 
 const CandidateManager = require("./CandidateManager");
 

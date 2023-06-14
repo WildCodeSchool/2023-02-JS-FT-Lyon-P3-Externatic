@@ -1,20 +1,19 @@
 const AbstractManager = require("./AbstractManager");
 
-class UserManager extends AbstractManager {
+class ApplicationManager extends AbstractManager {
   constructor() {
     super({ table: "user" });
   }
 
   insert(user) {
     return this.database.query(
-      `INSERT INTO ${this.table} (email, phone, city, picture, password, admin) VALUES (?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO ${this.table} (candidate_id, job_posting_id, date, status) VALUES (?, ?, ?, ?, ?, ?)`,
       [
-        user.email,
-        user.phone,
-        user.city,
+        user.candidate_id,
+        user.job_posting_id,
+        user.date,
         user.picture,
-        user.password,
-        user.admin,
+        user.status,
       ]
     );
   }
@@ -27,4 +26,4 @@ class UserManager extends AbstractManager {
   }
 }
 
-module.exports = UserManager;
+module.exports = ApplicationManager;
