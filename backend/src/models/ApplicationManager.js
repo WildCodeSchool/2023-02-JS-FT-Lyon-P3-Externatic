@@ -20,8 +20,14 @@ class ApplicationManager extends AbstractManager {
 
   update(user) {
     return this.database.query(
-      `UPDATE ${this.table} set phone = ? where id = ?`,
-      [user.phone, user.id]
+      `UPDATE ${this.table} set candidate_id = ?, job_posting = ?, date = ?, picture = ?, status = ? where id = ${user.id}`,
+      [
+        user.candidate_id,
+        user.job_posting_id,
+        user.date,
+        user.picture,
+        user.status,
+      ]
     );
   }
 }

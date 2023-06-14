@@ -5,7 +5,7 @@ SET foreign_key_checks = 1;
 USE db_externatic;
 
 CREATE TABLE user (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   email VARCHAR(100) UNIQUE NOT NULL,
   phone VARCHAR(50),
   city VARCHAR(100),
@@ -17,7 +17,7 @@ CREATE TABLE user (
 
 
 CREATE TABLE candidate (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
   firstname VARCHAR(50) NOT NULL,
   lastname VARCHAR(50) NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE candidate (
 
 
 CREATE TABLE company (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
   name VARCHAR(50) NOT NULL,
   contact VARCHAR(50),
@@ -40,7 +40,7 @@ CREATE TABLE company (
 
 
 CREATE TABLE job_posting (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   company_id INT NOT NULL,
   title VARCHAR(100) NOT NULL,
   description TEXT NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE job_posting (
 
 
 CREATE TABLE applications (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   candidate_id INT NOT NULL,
   job_posting_id INT NOT NULL,
   date DATE NOT NULL,
@@ -101,8 +101,8 @@ VALUES
 
 INSERT INTO job_posting (id, company_id, title, description, requirements, contract_type, remote, location, salary, posting_date, archived)
 VALUES
-  (1, 1, 'Job1', 'Job description 1', 'Requirements 1', 'CDI', 'Full Remote', 'Location1', 'Salary1', '2023-01-01', 0),
+  (1, 1, 'Job1', 'Job description 1', 'Requirements 1', 'CDI', 'Teletravail', 'Location1', 'Salary1', '2023-01-01', 0),
   (2, 2, 'Job2', 'Job description 2', 'Requirements 2', 'CDD', 'Hybride', 'Location2', 'Salary2', '2023-01-02', 0),
-  (3, 3, 'Job3', 'Job description 3', 'Requirements 3', 'Stage', 'No Remote', 'Location3', 'Salary3', '2023-01-03', 0),
-  (4, 4, 'Job4', 'Job description 4', 'Requirements 4', 'Alternance', 'Full Remote', 'Location4', 'Salary4', '2023-01-04', 0),
+  (3, 3, 'Job3', 'Job description 3', 'Requirements 3', 'Stage', 'Presentiel', 'Location3', 'Salary3', '2023-01-03', 0),
+  (4, 4, 'Job4', 'Job description 4', 'Requirements 4', 'Alternance', 'Presentiel', 'Location4', 'Salary4', '2023-01-04', 0),
   (5, 5, 'Job5', 'Job description 5', 'Requirements 5', 'CDI', 'Hybride', 'Location5', 'Salary5', '2023-01-05', 0);
