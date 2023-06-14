@@ -26,12 +26,12 @@ app.use(
 
 const router = require("./Routers/router");
 const usersRouter = require("./Routers/UserRouter");
+const applicationsRouter = require("./Routers/applicationsRouter");
+const routerCandidate = require("./Routers/routerCandidate");
 
 app.use(router);
 app.use(usersRouter);
-
-const routerCandidate = require("./Routers/routerCandidate");
-
+app.use(applicationsRouter);
 app.use(routerCandidate);
 
 // serve the `backend/public` folder for public resources
