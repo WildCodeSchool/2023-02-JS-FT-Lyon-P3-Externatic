@@ -1,14 +1,12 @@
 const express = require("express");
 
-
 const routerCompany = express.Router();
 const companyControllers = require("../controllers/companyControllers");
 
-routerCompany.get("/api/movies", companyControllers.browse);
-routerCompany.get("/api/movies/:id", companyControllers.read);
-routerCompany.post("/api/movies", companyControllers.edit);
-routerCompany.put("/api/movies/:id", companyControllers.add);
-routerCompany.delete("/api/movies/:id", companyControllers.destroy);
-
+routerCompany.get("/api/companies", companyControllers.browse);
+routerCompany.get("/api/companies/:id", companyControllers.read);
+routerCompany.post("/api/companies", companyControllers.edit);
+routerCompany.put("/api/companies/:id", companyControllers.add);
+routerCompany.delete("/api/companies/:id", companyControllers.destroy);
 
 module.exports = routerCompany;

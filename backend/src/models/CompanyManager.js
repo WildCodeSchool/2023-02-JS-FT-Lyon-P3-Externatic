@@ -5,7 +5,7 @@ class CompanyManager extends AbstractManager {
     super({ table: "company" });
   }
 
-  insert(item) {
+  insert(company) {
     return this.database.query(`insert into ${this.table} (name) values (?)`, [
       company.name,
     ]);
