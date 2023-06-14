@@ -25,8 +25,10 @@ app.use(
 // import and mount the API routes
 
 const router = require("./Routers/router");
+const usersRouter = require("./Routers/routerUser");
 
 app.use(router);
+app.use(usersRouter);
 
 const routerCandidate = require("./Routers/routerCandidate");
 
