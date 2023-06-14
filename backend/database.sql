@@ -11,7 +11,7 @@ CREATE TABLE user (
   city VARCHAR(100),
   picture BLOB,
   password VARCHAR(100) UNIQUE NOT NULL,
-  admin BOOL,
+  admin BOOL DEFAULT 0,
   PRIMARY KEY (id)
 );
 
