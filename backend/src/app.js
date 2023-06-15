@@ -25,12 +25,12 @@ app.use(
 
 const router = require("./Routers/router");
 const usersRouter = require("./Routers/routerUser");
+const routerApplication = require("./Routers/routerApplications");
+const routerCandidate = require("./Routers/routerCandidate");
 
 app.use(router);
 app.use(usersRouter);
-
-const routerCandidate = require("./Routers/routerCandidate");
-
+app.use(routerApplication);
 app.use(routerCandidate);
 
 const routerJob = require("./Routers/routerJob");
