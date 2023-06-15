@@ -22,7 +22,7 @@ class UserManager extends AbstractManager {
   update(user) {
     return this.database.query(
       `UPDATE ${this.table} set email = ?, phone = ?, picture = ?, password = ?, admin = ?  where id = ${user.id}`,
-      [user.email, user.phone, user.picture, user.password, user.admin]
+      [user.email, user.phone, user.picture, user.password, user.admin, user.id]
     );
   }
 }

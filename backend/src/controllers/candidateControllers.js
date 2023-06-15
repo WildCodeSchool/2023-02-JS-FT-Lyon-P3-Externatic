@@ -28,42 +28,68 @@ const read = (req, res) => {
     });
 };
 
-const edit = (req, res) => {
-  const candidate = req.body;
+const edit = async (req, res) => {
+  try {
+    const { email, phone, city, password, firstname, lastname, cv } = req.body;
+    const userId = req.body.user_id;
+    const candidateId = parseInt(req.params.id, 10);
 
-  // TODO validations (length, format...)
+    // TODO: Add validations for email, phone, city, password, firstname, lastname
 
-  candidate.id = parseInt(req.params.id, 10);
-
-  models.candidate
-    .update(candidate)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
+    // eslint-disable-next-line no-restricted-syntax
+    console.log(userId);
+    // Update user information
+    await models.user.update({
+      id: userId,
+      email,
+      phone,
+      city,
+      password,
     });
+
+    // Update candidate information
+    await models.candidate.update({
+      id: candidateId,
+      user_id: userId,
+      firstname,
+      lastname,
+      cv,
+    });
+
+    res.sendStatus(204);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const add = (req, res) => {
-  const candidate = req.body;
+const add = async (req, res) => {
+  try {
+    const { email, phone, city, password, firstname, lastname } = req.body;
 
-  // TODO validations (length, format...)
+    // TODO: Add validations for email, phone, city, password, firstname, lastname
 
-  models.candidate
-    .insert(candidate)
-    .then(([result]) => {
-      res.location(`/candidates/${result.insertId}`).sendStatus(201);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
+    // Create a new user entry
+    const [userResult] = await models.user.insert({
+      email,
+      phone,
+      city,
+      password,
     });
+    const userId = userResult.insertId;
+
+    // Create a new candidate entry
+    const [candidateResult] = await models.candidate.insert({
+      user_id: userId,
+      firstname,
+      lastname,
+    });
+
+    res.location(`/candidates/${candidateResult.insertId}`).sendStatus(201);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
 const destroy = (req, res) => {
