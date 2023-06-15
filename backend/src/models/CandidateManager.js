@@ -40,6 +40,17 @@ class CandidateManager extends AbstractManager {
       [candidate.user_id, candidate.firstname, candidate.lastname, candidate.cv]
     );
   }
+
+  delete(candidateId) {
+    return this.database.query(
+      `DELETE candidate, user
+    FROM candidate
+    JOIN user ON candidate.user_id = user.id
+    WHERE candidate.id = ?
+  `,
+      [candidateId]
+    );
+  }
 }
 
 module.exports = CandidateManager;
