@@ -35,11 +35,11 @@ const ApplicationManager = require("./ApplicationManager");
 
 models.item = new ItemManager();
 models.user = new UserManager();
-models.aplication = new ApplicationManager();
+models.application = new ApplicationManager();
 
 models.item.setDatabase(pool);
 models.user.setDatabase(pool);
-models.aplication.setDatabase(pool);
+models.application.setDatabase(pool);
 
 const CandidateManager = require("./CandidateManager");
 

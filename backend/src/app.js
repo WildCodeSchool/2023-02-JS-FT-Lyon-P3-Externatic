@@ -25,7 +25,7 @@ app.use(
 
 const router = require("./Routers/router");
 const usersRouter = require("./Routers/routerUser");
-const routerApplication = require("./Routers/applicationsRouter");
+const routerApplication = require("./Routers/routerApplications");
 const routerCandidate = require("./Routers/routerCandidate");
 
 app.use(router);
