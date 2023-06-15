@@ -56,7 +56,7 @@ const edit = async (req, res) => {
       cv,
     });
 
-    res.sendStatus(204);
+    res.sendStatus(200);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
