@@ -16,7 +16,7 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL ?? "http://localhost:3000",
+    origin: process.env.FRONTEND_URL ?? "http://localhost:5173",
     optionsSuccessStatus: 200,
   })
 );
@@ -25,12 +25,12 @@ app.use(
 
 const router = require("./Routers/router");
 const usersRouter = require("./Routers/routerUser");
+const routerApplication = require("./Routers/routerApplications");
+const routerCandidate = require("./Routers/routerCandidate");
 
 app.use(router);
 app.use(usersRouter);
-
-const routerCandidate = require("./Routers/routerCandidate");
-
+app.use(routerApplication);
 app.use(routerCandidate);
 
 const routerJob = require("./Routers/routerJob");

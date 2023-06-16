@@ -28,42 +28,89 @@ const read = (req, res) => {
     });
 };
 
-const edit = (req, res) => {
-  const company = req.body;
+const edit = async (req, res) => {
+  try {
+    const {
+      email,
+      phone,
+      city,
+      password,
+      name,
+      contact,
+      description,
+      website,
+    } = req.body;
+    const userId = req.body.user_id;
+    const companyId = parseInt(req.params.id, 10);
 
-  // TODO validations (length, format...)
+    // TODO: Add validations for email, phone, city, password, name, contact, description, website
 
-  company.id = parseInt(req.params.id, 10);
-
-  models.company
-    .update(company)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
+    // eslint-disable-next-line no-restricted-syntax
+    console.log(userId);
+    // Update user information
+    await models.user.update({
+      id: userId,
+      email,
+      phone,
+      city,
+      password,
     });
+
+    // Update company information
+    await models.company.update({
+      id: companyId,
+      user_id: userId,
+      name,
+      contact,
+      description,
+      website,
+    });
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const add = (req, res) => {
-  const company = req.body;
+const add = async (req, res) => {
+  try {
+    const {
+      email,
+      phone,
+      city,
+      password,
+      name,
+      contact,
+      description,
+      website,
+    } = req.body;
 
-  // TODO validations (length, format...)
+    // TODO: Add validations for email, phone, city, password, name, contact, description, website
 
-  models.company
-    .insert(company)
-    .then(([result]) => {
-      res.location(`/companies/${result.insertId}`).sendStatus(201);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
+    // Create a new user entry
+    const [userResult] = await models.user.insert({
+      email,
+      phone,
+      city,
+      password,
     });
+    const userId = userResult.insertId;
+
+    // Create a new company entry
+    const [companyResult] = await models.company.insert({
+      user_id: userId,
+      name,
+      contact,
+      description,
+      website,
+    });
+
+    res.location(`/companys/${companyResult.insertId}`).sendStatus(201);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
 const destroy = (req, res) => {
