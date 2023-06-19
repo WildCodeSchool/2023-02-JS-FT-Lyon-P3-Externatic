@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 
 import "./App.css";
 
