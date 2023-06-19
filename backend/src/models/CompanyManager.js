@@ -5,14 +5,23 @@ class CompanyManager extends AbstractManager {
     super({ table: "company" });
   }
 
-  find(id) {
-    return this.database.query(`select * from  ${this.table} where id = ?`, [
-      id,
-    ]);
+  find(companyId) {
+    return this.database.query(
+      `
+      SELECT company.id, company.user_id, company.name, company.contact, company.description, user.email, user.phone, user.city, user.picture
+      FROM company
+      INNER JOIN user ON company.user_id = user.id
+      WHERE company.id = ?
+    `,
+      [companyId]
+    );
   }
 
   findAll() {
-    return this.database.query(`select  * from  ${this.table}`);
+    return this.database
+      .query(`SELECT company.id, company.user_id, company.name, company.contact, company.description, user.email, user.phone, user.city, user.picture
+    FROM ${this.table}
+    INNER JOIN user ON company.user_id = user.id`);
   }
 
   insert(company) {
