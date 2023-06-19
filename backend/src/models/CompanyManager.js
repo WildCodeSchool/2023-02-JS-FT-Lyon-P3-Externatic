@@ -8,7 +8,7 @@ class CompanyManager extends AbstractManager {
   find(companyId) {
     return this.database.query(
       `
-      SELECT company.id, company.user_id, company.name, company.contact, company.description, company.website, user.email, user.phone, user.city, user.picture
+      SELECT company.id, company.user_id, company.name, company.contact, company.description, user.email, user.phone, user.city, user.picture
       FROM company
       INNER JOIN user ON company.user_id = user.id
       WHERE company.id = ?
@@ -19,7 +19,8 @@ class CompanyManager extends AbstractManager {
 
   findAll() {
     return this.database
-      .query(`SELECT company.id, company.user_id, company.name, company.contact, company.description, company.website, user.email, user.phone, user.city, user.picture
+      .query(`SELECT company.id, company.user_id, company.name, company.contact, company.description, user.email, user.phone, user.city, user.picture
+
     FROM ${this.table}
     INNER JOIN user ON company.user_id = user.id`);
   }
