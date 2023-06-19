@@ -2,10 +2,10 @@ import React from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Navbar from "../components/Navbar";
-import AdminCreate from "../components/AdminCreate";
-import CandidatesTable from "../components/CandidatesTable";
-import CompaniesTable from "../components/CompaniesTable";
-import AdminDelete from "../components/AdminDelete";
+import AdminCreate from "../components/Admin/AdminCreate";
+import CandidatesTable from "../components/Admin/CandidatesTable";
+import CompaniesTable from "../components/Admin/CompaniesTable";
+import AdminDelete from "../components/Admin/AdminDelete";
 
 export default function Admin() {
   return (
