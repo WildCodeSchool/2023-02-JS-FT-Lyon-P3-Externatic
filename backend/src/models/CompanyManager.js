@@ -49,6 +49,17 @@ class CompanyManager extends AbstractManager {
       ]
     );
   }
+
+  delete(companyId) {
+    return this.database.query(
+      `DELETE company, user
+    FROM company
+    JOIN user ON company.user_id = user.id
+    WHERE company.id = ?
+  `,
+      [companyId]
+    );
+  }
 }
 
 module.exports = CompanyManager;
