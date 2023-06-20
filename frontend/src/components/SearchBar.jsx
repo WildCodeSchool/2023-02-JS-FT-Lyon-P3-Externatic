@@ -106,8 +106,9 @@ export default function SearchBar() {
           align="center"
           color="text.primary"
           gutterBottom
+          sx={{ mt: 6 }}
         >
-          Album layout
+          Annonces d'Emploi
         </Typography>
         <FormControl sx={{ m: 1, width: 250 }}>
           <InputLabel id="demo-multiple-checkbox-label">
