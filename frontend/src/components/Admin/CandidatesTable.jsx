@@ -55,18 +55,19 @@ export default function CandidatesTable() {
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h4" gutterBottom sx={{ mt: 4 }}>
         Liste des Candidats
       </Typography>
       <DataGrid
+        id="candidates-list"
         rows={candidates}
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: 10 },
           },
         }}
-        pageSizeOptions={[5, 10]}
+        pageSizeOptions={[10, 20]}
         checkboxSelection
       />
     </Container>
