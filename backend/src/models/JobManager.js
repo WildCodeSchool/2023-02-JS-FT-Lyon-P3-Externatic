@@ -5,14 +5,24 @@ class JobManager extends AbstractManager {
     super({ table: "job_posting" });
   }
 
-  find(id) {
-    return this.database.query(`select * from  ${this.table} where id = ?`, [
-      id,
-    ]);
+  find(jobId) {
+    return this.database.query(
+      `
+      SELECT job_posting.id, job_posting.company_id, job_posting.title, job_posting.description, job_posting.requirements, job_posting.contract_type, job_posting.remote, job_posting.location, job_posting.salary, job_posting.posting_date, job_posting.archived, company.name, company.contact, company.website
+      FROM job_posting
+      INNER JOIN company ON job_posting.company_id = company.id
+      WHERE job_posting.id = ?
+    `,
+      [jobId]
+    );
   }
 
   findAll() {
-    return this.database.query(`select  * from  ${this.table}`);
+    return this.database.query(`
+      SELECT job_posting.id, job_posting.company_id, job_posting.title, job_posting.description, job_posting.requirements, job_posting.contract_type, job_posting.remote, job_posting.location, job_posting.salary, job_posting.posting_date, job_posting.archived, company.name, company.contact, company.website
+      FROM ${this.table}
+      INNER JOIN company ON job_posting.company_id = company.id
+    `);
   }
 
   insert(job) {
