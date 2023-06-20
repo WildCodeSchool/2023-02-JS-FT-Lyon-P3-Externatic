@@ -6,8 +6,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import CardMedia from "@mui/material/CardMedia";
-import TopAnnoncesCard from "../components/HomeComponents/TopAnnoncesCard";
-import JobByTypeCard from "../components/HomeComponents/JobByTypeCard";
+import TopAnnoncesCard from "../components/Home/TopAnnoncesCard";
+import JobByTypeCard from "../components/Home/JobByTypeCard";
 import backgroundImage from "../assets/tim-mossholder-GOMhuCj-O9w-unsplash-1024x683.jpg";
 import externaticLogo from "../assets/EXTERNATIC-LOGO-VERTICAL-RVB-removebg-preview.png";
 

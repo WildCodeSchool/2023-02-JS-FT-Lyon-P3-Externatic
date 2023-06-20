@@ -12,7 +12,6 @@ export default function JobByTypeCard({ jobTypes }) {
       sx={{
         minWidth: 500,
         maxWidth: 700,
-        // width: 600,
         height: 300,
         margin: 3,
         padding: 0,
@@ -25,7 +24,6 @@ export default function JobByTypeCard({ jobTypes }) {
           height: 300,
           minWidth: 500,
           maxWidth: 700,
-          // width: 600,
           cursor: "pointer",
         }}
         image={background}
@@ -40,11 +38,8 @@ export default function JobByTypeCard({ jobTypes }) {
             padding: "20px",
             alignItems: "center",
             height: "100%",
-            // fontSize: 24,
             minWidth: 500,
             maxWidth: 700,
-            // width: 600,
-            // alignItems: "center",
           }}
           color="white"
         >
@@ -54,7 +49,6 @@ export default function JobByTypeCard({ jobTypes }) {
               fontSize: 24,
               minWidth: 500,
               maxWidth: 700,
-              // width: 600,
               alignItems: "center",
             }}
             color="white"

@@ -1,8 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-
 import Home from "./pages/Home";
+import Admin from "./pages/Admin";
+import Ads from "./pages/Ads";
+import Register from "./pages/Register";
 
 import "./App.css";
 
@@ -29,6 +31,9 @@ function App() {
         <CssBaseline />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/annonces" element={<Ads />} />
         </Routes>
       </ThemeProvider>
     </div>
