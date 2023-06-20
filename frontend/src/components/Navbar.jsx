@@ -44,7 +44,7 @@ export default function Navbar() {
     navigate("/");
   };
   const handleLinkAdds = () => {
-    navigate("/jobs");
+    navigate("/annonces");
   };
 
   return (
