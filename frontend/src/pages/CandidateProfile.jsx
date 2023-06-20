@@ -18,10 +18,10 @@ export default function CandidateProfile() {
         </Typography>
         <Box sx={{ display: "flex" }}>
           <Grid container spacing={4}>
-            <Grid item xs={4}>
+            <Grid item xs={12} lg={4}>
               <CandidateCard />
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={12} lg={8}>
               <Paper sx={{ height: "100%" }}>
                 <CandidateApplications />
               </Paper>

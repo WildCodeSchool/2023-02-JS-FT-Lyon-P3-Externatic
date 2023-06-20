@@ -14,7 +14,7 @@ const browse = (req, res) => {
 
 const browseById = (req, res) => {
   models.application
-    .findApplicationsByUserId()
+    .findApplicationsByUserId(req.params.id)
     .then(([rows]) => {
       res.send(rows);
     })

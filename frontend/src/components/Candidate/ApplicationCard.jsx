@@ -9,10 +9,16 @@ export default function ApplicationCard({ candidateApplication }) {
     <Card sx={{ maxWidth: "100%" }}>
       <CardContent sx={{ m: 2 }}>
         <Typography variant="body1" color="text.secondary" gutterBottom>
-          Statut : {candidateApplication.status}
+          {candidateApplication.title}
         </Typography>
         <Typography variant="body1" color="text.secondary" gutterBottom>
-          id entreprise : {candidateApplication.company_id}
+          {candidateApplication.name}
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          {candidateApplication.contract_type}
+        </Typography>
+        <Typography variant="body1" color="text.secondary" gutterBottom>
+          Statut : {candidateApplication.status}
         </Typography>
       </CardContent>
     </Card>
@@ -21,14 +27,16 @@ export default function ApplicationCard({ candidateApplication }) {
 
 ApplicationCard.propTypes = {
   candidateApplication: PropTypes.shape({
-    company_id: PropTypes.number,
+    title: PropTypes.string,
+    name: PropTypes.string,
     status: PropTypes.string,
+    contract_type: PropTypes.string,
   }),
 };
 
 ApplicationCard.defaultProps = {
   candidateApplication: {
-    company_id: 2,
+    title: "company name",
     status: "en cours",
   },
 };

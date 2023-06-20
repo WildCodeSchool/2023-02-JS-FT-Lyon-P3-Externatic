@@ -20,10 +20,11 @@ class ApplicationManager extends AbstractManager {
   findApplicationsByUserId(userId) {
     return this.database.query(
       `SELECT * FROM ${this.table} AS app
-      JOIN candidate AS c ON app.candidate_id = c.id
-      JOIN user AS u ON c.user_id = u.id
-      JOIN job_posting AS jp ON app.job_posting_id = jp.id
-      WHERE app.candidate_id = ${userId}`,
+       JOIN candidate AS c ON app.candidate_id = c.id
+       JOIN user AS u ON c.user_id = u.id
+       JOIN job_posting AS jp ON app.job_posting_id = jp.id
+       JOIN company AS co ON jp.company_id = co.id
+       WHERE app.candidate_id = ?`,
       [userId]
     );
   }
