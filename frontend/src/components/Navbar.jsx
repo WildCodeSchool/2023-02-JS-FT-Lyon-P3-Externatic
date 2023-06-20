@@ -46,6 +46,13 @@ export default function Navbar() {
   const handleLinkAdds = () => {
     navigate("/jobs");
   };
+  const handleLinkBlog = () => {
+    navigate("/blog");
+  };
+
+  const handleLinkUser = () => {
+    navigate("/espace-candidat");
+  };
 
   return (
     <AppBar position="sticky" color="secondary">
@@ -91,6 +98,11 @@ export default function Navbar() {
                   Annonces
                 </Typography>
               </MenuItem>
+              <MenuItem onClick={handleLinkBlog}>
+                <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                  Blog
+                </Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <Box
@@ -117,7 +129,7 @@ export default function Navbar() {
                 }}
               >
                 <HomeRoundedIcon />
-                <Typography>Accueil</Typography>
+                <Typography sx={{ ml: 1 }}>Accueil</Typography>
               </Box>
             </Button>
 
@@ -133,7 +145,7 @@ export default function Navbar() {
                 }}
               >
                 <LibraryBooksRoundedIcon />
-                <Typography>Annonces</Typography>
+                <Typography sx={{ ml: 1 }}>Annonces</Typography>
               </Box>
             </Button>
             <Button
@@ -148,7 +160,7 @@ export default function Navbar() {
                 }}
               >
                 <RssFeedRoundedIcon />
-                <Typography>Blog</Typography>
+                <Typography sx={{ ml: 1 }}>Blog</Typography>
               </Box>
             </Button>
           </Box>
@@ -174,7 +186,7 @@ export default function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleLinkHome}>
+              <MenuItem onClick={handleLinkUser}>
                 <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
                   Espace Candidat
                 </Typography>
