@@ -84,6 +84,7 @@ export default function AdminCreate() {
             terms: false,
           });
           notify();
+          document.getElementById("candidate-expand").click();
         })
         .catch(() => console.warn("registration problem"));
     }
@@ -99,9 +100,12 @@ export default function AdminCreate() {
           pb: "3rem",
         }}
       >
+        <Typography variant="h4" color="initial">
+          Création
+        </Typography>
         <Accordion>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={<ExpandMoreIcon id="candidate-expand" />}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
@@ -110,14 +114,14 @@ export default function AdminCreate() {
           <AccordionDetails>
             <Box
               sx={{
-                marginTop: 8,
+                marginTop: 2,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
               }}
             >
               <Typography component="h1" variant="h5">
-                Enregistrer un nouveau Candidat
+                Enregistrer un Nouveau Candidat
               </Typography>
               <Box
                 component="form"
@@ -213,19 +217,19 @@ export default function AdminCreate() {
             aria-controls="panel2a-content"
             id="panel2a-header"
           >
-            <Typography>Créer une nouvelle Entreprise</Typography>
+            <Typography>Créer une Nouvelle Entreprise</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Box
               sx={{
-                marginTop: 8,
+                marginTop: 2,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
               }}
             >
               <Typography component="h1" variant="h5">
-                Enregistrer une nouvelle Entreprise
+                Enregistrer une Nouvelle Entreprise
               </Typography>
               <Box
                 component="form"

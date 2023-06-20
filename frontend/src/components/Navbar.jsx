@@ -22,6 +22,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNavMenu, setAnchorElNavMenu] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -29,7 +30,14 @@ export default function Navbar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-    navigate("/profile-candidate");
+  };
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNavMenu(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNavMenu(null);
   };
 
   const handleLinkHome = () => {
@@ -52,11 +60,38 @@ export default function Navbar() {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleLinkHome}
+              onClick={handleOpenNavMenu}
               color="inherit"
             >
               <MenuIcon />
             </IconButton>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="NavMenu"
+              anchorEl={anchorElNavMenu}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNavMenu)}
+              onClose={handleCloseNavMenu}
+            >
+              <MenuItem onClick={handleLinkHome}>
+                <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                  Accueil
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={handleLinkAdds}>
+                <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                  Annonces
+                </Typography>
+              </MenuItem>
+            </Menu>
           </Box>
           <Box
             sx={{
