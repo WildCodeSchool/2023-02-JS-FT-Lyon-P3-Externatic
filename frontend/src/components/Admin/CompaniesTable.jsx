@@ -46,20 +46,21 @@ export default function CompaniesTable() {
   }, []);
 
   return (
-    <Container maxWidth="lg">
-      <Typography variant="h5" gutterBottom>
+    <Container maxWidth="lg" sx={{ my: 4 }}>
+      <Typography variant="h4" gutterBottom>
         Liste des Entreprises
       </Typography>
       <div style={{ height: "100%", width: "100%" }}>
         <DataGrid
+          id="company-list"
           rows={companies}
           columns={columns}
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
+              paginationModel: { page: 0, pageSize: 10 },
             },
           }}
-          pageSizeOptions={[5, 10]}
+          pageSizeOptions={[10, 20]}
           checkboxSelection
         />
       </div>
