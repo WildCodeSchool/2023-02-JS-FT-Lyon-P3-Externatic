@@ -4,6 +4,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import CandidateProfile from "./pages/CandidateProfile";
+import Ads from "./pages/Ads";
+import Register from "./pages/Register";
 
 import "./App.css";
 
@@ -32,6 +34,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/espace-candidat" element={<CandidateProfile />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/annonces" element={<Ads />} />
         </Routes>
       </ThemeProvider>
     </div>
