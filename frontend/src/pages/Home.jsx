@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import CardMedia from "@mui/material/CardMedia";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import TopAnnoncesCard from "../components/Home/TopAnnoncesCard";
 import JobByTypeCard from "../components/Home/JobByTypeCard";
@@ -25,6 +26,7 @@ function Copyright() {
 }
 
 export default function Home() {
+  const navigate = useNavigate();
   const jobTypes = {
     devBack: "Développeur Back-end",
     devFront: "Dévelopeur Front-End",
@@ -97,8 +99,22 @@ export default function Home() {
               spacing={3}
               justifyContent="center"
             >
-              <Button variant="contained">M'inscrire</Button>
-              <Button variant="outlined">Voir les Offres</Button>
+              <Button
+                onClick={() => {
+                  navigate("/register");
+                }}
+                variant="contained"
+              >
+                M'inscrire
+              </Button>
+              <Button
+                onClick={() => {
+                  navigate("/annonces");
+                }}
+                variant="outlined"
+              >
+                Voir les Offres
+              </Button>
             </Stack>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <CardMedia
@@ -131,7 +147,7 @@ export default function Home() {
                 gutterBottom
                 margin={3}
               >
-                Nos valeurs humaines et profissionnelles:
+                Nos valeurs humaines et professionnelles:
               </Typography>
               <Typography
                 variant="h5"
