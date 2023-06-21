@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
+import CandidateProfile from "./pages/CandidateProfile";
 import Ads from "./pages/Ads";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -32,6 +33,7 @@ function App() {
         <CssBaseline />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/espace-candidat" element={<CandidateProfile />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

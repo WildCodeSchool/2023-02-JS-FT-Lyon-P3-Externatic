@@ -32,7 +32,7 @@ function Copyright() {
 
 export default function Register() {
   const navigate = useNavigate();
-  const notify = () => toast.success("Votre comte a bien été créé !");
+  const notify = () => toast.success("Votre compte a bien été créé !");
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
