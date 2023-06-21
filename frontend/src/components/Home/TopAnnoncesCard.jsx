@@ -9,7 +9,17 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Navigation, Pagination, Scrollbar } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 import cardJobPosting from "../../assets/cardJobPosting.jpg";
+// Import Swiper styles
+
+// eslint-disable-next-line import/no-unresolved
+import "swiper/css";
+// eslint-disable-next-line import/no-unresolved
+import "swiper/css/navigation";
+// eslint-disable-next-line import/no-unresolved
+import "swiper/css/pagination";
 
 export default function TopAnnoncesCard() {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -34,37 +44,57 @@ export default function TopAnnoncesCard() {
         minWidth="1200"
         // flexWrap="wrap"
       >
-        {jobPosting &&
-          jobPosting.map((jobs) => (
-            <div key={jobs.id} className="">
-              <Card sx={{ maxWidth: 335, minWidth: 280, m: 1 }}>
-                <CardMedia
-                  component="img"
-                  alt="city"
-                  height="140"
-                  image={cardJobPosting}
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {jobs.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {jobs.description} <br />
-                    {jobs.requirements} <br />
-                    {jobs.contract_type} <br />
-                    {jobs.remote} <br />
-                    {jobs.location} <br />
-                    {jobs.salary} <br />
-                    {jobs.posting_date} <br />
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small">VOIR PLUS</Button>
-                  <Button size="small">SHARE</Button>
-                </CardActions>
-              </Card>
-            </div>
-          ))}
+        <Swiper
+          // install Swiper modules
+          modules={[Navigation, Pagination, Scrollbar]}
+          spaceBetween={40}
+          slidesPerView={3}
+          navigation
+          pagination={{ clickable: true }}
+          scrollbar={{ draggable: false }}
+        >
+          {jobPosting &&
+            jobPosting.map((jobs) => (
+              <SwiperSlide key={jobs.id} className="">
+                <Card
+                  sx={{
+                    maxWidth: 335,
+                    minWidth: 280,
+                    m: 2,
+                    height: 450,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    alt="city"
+                    height="140"
+                    image={cardJobPosting}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {jobs.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {jobs.description} <br />
+                      {jobs.requirements} <br />
+                      {jobs.contract_type}
+                      {jobs.remote}
+                      {jobs.location} <br />
+                      {jobs.salary} <br />
+                      {jobs.posting_date} <br />
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small">VOIR PLUS</Button>
+                    <Button size="small">SHARE</Button>
+                  </CardActions>
+                </Card>
+              </SwiperSlide>
+            ))}
+        </Swiper>
       </Stack>
     </Container>
   );
