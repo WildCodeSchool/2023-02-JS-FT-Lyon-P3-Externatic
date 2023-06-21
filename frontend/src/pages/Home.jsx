@@ -164,9 +164,8 @@ export default function Home() {
           >
             Top Annonces
           </Typography>
-          <Box>
-            <TopAnnoncesCard />
-          </Box>
+          {/* {Carousel TopAnnoncesCard} */}
+          <TopAnnoncesCard />
           <Box
             maxWidth="xl"
             sx={{ m: 2 }}
