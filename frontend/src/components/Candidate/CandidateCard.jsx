@@ -51,7 +51,7 @@ export default function CandidateCard() {
   };
 
   return (
-    <Card sx={{ maxWidth: "100%" }}>
+    <Card sx={{ maxWidth: "100%", mb: { xs: 3, md: 3 } }}>
       <Box sx={{ p: 2 }}>
         <Box sx={{ m: 2, display: "flex", justifyContent: "center" }}>
           <Avatar
