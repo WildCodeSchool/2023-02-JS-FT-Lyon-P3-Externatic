@@ -140,3 +140,19 @@ VALUES
   (10, 'Graphic Designer', 'Create visual designs for various mediums', 'Bachelor\'s degree in Graphic Design, proficiency in Adobe Creative Suite', 'CDD', 'Presentiel', 'Atlanta', 'USD 65,000', '2023-06-10', 0),
   (11, 'Financial Advisor', 'Provide financial planning and investment advice', 'Bachelor\'s degree in Finance, relevant certifications (e.g., CFP)', 'CDI', 'Teletravail', 'Dallas', 'USD 100,000', '2023-06-11', 0),
   (12, 'Travel Consultant', 'Plan and book travel arrangements for clients', 'High school diploma, knowledge of popular travel destinations', 'CDD', 'Presentiel', 'Phoenix', 'USD 50,000', '2023-06-12', 0);
+
+INSERT INTO applications (candidate_id, job_posting_id, date, status)
+VALUES
+  (1, 1, '2023-06-19', 'en cours'),
+  (2, 2, '2023-06-18', 'rejetée'),
+  (3, 3, '2023-06-17', 'acceptée'),
+  (4, 1, '2023-06-16', 'rejetée'),
+  (5, 2, '2023-06-15', 'en cours'),
+  (6, 4, '2023-06-14', 'acceptée'),
+  (7, 3, '2023-06-13', 'rejetée'),
+  (8, 2, '2023-06-12', 'en cours'),
+  (9, 1, '2023-06-11', 'acceptée'),
+  (10, 4, '2023-06-10', 'en cours'),
+  (1, 5, '2023-06-18', 'rejetée'),
+  (1, 6, '2023-06-18', 'acceptée'),
+  (1, 2, '2023-06-18', 'rejetée');
