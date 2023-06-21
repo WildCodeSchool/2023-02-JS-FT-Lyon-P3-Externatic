@@ -12,10 +12,11 @@ import { useEffect, useState } from "react";
 import cardJobPosting from "../../assets/cardJobPosting.jpg";
 
 export default function TopAnnoncesCard() {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [jobPosting, setJobPosting] = useState();
 
   const jobsApplication = async () => {
-    const res = await axios.get("http://localhost:6001/jobs");
+    const res = await axios.get(`${BACKEND_URL}/jobs`);
     setJobPosting(res.data);
   };
 
