@@ -7,11 +7,12 @@ import ApplicationCard from "./ApplicationCard";
 
 export default function CandidateApplications() {
   const [candidateApplications, setCandidateApplications] = useState([]);
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const config = {
     method: "get",
     maxBodyLength: Infinity,
-    url: "http://localhost:6001/candidate-applications/1",
+    url: `${BACKEND_URL}/candidate-applications/1`,
     headers: {},
   };
 
@@ -32,25 +33,30 @@ export default function CandidateApplications() {
   }, []);
 
   return (
-    <Box>
+    <>
       <Typography
         variant="h6"
         color="initial"
-        sx={{ p: 2, backgroundColor: "primary.main", color: "white" }}
+        sx={{
+          p: 2,
+          backgroundColor: "primary.main",
+          color: "white",
+          borderRadius: 2,
+        }}
       >
         Mes Candidatures :
       </Typography>
-      <Divider />
-
-      {candidateApplications.map((candidateApplication) => (
-        <>
-          <ApplicationCard
-            key={candidateApplication.id}
-            candidateApplication={candidateApplication}
-          />
-          <Divider key={candidateApplication.company_id} />
-        </>
-      ))}
-    </Box>
+      <Box sx={{ borderRadius: "1rem" }}>
+        {candidateApplications.map((candidateApplication) => (
+          <>
+            <ApplicationCard
+              key={candidateApplication.id}
+              candidateApplication={candidateApplication}
+            />
+            <Divider key={candidateApplication.company_id} />
+          </>
+        ))}
+      </Box>
+    </>
   );
 }

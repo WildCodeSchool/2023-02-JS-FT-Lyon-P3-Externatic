@@ -16,25 +16,49 @@ export default function CandidateProfile() {
         <Typography variant="h3" color="initial" sx={{ m: 3 }}>
           Espace Candidat
         </Typography>
-        <Box sx={{ display: "flex" }}>
-          <Grid container spacing={4}>
-            <Grid item xs={12} lg={4}>
-              <CandidateCard />
-            </Grid>
-            <Grid item xs={12} lg={8}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "column", lg: "row", xl: "row" },
+          }}
+        >
+          <Grid
+            item
+            xs={12}
+            lg={6}
+            elevation={3}
+            sx={{
+              position: { lg: "fixed" },
+            }}
+          >
+            <CandidateCard />
+          </Grid>
+          <Grid container spacing={4} justifyContent="flex-end">
+            <Grid item xs={12} lg={8} elevation={3}>
               <Paper sx={{ height: "100%" }}>
                 <CandidateApplications />
               </Paper>
             </Grid>
-            <Grid item xs={12}>
-              <Paper sx={{ height: "15rem" }}>
-                <Typography variant="h6" color="initial">
-                  Mes Annonces Préférées
-                </Typography>
-              </Paper>
-            </Grid>
           </Grid>
         </Box>
+        <Grid container spacing={4} justifyContent="flex-end" sx={{ my: 2 }}>
+          <Grid item xs={12} lg={8} elevation={3}>
+            <Paper sx={{ height: "15rem" }}>
+              <Typography
+                variant="h6"
+                color="initial"
+                sx={{
+                  p: 2,
+                  backgroundColor: "primary.main",
+                  color: "white",
+                  borderRadius: 2,
+                }}
+              >
+                Mes Annonces Préférées
+              </Typography>
+            </Paper>
+          </Grid>
+        </Grid>
       </Container>
     </>
   );
