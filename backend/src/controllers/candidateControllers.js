@@ -12,6 +12,23 @@ const browse = (req, res) => {
     });
 };
 
+const profile = (req, res) => {
+  const id = req.payloads.sub;
+  models.candidate
+    .find(id)
+    .then(([candidates]) => {
+      if (candidates[0] == null) {
+        res.sendStatus(404);
+      } else {
+        res.send(candidates[0]);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 const read = (req, res) => {
   models.candidate
     .find(req.params.id)
@@ -65,7 +82,8 @@ const edit = async (req, res) => {
 
 const add = async (req, res) => {
   try {
-    const { email, phone, city, password, firstname, lastname } = req.body;
+    const { email, phone, city, hashedPassword, firstname, lastname } =
+      req.body;
 
     // TODO: Add validations for email, phone, city, password, firstname, lastname
 
@@ -74,7 +92,7 @@ const add = async (req, res) => {
       email,
       phone,
       city,
-      password,
+      hashedPassword,
     });
     const userId = userResult.insertId;
 
@@ -114,4 +132,5 @@ module.exports = {
   edit,
   add,
   destroy,
+  profile,
 };
