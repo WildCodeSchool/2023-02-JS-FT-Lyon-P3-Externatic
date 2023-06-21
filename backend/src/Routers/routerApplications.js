@@ -4,10 +4,14 @@ const routerApplication = express.Router();
 
 const applicationControllers = require("../controllers/applicationControllers ");
 
-routerApplication.get("/application", applicationControllers.browse);
-routerApplication.get("/application/:id", applicationControllers.read);
-routerApplication.put("/application/:id", applicationControllers.edit);
-routerApplication.post("/application", applicationControllers.add);
-routerApplication.delete("/application/:id", applicationControllers.destroy);
+routerApplication.get("/applications", applicationControllers.browse);
+routerApplication.get("/applications/:id", applicationControllers.read);
+routerApplication.get(
+  "/candidate-applications/:id",
+  applicationControllers.browseById
+);
+routerApplication.put("/applications/:id", applicationControllers.edit);
+routerApplication.post("/applications", applicationControllers.add);
+routerApplication.delete("/applications/:id", applicationControllers.destroy);
 
 module.exports = routerApplication;

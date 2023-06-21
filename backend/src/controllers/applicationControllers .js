@@ -12,6 +12,18 @@ const browse = (req, res) => {
     });
 };
 
+const browseById = (req, res) => {
+  models.application
+    .findApplicationsByUserId(req.params.id)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 const read = (req, res) => {
   models.application
     .find(req.params.id)
@@ -84,6 +96,7 @@ const destroy = (req, res) => {
 
 module.exports = {
   browse,
+  browseById,
   read,
   edit,
   add,
