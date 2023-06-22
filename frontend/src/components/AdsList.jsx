@@ -127,9 +127,13 @@ export default function AdsList() {
               <Box>
                 <Typography>{selectedJob.contact}</Typography>
                 <Typography>{selectedJob.location}</Typography>
-                <Typography>{selectedJob.contract_type}</Typography>
+                <Typography>
+                  Type de contrat : {selectedJob.contract_type}
+                </Typography>
                 <Typography>{selectedJob.remote}</Typography>
-                <Typography>{selectedJob.posting_date}</Typography>
+                <Typography>
+                  Date de publication : {selectedJob.posting_date}
+                </Typography>
                 <Link
                   href={selectedJob.website}
                   target="_blank"

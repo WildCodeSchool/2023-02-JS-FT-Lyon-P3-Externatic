@@ -75,14 +75,20 @@ export default function SearchBar() {
     const {
       target: { value },
     } = event;
-    setJobType(typeof value === "string" ? value.split(",") : value);
+    setJobType(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
   };
 
   const handleChanges = (event) => {
     const {
       target: { value },
     } = event;
-    setJobTitle(typeof value === "string" ? value.split(",") : value);
+    setJobTitle(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
   };
   return (
     <Box
