@@ -39,13 +39,13 @@ const verifyPassword = (req, res) => {
           }
         );
         delete req.body.password;
-        delete req.user.hashedPassword;
+        delete req.candidate.hashedPassword;
         res
           .cookie("access_token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
           })
-          .send(req.user);
+          .send(req.candidate);
       } else res.sendStatus(401);
     })
     .catch((err) => {

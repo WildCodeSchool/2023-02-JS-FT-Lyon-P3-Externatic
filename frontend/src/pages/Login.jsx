@@ -48,7 +48,7 @@ export default function Login() {
     e.preventDefault();
     if (validateForm) {
       axios
-        .post(`${BACKEND_URL}/login`, userInfos, { userCredentials: true })
+        .post(`${BACKEND_URL}/login`, userInfos, { withCredentials: true })
         .then(({ data: candidate }) => {
           login(candidate);
           navigate("/");

@@ -12,18 +12,6 @@ const {
   verifyToken,
   logout,
 } = require("../services/auth");
-
-const {
-  getCandidateByEmailMiddleWare,
-  register,
-} = require("../controllers/authControllers");
-
-const {
-  hashPassword,
-  verifyPassword,
-  verifyToken,
-  logout,
-} = require("../services/auth");
 const {
   getCandidateByEmailMiddleWare,
   register,
@@ -36,6 +24,11 @@ const candidateControllers = require("../controllers/candidateControllers");
 routerCandidate.post("/register", hashPassword, register);
 routerCandidate.post("/login", getCandidateByEmailMiddleWare, verifyPassword);
 routerCandidate.get("/logout", verifyToken, logout);
+routerCandidate.get(
+  "/candidate-profile",
+  verifyToken,
+  candidateControllers.profile
+);
 
 routerCandidate.get("/candidates", candidateControllers.browse);
 routerCandidate.get("/candidates/:id", candidateControllers.read);
