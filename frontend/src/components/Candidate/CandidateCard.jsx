@@ -8,14 +8,9 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextSnippetIcon from "@mui/icons-material/TextSnippet";
-import { MuiFileInput } from "mui-file-input";
+import CVupload from "./CVupload";
 
 export default function CandidateCard({ candidate }) {
-  const [file, setFile] = React.useState(null);
-
-  const handleChange = (newFile) => {
-    setFile(newFile);
-  };
   return (
     <Card sx={{ maxWidth: "100%", mb: { xs: 3, md: 3 } }}>
       <Box
@@ -61,14 +56,7 @@ export default function CandidateCard({ candidate }) {
           </Typography>
         </CardContent>
         {candidate.cv === null ? (
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <MuiFileInput
-              value={file}
-              onChange={handleChange}
-              placeholder="Ajouter un CV"
-              sx={{ width: 275 }}
-            />
-          </Box>
+          <CVupload />
         ) : (
           <Typography variant="body1">
             <TextSnippetIcon fontSize="large" />
