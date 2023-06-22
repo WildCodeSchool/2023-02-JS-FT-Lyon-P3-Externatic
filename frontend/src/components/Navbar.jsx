@@ -49,7 +49,12 @@ export default function Navbar() {
   const handleLinkBlog = () => {
     navigate("/blog");
   };
-
+  const handleLinkLogin = () => {
+    navigate("/login");
+  };
+  const handleLinkRegister = () => {
+    navigate("/register");
+  };
   const handleLinkUser = () => {
     navigate("/espace-candidat");
   };
@@ -164,10 +169,12 @@ export default function Navbar() {
               </Box>
             </Button>
           </Box>
-          <Box sx={{ flexGrow: 1 }}>
-            <Tooltip title="Open settings">
+          <Box
+            sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}
+          >
+            <Tooltip title="Espace Utilisateur">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Aline Sharp" src={profilePic} />
+                <Avatar alt="Avatar" src={profilePic} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -191,7 +198,12 @@ export default function Navbar() {
                   Espace Candidat
                 </Typography>
               </MenuItem>
-              <MenuItem onClick={handleLinkAdds}>
+              <MenuItem onClick={handleLinkLogin}>
+                <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                  Login
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={handleLinkRegister}>
                 <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
                   Logout
                 </Typography>

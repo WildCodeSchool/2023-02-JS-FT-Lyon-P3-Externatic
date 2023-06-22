@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
@@ -7,8 +8,13 @@ import Box from "@mui/material/Box";
 import Navbar from "../components/Navbar";
 import CandidateCard from "../components/Candidate/CandidateCard";
 import CandidateApplications from "../components/Candidate/CandidateApplications";
+import { useCandidateContext } from "../Contexts/CandidateContext";
 
 export default function CandidateProfile() {
+  const { candidate } = useCandidateContext();
+  const navigate = useNavigate();
+  if (!candidate?.id) return navigate("/login");
+
   return (
     <>
       <Navbar />
@@ -31,7 +37,7 @@ export default function CandidateProfile() {
               position: { lg: "fixed" },
             }}
           >
-            <CandidateCard />
+            <CandidateCard candidate={candidate} />
           </Grid>
           <Grid container spacing={4} justifyContent="flex-end">
             <Grid item xs={12} lg={8} elevation={3}>

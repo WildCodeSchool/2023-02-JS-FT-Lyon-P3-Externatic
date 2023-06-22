@@ -1,99 +1,79 @@
 import * as React from "react";
-import { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
-import FormControl from "@mui/material/FormControl";
-import Input from "@mui/material/Input";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import TextSnippetIcon from "@mui/icons-material/TextSnippet";
+import { MuiFileInput } from "mui-file-input";
 
-export default function CandidateCard() {
-  const [candidate, setCandidate] = useState({});
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+export default function CandidateCard({ candidate }) {
+  const [file, setFile] = React.useState(null);
 
-  const config = {
-    method: "get",
-    maxBodyLength: Infinity,
-    url: `${BACKEND_URL}/candidates/1`,
-    headers: {},
+  const handleChange = (newFile) => {
+    setFile(newFile);
   };
-
-  const getCandidate = () => {
-    axios
-      .request(config)
-      .then((response) => {
-        setCandidate(response.data);
-        console.warn(candidate);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
-  useEffect(() => {
-    getCandidate();
-  }, []);
-
-  const inputRef = useRef();
-
-  const hSubmit = (evt) => {
-    evt.preventDefault();
-
-    const formData = new FormData();
-    formData.append("picture", inputRef.current.files[0]);
-
-    axios.post(`http://${BACKEND_URL}/picture`, formData);
-  };
-
   return (
     <Card sx={{ maxWidth: "100%", mb: { xs: 3, md: 3 } }}>
-      <Box sx={{ p: 2 }}>
-        <Box sx={{ m: 2, display: "flex", justifyContent: "center" }}>
+      <Box
+        sx={{
+          p: 2,
+          display: "flex",
+          flexDirection: "column",
+          alignContent: "center",
+        }}
+      >
+        <Box
+          sx={{
+            m: 2,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <Avatar
             alt="Candidate Picture"
             src={candidate.picture}
             sx={{ width: 150, height: 150 }}
           />
+          <Typography variant="body1" color="text.secondary" sx={{ m: 1 }}>
+            Changer ma photo
+          </Typography>
         </Box>
-        <CardContent sx={{ m: 2 }}>
+        <CardContent sx={{ m: 1 }}>
           <Typography gutterBottom variant="h4" component="div">
-            {candidate.firstname} {candidate.lastname}
+            {candidate.firstname.charAt(0).toUpperCase() +
+              candidate.firstname.slice(1)}{" "}
+            {candidate.lastname.charAt(0).toUpperCase() +
+              candidate.lastname.slice(1)}
           </Typography>
           <Typography variant="body1" color="text.secondary" gutterBottom>
-            {candidate.phone}
+            {candidate.city}
           </Typography>
           <Typography variant="body1" color="text.secondary" gutterBottom>
             {candidate.email}
           </Typography>
           <Typography variant="body1" color="text.secondary" gutterBottom>
-            {candidate.city}
+            {candidate.phone}
           </Typography>
-          <Box
-            component="form"
-            encType="multipart/form-data"
-            noValidate
-            onSubmit={hSubmit}
-            sx={{ display: "flex", flexDirection: "column" }}
-          >
-            <FormControl encType="multipart/form-data" sx={{ m: 1 }}>
-              <Input type="file" name="monfichier" ref={inputRef} />
-              <Button
-                type="submit"
-                size="small"
-                variant="outlined"
-                slots="input"
-                sx={{ m: 1 }}
-              >
-                Envoyer
-              </Button>
-            </FormControl>
-          </Box>
         </CardContent>
+        {candidate.cv === null ? (
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <MuiFileInput
+              value={file}
+              onChange={handleChange}
+              placeholder="Ajouter un CV"
+              sx={{ width: 275 }}
+            />
+          </Box>
+        ) : (
+          <Typography variant="body1">
+            <TextSnippetIcon fontSize="large" />
+          </Typography>
+        )}
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
           <Button size="small">Modifier mes Informations</Button>
         </CardActions>
@@ -110,6 +90,7 @@ CandidateCard.propTypes = {
     email: PropTypes.string,
     city: PropTypes.string,
     picture: PropTypes.string,
+    cv: PropTypes.string,
   }),
 };
 
