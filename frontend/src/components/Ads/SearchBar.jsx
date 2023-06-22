@@ -9,6 +9,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -67,9 +68,38 @@ const jobsType = [
   },
 ];
 
+// const citysAvailable = [
+//   {
+//     id: 1,
+//     type: "Paris",
+//   },
+//   {
+//     id: 2,
+//     type: "Lyon",
+//   },
+//   {
+//     id: 3,
+//     type: "Bordeaux",
+//   },
+//   {
+//     id: 4,
+//     type: "Marseille",
+//   },
+//   {
+//     id: 5,
+//     type: "Lille",
+//   },
+//   {
+//     id: 6,
+//     type: "Montpellier",
+//   },
+// ];
+
 export default function SearchBar() {
   const [jobType, setJobType] = useState([]);
   const [jobTitle, setJobTitle] = useState([]);
+  // const [location, setLocation] = useState([]);
+  const [infoFiltered, setInfoFiltered] = useState();
 
   const handleChange = (event) => {
     const {
@@ -90,6 +120,14 @@ export default function SearchBar() {
       typeof value === "string" ? value.split(",") : value
     );
   };
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  // Filtering
+  const handleFilter = async () => {
+    const res = await axios.get(`${BACKEND_URL}/jobs`);
+    setInfoFiltered(res.data);
+    console.warn(infoFiltered);
+  };
+
   return (
     <Box
       component="form"
@@ -172,7 +210,7 @@ export default function SearchBar() {
             ))}
           </Select>
         </FormControl>
-        <Button variant="contained" sx={{ mt: 2 }}>
+        <Button onClick={handleFilter} variant="contained" sx={{ mt: 2 }}>
           Rechercher
         </Button>
       </Container>
