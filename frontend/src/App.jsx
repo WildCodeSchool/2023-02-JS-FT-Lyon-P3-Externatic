@@ -6,6 +6,7 @@ import Admin from "./pages/Admin";
 import CandidateProfile from "./pages/CandidateProfile";
 import Ads from "./pages/Ads";
 import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 import "./App.css";
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="/espace-candidat" element={<CandidateProfile />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/annonces" element={<Ads />} />
         </Routes>
       </ThemeProvider>
