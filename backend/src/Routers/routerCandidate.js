@@ -21,6 +21,7 @@ const routerCandidate = express.Router();
 
 const candidateControllers = require("../controllers/candidateControllers");
 
+// Routes Privées
 routerCandidate.post("/register", hashPassword, register);
 routerCandidate.post("/login", getCandidateByEmailMiddleWare, verifyPassword);
 routerCandidate.get("/logout", verifyToken, logout);
@@ -30,12 +31,13 @@ routerCandidate.get(
   candidateControllers.profile
 );
 
+// Routes Publiques
 routerCandidate.get("/candidates", candidateControllers.browse);
 routerCandidate.get("/candidates/:id", candidateControllers.read);
 routerCandidate.put("/candidates/:id", candidateControllers.edit);
 routerCandidate.delete("/candidates/:id", candidateControllers.destroy);
 
-routerCandidate.post("/picture", upload.single("picture"), (req, res) => {
+routerCandidate.post("/monCV", upload.single("monCV"), (req, res) => {
   const { originalname } = req.file;
 
   const { filename } = req.file;
@@ -48,6 +50,7 @@ routerCandidate.post("/picture", upload.single("picture"), (req, res) => {
       res.send("File uploaded");
     }
   );
+  console.warn(req.file);
 });
 
 module.exports = routerCandidate;
