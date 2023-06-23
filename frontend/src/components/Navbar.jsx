@@ -16,7 +16,6 @@ import MenuItem from "@mui/material/MenuItem";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/externatic-logo-long.png";
-import profilePic from "../assets/profilePicture.jpg";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -174,7 +173,7 @@ export default function Navbar() {
           >
             <Tooltip title="Espace Utilisateur">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Avatar" src={profilePic} />
+                <Avatar alt="Avatar" />
               </IconButton>
             </Tooltip>
             <Menu

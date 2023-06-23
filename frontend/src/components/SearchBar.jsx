@@ -108,7 +108,7 @@ export default function SearchBar() {
           gutterBottom
           sx={{ mt: 6 }}
         >
-          Annonces d'Emploi
+          Annonces
         </Typography>
         <FormControl sx={{ m: 1, width: 250 }}>
           <InputLabel id="demo-multiple-checkbox-label">

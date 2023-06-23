@@ -33,7 +33,7 @@ export default function CandidateApplications() {
   }, []);
 
   return (
-    <>
+    <Box sx={{ borderRadius: "1rem" }}>
       <Typography
         variant="h6"
         color="initial"
@@ -46,17 +46,15 @@ export default function CandidateApplications() {
       >
         Mes Candidatures :
       </Typography>
-      <Box sx={{ borderRadius: "1rem" }}>
-        {candidateApplications.map((candidateApplication) => (
-          <>
-            <ApplicationCard
-              key={candidateApplication.id}
-              candidateApplication={candidateApplication}
-            />
-            <Divider key={candidateApplication.company_id} />
-          </>
-        ))}
-      </Box>
-    </>
+      {candidateApplications.map((candidateApplication) => (
+        <>
+          <ApplicationCard
+            key={candidateApplication.date}
+            candidateApplication={candidateApplication}
+          />
+          <Divider key={candidateApplication.job_posting_id} />
+        </>
+      ))}
+    </Box>
   );
 }
