@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -13,7 +13,12 @@ import { useCandidateContext } from "../Contexts/CandidateContext";
 export default function CandidateProfile() {
   const { candidate } = useCandidateContext();
   const navigate = useNavigate();
-  if (!candidate?.id) return navigate("/login");
+
+  useEffect(() => {
+    if (!candidate?.id) {
+      navigate("/login");
+    }
+  }, []);
 
   return (
     <>
