@@ -50,7 +50,7 @@ routerCandidate.post("/monCV", upload.single("monCV"), (req, res) => {
       res.send("File uploaded");
     }
   );
-  console.warn(req.file);
+  console.warn(req.file.path, req.file.originalname);
 });
 
 module.exports = routerCandidate;
