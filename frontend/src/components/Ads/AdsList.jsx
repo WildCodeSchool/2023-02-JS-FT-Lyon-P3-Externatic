@@ -8,6 +8,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function AdsList() {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -25,7 +26,11 @@ export default function AdsList() {
   }, []);
 
   if (albums.length === 0) {
-    return <Typography>Loading...</Typography>;
+    return (
+      <Container maxWidth="lg">
+        <CircularProgress />
+      </Container>
+    );
   }
 
   return (
