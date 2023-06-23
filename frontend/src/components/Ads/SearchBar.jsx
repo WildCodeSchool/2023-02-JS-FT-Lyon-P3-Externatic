@@ -107,7 +107,7 @@ export default function SearchBar() {
           color="text.primary"
           gutterBottom
         >
-          Album layout
+          Annonces
         </Typography>
         <FormControl sx={{ m: 1, width: 250 }}>
           <InputLabel id="demo-multiple-checkbox-label">
