@@ -8,7 +8,7 @@ class CandidateManager extends AbstractManager {
   find(candidateId) {
     return this.database.query(
       `
-      SELECT candidate.id, candidate.user_id, candidate.firstname, candidate.lastname, candidate.cv, user.email, user.phone, user.city, user.picture
+      SELECT candidate.id, candidate.user_id, candidate.firstname, candidate.lastname, candidate.cv, user.email, user.hashedPassword, user.phone, user.city, user.picture
       FROM candidate
       INNER JOIN user ON candidate.user_id = user.id
       WHERE candidate.id = ?
@@ -17,9 +17,18 @@ class CandidateManager extends AbstractManager {
     );
   }
 
+  findByEmailWithPassword(email) {
+    return this.database.query(
+      `SELECT * FROM ${this.table} 
+      INNER JOIN user ON candidate.user_id = user.id
+      WHERE email = ?`,
+      [email]
+    );
+  }
+
   findAll() {
     return this.database
-      .query(`SELECT candidate.id, candidate.user_id, candidate.firstname, candidate.lastname, candidate.cv, user.email, user.phone, user.city, user.picture
+      .query(`SELECT candidate.id, candidate.user_id, candidate.firstname, candidate.lastname, candidate.cv, user.email,user.hashedPassword, user.phone, user.city, user.picture
     FROM ${this.table}
     INNER JOIN user ON candidate.user_id = user.id`);
   }

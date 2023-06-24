@@ -6,6 +6,7 @@ import Admin from "./pages/Admin";
 import CandidateProfile from "./pages/CandidateProfile";
 import Ads from "./pages/Ads";
 import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 import "./App.css";
 
@@ -32,10 +33,11 @@ function App() {
         <CssBaseline />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/annonces" element={<Ads />} />
           <Route path="/espace-candidat" element={<CandidateProfile />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/annonces" element={<Ads />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </ThemeProvider>
     </div>

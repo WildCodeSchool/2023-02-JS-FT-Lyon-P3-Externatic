@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -125,8 +124,6 @@ export default function SearchBar() {
       ...infoFiltered,
       [event.target.name]: event.target.value,
     });
-
-    // );
   };
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -142,7 +139,6 @@ export default function SearchBar() {
   useEffect(() => {
     handleNoFilter();
   }, []);
-  // Filtering
   const handleFilter = async () => {
     try {
       const res = await axios.get(`${BACKEND_URL}/jobs`);
@@ -207,7 +203,6 @@ export default function SearchBar() {
             <Select
               labelId="demo-multiple-checkbox-label"
               id="demo-multiple-checkbox"
-              // multiple
               name="jobType"
               value={infoFiltered.jobType}
               onChange={handleChange}
@@ -246,7 +241,6 @@ export default function SearchBar() {
       </Box>
       {infoData && <AdsList infoData={infoData} />}
       {infoData ? "" : <AdsList infoDataNoFiltered={infoDataNoFiltered} />}
-      {/* {console.log(infoDataNoFiltered)} */}
     </>
   );
 }

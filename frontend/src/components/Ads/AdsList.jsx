@@ -84,7 +84,6 @@ export default function AdsList({ infoData, infoDataNoFiltered }) {
         </Container>
       )}
     </>
-    // console.log(infoData)
   );
 }
 

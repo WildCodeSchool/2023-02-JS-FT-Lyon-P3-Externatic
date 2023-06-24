@@ -1,6 +1,7 @@
 // import some node modules for later
 const fs = require("node:fs");
 const path = require("node:path");
+const cookieParser = require("cookie-parser");
 
 // create express app
 
@@ -11,6 +12,7 @@ const app = express();
 // use some application-level middlewares
 
 app.use(express.json());
+app.use(cookieParser());
 
 const cors = require("cors");
 
@@ -18,27 +20,24 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL ?? "http://localhost:5173",
     optionsSuccessStatus: 200,
+    credentials: true,
   })
 );
 
 // import and mount the API routes
 
 const router = require("./Routers/router");
-const usersRouter = require("./Routers/routerUser");
+const routerUsers = require("./Routers/routerUser");
 const routerApplication = require("./Routers/routerApplications");
 const routerCandidate = require("./Routers/routerCandidate");
-
-app.use(router);
-app.use(usersRouter);
-app.use(routerApplication);
-app.use(routerCandidate);
-
 const routerJob = require("./Routers/routerJob");
-
-app.use(routerJob);
-
 const routerCompany = require("./Routers/routerCompany");
 
+app.use(router);
+app.use(routerUsers);
+app.use(routerApplication);
+app.use(routerCandidate);
+app.use(routerJob);
 app.use(routerCompany);
 
 // serve the `backend/public` folder for public resources
