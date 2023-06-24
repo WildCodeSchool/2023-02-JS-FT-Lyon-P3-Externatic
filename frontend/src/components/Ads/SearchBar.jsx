@@ -112,23 +112,23 @@ const citysAvailable = [
 
 export default function SearchBar() {
   const [infoDataNoFiltered, setInfoDataNoFiltered] = useState();
-  const [infoData, setInfoData] = useState();
-  const [infoFiltered, setInfoFiltered] = useState({
+  const [infoDataFiltered, setInfoDataFiltered] = useState();
+  const [inputFilter, setInputFilter] = useState({
     jobType: "",
     jobTitle: "",
     jobLocation: "",
   });
 
   const handleChange = (event) => {
-    setInfoFiltered({
-      ...infoFiltered,
+    setInputFilter({
+      ...inputFilter,
       [event.target.name]: event.target.value,
     });
   };
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-  const handleNoFilter = async () => {
+  const handleNoFilterData = async () => {
     try {
       const res = await axios.get(`${BACKEND_URL}/jobs`);
       setInfoDataNoFiltered(res.data);
@@ -137,18 +137,19 @@ export default function SearchBar() {
     }
   };
   useEffect(() => {
-    handleNoFilter();
+    handleNoFilterData();
   }, []);
-  const handleFilter = async () => {
+
+  const handleFilterData = async () => {
     try {
       const res = await axios.get(`${BACKEND_URL}/jobs`);
       setInfoDataNoFiltered(res.data);
-      setInfoData(
+      setInfoDataFiltered(
         res.data.filter((jobs) => {
           return (
-            jobs.location === infoFiltered.jobLocation &&
-            jobs.title === infoFiltered.jobTitle &&
-            jobs.contract_type === infoFiltered.jobType
+            jobs.location === inputFilter.jobLocation &&
+            jobs.title === inputFilter.jobTitle &&
+            jobs.contract_type === inputFilter.jobType
           );
         })
       );
@@ -185,7 +186,7 @@ export default function SearchBar() {
               labelId="demo-multiple-checkbox-label"
               id="demo-multiple-checkbox"
               name="jobTitle"
-              value={infoFiltered.jobTitle}
+              value={inputFilter.jobTitle}
               onChange={handleChange}
               MenuProps={MenuProps}
             >
@@ -204,7 +205,7 @@ export default function SearchBar() {
               labelId="demo-multiple-checkbox-label"
               id="demo-multiple-checkbox"
               name="jobType"
-              value={infoFiltered.jobType}
+              value={inputFilter.jobType}
               onChange={handleChange}
               MenuProps={MenuProps}
             >
@@ -223,7 +224,7 @@ export default function SearchBar() {
               labelId="demo-multiple-checkbox-label"
               id="demo-multiple-checkbox"
               name="jobLocation"
-              value={infoFiltered.jobLocation}
+              value={inputFilter.jobLocation}
               onChange={handleChange}
               MenuProps={MenuProps}
             >
@@ -234,13 +235,17 @@ export default function SearchBar() {
               ))}
             </Select>
           </FormControl>
-          <Button onClick={handleFilter} variant="contained" sx={{ mt: 2 }}>
+          <Button onClick={handleFilterData} variant="contained" sx={{ mt: 2 }}>
             Rechercher
           </Button>
         </Container>
       </Box>
-      {infoData && <AdsList infoData={infoData} />}
-      {infoData ? "" : <AdsList infoDataNoFiltered={infoDataNoFiltered} />}
+      {infoDataFiltered && <AdsList infoDataFiltered={infoDataFiltered} />}
+      {infoDataFiltered ? (
+        ""
+      ) : (
+        <AdsList infoDataNoFiltered={infoDataNoFiltered} />
+      )}
     </>
   );
 }

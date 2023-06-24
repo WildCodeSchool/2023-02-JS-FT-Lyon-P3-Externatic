@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { PropTypes } from "prop-types";
 
-export default function AdsList({ infoData, infoDataNoFiltered }) {
+export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
   return (
     <>
       {infoDataNoFiltered && (
@@ -47,10 +47,10 @@ export default function AdsList({ infoData, infoDataNoFiltered }) {
           </Grid>
         </Container>
       )}
-      {infoData && (
+      {infoDataFiltered && (
         <Container sx={{ py: 8 }} maxWidth="xl">
           <Grid container spacing={4}>
-            {infoData.map((jobOffer) => (
+            {infoDataFiltered.map((jobOffer) => (
               <Grid item key={jobOffer.id} xs={12} sm={6} md={4}>
                 <Card
                   sx={{
@@ -88,11 +88,11 @@ export default function AdsList({ infoData, infoDataNoFiltered }) {
 }
 
 AdsList.defaultProps = {
-  infoData: [],
+  infoDataFiltered: [],
 };
 
 AdsList.propTypes = {
-  infoData: PropTypes.arrayOf(
+  infoDataFiltered: PropTypes.arrayOf(
     PropTypes.shape({
       archived: PropTypes.number,
       company_id: PropTypes.number,
