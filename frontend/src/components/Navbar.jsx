@@ -16,7 +16,6 @@ import MenuItem from "@mui/material/MenuItem";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/externatic-logo-long.png";
-import profilePic from "../assets/profilePicture.jpg";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -45,6 +44,18 @@ export default function Navbar() {
   };
   const handleLinkAdds = () => {
     navigate("/annonces");
+  };
+  const handleLinkBlog = () => {
+    navigate("/blog");
+  };
+  const handleLinkLogin = () => {
+    navigate("/login");
+  };
+  const handleLinkRegister = () => {
+    navigate("/register");
+  };
+  const handleLinkUser = () => {
+    navigate("/espace-candidat");
   };
 
   return (
@@ -91,6 +102,11 @@ export default function Navbar() {
                   Annonces
                 </Typography>
               </MenuItem>
+              <MenuItem onClick={handleLinkBlog}>
+                <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                  Blog
+                </Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <Box
@@ -117,7 +133,7 @@ export default function Navbar() {
                 }}
               >
                 <HomeRoundedIcon />
-                <Typography>Accueil</Typography>
+                <Typography sx={{ ml: 1 }}>Accueil</Typography>
               </Box>
             </Button>
 
@@ -133,7 +149,7 @@ export default function Navbar() {
                 }}
               >
                 <LibraryBooksRoundedIcon />
-                <Typography>Annonces</Typography>
+                <Typography sx={{ ml: 1 }}>Annonces</Typography>
               </Box>
             </Button>
             <Button
@@ -148,14 +164,16 @@ export default function Navbar() {
                 }}
               >
                 <RssFeedRoundedIcon />
-                <Typography>Blog</Typography>
+                <Typography sx={{ ml: 1 }}>Blog</Typography>
               </Box>
             </Button>
           </Box>
-          <Box sx={{ flexGrow: 1 }}>
-            <Tooltip title="Open settings">
+          <Box
+            sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}
+          >
+            <Tooltip title="Espace Utilisateur">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Aline Sharp" src={profilePic} />
+                <Avatar alt="Avatar" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -174,12 +192,17 @@ export default function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleLinkHome}>
+              <MenuItem onClick={handleLinkUser}>
                 <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
                   Espace Candidat
                 </Typography>
               </MenuItem>
-              <MenuItem onClick={handleLinkAdds}>
+              <MenuItem onClick={handleLinkLogin}>
+                <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                  Login
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={handleLinkRegister}>
                 <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
                   Logout
                 </Typography>

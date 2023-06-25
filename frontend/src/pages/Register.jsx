@@ -32,7 +32,7 @@ function Copyright() {
 
 export default function Register() {
   const navigate = useNavigate();
-  const notify = () => toast.success("Votre comte a bien été créé !");
+  const notify = () => toast.success("Votre compte a bien été créé !");
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -58,7 +58,7 @@ export default function Register() {
     console.warn(formData);
     if (validateForm) {
       axios
-        .post(`${BACKEND_URL}/candidates`, { ...formData })
+        .post(`${BACKEND_URL}/register`, { ...formData })
         .then(() => {
           notify();
         })
@@ -204,7 +204,7 @@ export default function Register() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="./signin" variant="body2">
+                <Link href="./login" variant="body2">
                   Vous avez déja un compte? Accéder au Login
                 </Link>
               </Grid>
