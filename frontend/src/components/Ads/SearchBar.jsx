@@ -168,7 +168,14 @@ export default function SearchBar() {
         noValidate
         autoComplete="off"
       >
-        <Container maxWidth="md">
+        <Container
+          maxWidth="md"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <Typography
             component="h1"
             variant="h2"
@@ -178,63 +185,65 @@ export default function SearchBar() {
           >
             Annonces
           </Typography>
-          <FormControl sx={{ m: 1, width: 250 }}>
-            <InputLabel id="demo-multiple-checkbox-label">
-              Type de poste
-            </InputLabel>
-            <Select
-              labelId="demo-multiple-checkbox-label"
-              id="demo-multiple-checkbox"
-              name="jobTitle"
-              value={inputFilter.jobTitle}
-              onChange={handleChange}
-              MenuProps={MenuProps}
-            >
-              {jobsTitle.map((title) => (
-                <MenuItem key={title.id} value={title.type}>
-                  <ListItemText primary={title.type} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl sx={{ m: 1, width: 250 }}>
-            <InputLabel id="demo-multiple-checkbox-label">
-              Type de contrat
-            </InputLabel>
-            <Select
-              labelId="demo-multiple-checkbox-label"
-              id="demo-multiple-checkbox"
-              name="jobType"
-              value={inputFilter.jobType}
-              onChange={handleChange}
-              MenuProps={MenuProps}
-            >
-              {jobsType.map((job) => (
-                <MenuItem key={job.id} value={job.type}>
-                  <ListItemText primary={job.type} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl sx={{ m: 1, width: 250 }}>
-            <InputLabel id="demo-multiple-checkbox-label">
-              Localisation
-            </InputLabel>
-            <Select
-              labelId="demo-multiple-checkbox-label"
-              id="demo-multiple-checkbox"
-              name="jobLocation"
-              value={inputFilter.jobLocation}
-              onChange={handleChange}
-              MenuProps={MenuProps}
-            >
-              {citysAvailable.map((job) => (
-                <MenuItem key={job.id} value={job.type}>
-                  <ListItemText primary={job.type} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <Box>
+            <FormControl sx={{ m: 1, width: 250 }}>
+              <InputLabel id="demo-multiple-checkbox-label">
+                Type de poste
+              </InputLabel>
+              <Select
+                labelId="demo-multiple-checkbox-label"
+                id="demo-multiple-checkbox"
+                name="jobTitle"
+                value={inputFilter.jobTitle}
+                onChange={handleChange}
+                MenuProps={MenuProps}
+              >
+                {jobsTitle.map((title) => (
+                  <MenuItem key={title.id} value={title.type}>
+                    <ListItemText primary={title.type} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl sx={{ m: 1, width: 250 }}>
+              <InputLabel id="demo-multiple-checkbox-label">
+                Type de contrat
+              </InputLabel>
+              <Select
+                labelId="demo-multiple-checkbox-label"
+                id="demo-multiple-checkbox"
+                name="jobType"
+                value={inputFilter.jobType}
+                onChange={handleChange}
+                MenuProps={MenuProps}
+              >
+                {jobsType.map((job) => (
+                  <MenuItem key={job.id} value={job.type}>
+                    <ListItemText primary={job.type} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl sx={{ m: 1, width: 250 }}>
+              <InputLabel id="demo-multiple-checkbox-label">
+                Localisation
+              </InputLabel>
+              <Select
+                labelId="demo-multiple-checkbox-label"
+                id="demo-multiple-checkbox"
+                name="jobLocation"
+                value={inputFilter.jobLocation}
+                onChange={handleChange}
+                MenuProps={MenuProps}
+              >
+                {citysAvailable.map((job) => (
+                  <MenuItem key={job.id} value={job.type}>
+                    <ListItemText primary={job.type} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
           <Button onClick={handleFilterData} variant="contained" sx={{ mt: 2 }}>
             Rechercher
           </Button>
