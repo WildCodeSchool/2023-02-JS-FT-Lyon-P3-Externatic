@@ -7,10 +7,14 @@ export default function JobByTypeCard({ jobTypes }) {
   return (
     <main className={styles.JobByTypeCardContainer}>
       <section className={styles.JobByTypeCardText}>
-        <div>{jobTypes}</div>
+        <div>{jobTypes.text}</div>
         <div>00 Jobs</div>
       </section>
-      <img className={styles.backgroundCardImg} src={cardJobPosting} alt="" />
+      <img
+        className={styles.backgroundCardImg}
+        src={cardJobPosting}
+        alt="office img"
+      />
     </main>
   );
 }

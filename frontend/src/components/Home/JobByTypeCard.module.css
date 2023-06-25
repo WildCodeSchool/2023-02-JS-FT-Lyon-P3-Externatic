@@ -10,8 +10,8 @@
   display: flex;
   width: 550px;
   height: 200px;
-  margin: 20px;
-  
+  margin: 10px;
+  transition: 0.5s;
 }
 
 .backgroundCardImg {
@@ -19,20 +19,35 @@
   width: 550px;
   height: 200px;
   z-index: 0;
-  
+  transition: 0.5s;
 }
 
 .JobByTypeCardText {
   position: absolute;
   width: 100%;
   height: 100%;
-  padding: 30px;
-  font-size: 1.6rem;
+  padding: 20px;
+  font-size: 1.5rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: end;
   color: aliceblue;
-  background-color: #851441e7;;
+  background-color: #851441d4;;
   z-index: 1;
+  transition: 0.5s;
+}
+
+@media screen and (width <= 650px) {
+  .JobByTypeCardContainer {
+      width: 350px;
+    }
+  
+    .backgroundCardImg {
+      width: 350px;
+    }
+
+    .JobByTypeCardText {
+      font-size: 1.4rem;
+    }
 }

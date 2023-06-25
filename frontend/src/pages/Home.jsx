@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link as ReactLink, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -6,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import CardMedia from "@mui/material/CardMedia";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import TopAnnoncesCard from "../components/Home/TopAnnoncesCard";
 import JobByTypeCard from "../components/Home/JobByTypeCard";
@@ -28,13 +29,13 @@ function Copyright() {
 export default function Home() {
   const navigate = useNavigate();
   const jobTypes = {
-    devBack: "Développeur Back-end",
-    devFront: "Dévelopeur Front-End",
-    devWeb: "Développeur Web",
-    devData: "Data Scientist",
-    prodcuctOwner: "Product Owner",
-    chefProject: "Chef de projet IT",
-    devOps: "DevOps",
+    devBack: { text: "Développeur Back-end", img: "" },
+    devFront: { text: "Dévelopeur Front-End", img: "" },
+    devWeb: { text: "Développeur Web", img: "" },
+    devData: { text: "Data Scientist", img: "" },
+    prodcuctOwner: { text: "Product Owner", img: "" },
+    chefProject: { text: "Chef de projet IT", img: "" },
+    devOps: { text: "DevOps", img: "" },
   };
 
   return (
@@ -184,25 +185,34 @@ export default function Home() {
           <TopAnnoncesCard />
           <Box
             maxWidth="xl"
-            sx={{ m: 2 }}
+            sx={{ m: 4 }}
             display="flex"
             direction="row"
             flexWrap="wrap"
             justifyContent="center"
           >
-            <JobByTypeCard jobTypes={jobTypes.devFront} />
-            <JobByTypeCard jobTypes={jobTypes.devBack} />
-            <JobByTypeCard jobTypes={jobTypes.prodcuctOwner} />
-            <JobByTypeCard jobTypes={jobTypes.devData} />
-            <JobByTypeCard jobTypes={jobTypes.chefProject} />
-            <JobByTypeCard jobTypes={jobTypes.devOps} />
+            <ReactLink to="/annonces">
+              <JobByTypeCard jobTypes={jobTypes.devFront} />
+            </ReactLink>
+            <ReactLink to="/annonces">
+              <JobByTypeCard jobTypes={jobTypes.devBack} />
+            </ReactLink>
+            <ReactLink to="/annonces">
+              <JobByTypeCard jobTypes={jobTypes.prodcuctOwner} />
+            </ReactLink>
+            <ReactLink to="/annonces">
+              <JobByTypeCard jobTypes={jobTypes.devData} />
+            </ReactLink>
+            <ReactLink to="/annonces">
+              <JobByTypeCard jobTypes={jobTypes.chefProject} />
+            </ReactLink>
+            <ReactLink to="/annonces">
+              <JobByTypeCard jobTypes={jobTypes.devOps} />
+            </ReactLink>
           </Box>
         </Container>
         {/* Footer */}
         <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
-          <Typography variant="h6" align="center" gutterBottom>
-            Footer
-          </Typography>
           <Typography
             variant="subtitle1"
             align="center"
