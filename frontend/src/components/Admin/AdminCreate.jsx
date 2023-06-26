@@ -38,8 +38,6 @@ export default function AdminCreate() {
 
   const handleSubmitCandidate = (event) => {
     event.preventDefault();
-    // eslint-disable-next-line no-restricted-syntax
-    console.log(formData);
 
     if (validateForm()) {
       axios
@@ -63,8 +61,6 @@ export default function AdminCreate() {
 
   const handleSubmitCompany = (event) => {
     event.preventDefault();
-    // eslint-disable-next-line no-restricted-syntax
-    console.log(formData);
 
     if (validateForm()) {
       axios

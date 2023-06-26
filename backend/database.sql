@@ -1,7 +1,6 @@
 SET foreign_key_checks = 0;
 DROP TABLE IF EXISTS user, candidate, company, job_posting, application;
 
-USE db_externatic;
 
 CREATE TABLE user (
   id INT NOT NULL AUTO_INCREMENT,

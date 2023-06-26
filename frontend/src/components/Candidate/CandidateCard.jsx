@@ -9,7 +9,6 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
-// import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 import Backdrop from "@mui/material/Backdrop";
 import CVupload from "./CVupload";
 
