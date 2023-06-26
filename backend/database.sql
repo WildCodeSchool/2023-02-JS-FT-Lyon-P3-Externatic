@@ -1,14 +1,13 @@
 SET foreign_key_checks = 0;
 DROP TABLE IF EXISTS user, candidate, company, job_posting, application;
 
-USE db_externatic;
 
 CREATE TABLE user (
   id INT NOT NULL AUTO_INCREMENT,
   email VARCHAR(100) UNIQUE NOT NULL,
   phone VARCHAR(50),
   city VARCHAR(100),
-  picture BLOB,
+  picture VARCHAR(200),
   hashedPassword VARCHAR(100) NOT NULL,
   admin BOOL DEFAULT 0,
   PRIMARY KEY (id)
@@ -21,7 +20,7 @@ CREATE TABLE candidate (
   user_id INT NOT NULL,
   firstname VARCHAR(50) NOT NULL,
   lastname VARCHAR(50) NOT NULL,
-  cv BLOB,
+  cv VARCHAR(200),
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES user(id)
 )
@@ -59,7 +58,7 @@ CREATE TABLE job_posting (
 ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 
-CREATE TABLE applications (
+CREATE TABLE application (
   id INT NOT NULL AUTO_INCREMENT,
   candidate_id INT NOT NULL,
   job_posting_id INT NOT NULL,

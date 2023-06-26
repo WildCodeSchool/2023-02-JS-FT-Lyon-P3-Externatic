@@ -1,10 +1,4 @@
 const express = require("express");
-const fs = require("fs");
-const multer = require("multer");
-
-const { v4: uuidv4 } = require("uuid");
-
-const upload = multer({ dest: "./public/uploads/" });
 
 const {
   hashPassword,
@@ -37,20 +31,8 @@ routerCandidate.get("/candidates/:id", candidateControllers.read);
 routerCandidate.put("/candidates/:id", candidateControllers.edit);
 routerCandidate.delete("/candidates/:id", candidateControllers.destroy);
 
-routerCandidate.post("/monCV", upload.single("monCV"), (req, res) => {
-  const { originalname } = req.file;
-
-  const { filename } = req.file;
-
-  fs.rename(
-    `./public/uploads/${filename}`,
-    `./public/uploads/${uuidv4()}-${originalname}`,
-    (err) => {
-      if (err) throw err;
-      res.send("File uploaded");
-    }
-  );
-  console.warn(req.file.path, req.file.originalname);
+routerCandidate.post("/monCV", candidateControllers.uploadCV, (req, res) => {
+  res.send("File uploaded");
 });
 
 module.exports = routerCandidate;

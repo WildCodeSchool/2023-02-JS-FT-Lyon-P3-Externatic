@@ -1,3 +1,10 @@
+const fs = require("fs");
+const multer = require("multer");
+
+const { v4: uuidv4 } = require("uuid");
+
+const upload = multer({ dest: "./public/uploads/" });
+
 const models = require("../models");
 
 const browse = (req, res) => {
@@ -126,6 +133,32 @@ const destroy = (req, res) => {
     });
 };
 
+const uploadCV = (req, res, next) => {
+  upload.single("monCV")(req, res, (err) => {
+    if (err) {
+      console.error(err);
+      return res.sendStatus(500);
+    }
+
+    const { originalname, filename } = req.file;
+
+    fs.rename(
+      `./public/uploads/${filename}`,
+      `./public/uploads/${uuidv4()}-${originalname}`,
+      (error) => {
+        if (error) {
+          console.error(error);
+          return res.sendStatus(500);
+        }
+
+        console.warn(req.file.path, req.file.originalname);
+        return next();
+      }
+    );
+    return next();
+  });
+};
+
 module.exports = {
   browse,
   read,
@@ -133,4 +166,5 @@ module.exports = {
   add,
   destroy,
   profile,
+  uploadCV,
 };
