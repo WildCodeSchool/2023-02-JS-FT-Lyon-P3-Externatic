@@ -20,5 +20,7 @@ export default function JobByTypeCard({ jobTypes }) {
 }
 
 JobByTypeCard.propTypes = {
-  jobTypes: PropTypes.string.isRequired,
+  jobTypes: PropTypes.shape({
+    text: PropTypes.string.isRequired,
+  }).isRequired,
 };
