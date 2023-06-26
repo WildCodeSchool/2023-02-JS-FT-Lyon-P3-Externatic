@@ -99,7 +99,7 @@ export default function SearchBar() {
       noValidate
       autoComplete="off"
     >
-      <Container maxWidth="md">
+      <Container maxWidth="md" sx={{ textAlign: "center" }}>
         <Typography
           component="h1"
           variant="h2"

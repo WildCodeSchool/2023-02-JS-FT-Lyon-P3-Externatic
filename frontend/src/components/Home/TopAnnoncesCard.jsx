@@ -78,7 +78,7 @@ export default function TopAnnoncesCard() {
                       {jobs.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {jobs.description} <br />
+                      {`${jobs.description.slice(0, 150)}...`} <br />
                       {jobs.requirements} <br />
                       {jobs.contract_type}
                       {jobs.remote}

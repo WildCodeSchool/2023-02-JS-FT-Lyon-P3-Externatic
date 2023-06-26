@@ -61,7 +61,7 @@ export default function AdsList() {
   }
 
   return (
-    <Container sx={{ py: 8 }} maxWidth="xl">
+    <Container sx={{ py: 8, textAlign: "center" }} maxWidth="xl">
       <Grid container spacing={4}>
         {albums.map((album) => (
           <Grid item key={album.id} xs={12} sm={6} md={4}>
@@ -81,10 +81,16 @@ export default function AdsList() {
                 image="https://source.unsplash.com/random?wallpapers"
               />
               <CardContent sx={{ flexGrow: 1 }}>
-                <Typography gutterBottom variant="h5" component="h2">
+                <Typography gutterBottom variant="h7" component="h7">
                   {album.name}
                 </Typography>
-                <Typography>{album.description}</Typography>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {album.title}
+                </Typography>
+                <Typography>{`${album.description.slice(
+                  0,
+                  150
+                )}...`}</Typography>
               </CardContent>
               <CardActions>
                 <Button size="small" onClick={() => handleOpen(album)}>
@@ -104,10 +110,16 @@ export default function AdsList() {
         open={open}
         onClick={handleClose}
       >
-        <Box sx={{ backgroundColor: "white", color: "black" }}>
+        <Box
+          sx={{
+            backgroundColor: "white",
+            color: "black",
+            width: "50%",
+          }}
+        >
           {selectedJob && (
             <Box sx={{ display: "flex" }}>
-              <Box>
+              <Box sx={{ m: "2rem" }}>
                 <Typography gutterBottom variant="h5" component="h2">
                   {selectedJob.name}
                 </Typography>
@@ -117,20 +129,45 @@ export default function AdsList() {
                 <Button onClick={handleToggleFavorite}>
                   {isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
                 </Button>
-                <Typography>{selectedJob.description}</Typography>
-                <Typography>{selectedJob.requirements}</Typography>
-                <Typography>{selectedJob.salary}</Typography>
-                <Button variant="contained" size="large">
+                <Typography sx={{ marginBottom: "1rem" }}>
+                  {selectedJob.description}
+                </Typography>
+                <Typography sx={{ marginBottom: "1rem" }}>
+                  {selectedJob.requirements}
+                </Typography>
+                <Typography sx={{ marginBottom: "1rem" }}>
+                  {selectedJob.salary}
+                </Typography>
+                <Button
+                  variant="contained"
+                  size="large"
+                  sx={{ marginTop: "1rem" }}
+                >
                   Postuler
                 </Button>
               </Box>
-              <Box>
-                <Typography>{selectedJob.contact}</Typography>
-                <Typography>{selectedJob.location}</Typography>
-                <Typography>
+              <Box
+                sx={{
+                  borderRadius: "3rem",
+                  border: "0.1px solid grey",
+                  marginTop: "2rem",
+                  marginRight: "1rem",
+                  padding: "1rem",
+                  height: "15rem",
+                }}
+              >
+                <Typography sx={{ marginBottom: "0.2rem" }}>
+                  {selectedJob.contact}
+                </Typography>
+                <Typography sx={{ marginBottom: "0.2rem" }}>
+                  {selectedJob.location}
+                </Typography>
+                <Typography sx={{ marginBottom: "0.2rem" }}>
                   Type de contrat : {selectedJob.contract_type}
                 </Typography>
-                <Typography>{selectedJob.remote}</Typography>
+                <Typography sx={{ marginBottom: "0.2rem" }}>
+                  {selectedJob.remote}
+                </Typography>
                 <Typography>
                   Date de publication : {selectedJob.posting_date}
                 </Typography>
@@ -139,7 +176,11 @@ export default function AdsList() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Button variant="contained" size="small">
+                  <Button
+                    variant="contained"
+                    size="small"
+                    sx={{ marginTop: "1rem" }}
+                  >
                     Site Web
                   </Button>
                 </Link>
