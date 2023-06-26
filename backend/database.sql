@@ -22,7 +22,7 @@ CREATE TABLE candidate (
   lastname VARCHAR(50) NOT NULL,
   cv VARCHAR(200),
   PRIMARY KEY (id),
-  FOREIGN KEY (user_id) REFERENCES user(id)
+  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 )
 ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -35,7 +35,7 @@ CREATE TABLE company (
   description TEXT,
   website TEXT,
   PRIMARY KEY (id),
-  FOREIGN KEY (user_id) REFERENCES user(id)
+  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 )
 ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -53,7 +53,7 @@ CREATE TABLE job_posting (
   posting_date DATE NOT NULL,
   archived BOOL,
   PRIMARY KEY (id),
-  FOREIGN KEY (company_id) REFERENCES company(id)
+  FOREIGN KEY (company_id) REFERENCES company(id) ON DELETE CASCADE
 )
 ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -65,8 +65,8 @@ CREATE TABLE application (
   date DATE NOT NULL,
   status ENUM ('en cours', 'acceptée', 'rejetée'),
   PRIMARY KEY (id),
-  FOREIGN KEY (candidate_id) REFERENCES candidate(id),
-  FOREIGN KEY (job_posting_id) REFERENCES job_posting(id)
+  FOREIGN KEY (candidate_id) REFERENCES candidate(id) ON DELETE CASCADE,
+  FOREIGN KEY (job_posting_id) REFERENCES job_posting(id) ON DELETE CASCADE
 )
 ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -144,7 +144,7 @@ VALUES
   (11, 'Financial Advisor', 'Provide financial planning and investment advice', 'Bachelor\'s degree in Finance, relevant certifications (e.g., CFP)', 'CDI', 'Teletravail', 'Dallas', 'USD 100,000', '2023-06-11', 0),
   (12, 'Travel Consultant', 'Plan and book travel arrangements for clients', 'High school diploma, knowledge of popular travel destinations', 'CDD', 'Presentiel', 'Phoenix', 'USD 50,000', '2023-06-12', 0);
 
-INSERT INTO applications (candidate_id, job_posting_id, date, status)
+INSERT INTO application (candidate_id, job_posting_id, date, status)
 VALUES
   (1, 1, '2023-06-19', 'en cours'),
   (2, 2, '2023-06-18', 'rejetée'),
