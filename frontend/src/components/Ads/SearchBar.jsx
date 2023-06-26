@@ -143,32 +143,17 @@ export default function SearchBar() {
   const handleFilterData = async () => {
     try {
       const res = await axios.get(`${BACKEND_URL}/jobs`);
+      const filteredData = res.data.filter((job) => {
+        const titleMatch =
+          !inputFilter.jobTitle || job.title === inputFilter.jobTitle;
+        const typeMatch =
+          !inputFilter.jobType || job.contract_type === inputFilter.jobType;
+        const locationMatch =
+          !inputFilter.jobLocation || job.location === inputFilter.jobLocation;
+        return titleMatch && typeMatch && locationMatch;
+      });
+      setInfoDataFiltered(filteredData);
       setInfoDataNoFiltered(res.data);
-      if (
-        inputFilter.jobLocation.length > 0 &&
-        inputFilter.jobTitle.length > 0 &&
-        inputFilter.jobType.length > 0
-      ) {
-        setInfoDataFiltered(
-          res.data.filter((jobs) => {
-            return (
-              jobs.location === inputFilter.jobLocation &&
-              jobs.title === inputFilter.jobTitle &&
-              jobs.contract_type === inputFilter.jobType
-            );
-          })
-        );
-      } else {
-        setInfoDataFiltered(
-          res.data.filter((jobs) => {
-            return (
-              inputFilter.jobLocation === jobs.location ||
-              jobs.title === inputFilter.jobTitle ||
-              jobs.contract_type === inputFilter.jobType
-            );
-          })
-        );
-      }
     } catch (error) {
       console.error(error);
     }
