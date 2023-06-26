@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function AdminCreate() {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-  const notify = () => toast.success("Nouvel Utilisateur Enregistré!");
+  const notifyCreation = () => toast.success("Nouvel Utilisateur Enregistré!");
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -53,7 +53,7 @@ export default function AdminCreate() {
             city: "",
             terms: false,
           });
-          notify();
+          notifyCreation();
         })
         .catch(() => console.warn("registration problem"));
     }
@@ -79,7 +79,7 @@ export default function AdminCreate() {
             admin: 0,
             terms: false,
           });
-          notify();
+          notifyCreation();
           document.getElementById("candidate-expand").click();
         })
         .catch(() => console.warn("registration problem"));

@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { PropTypes } from "prop-types";
 import CardMedia from "@mui/material/CardMedia";
-import background from "../../assets/background.png";
 
 export default function JobByTypeCard({ jobTypes }) {
   return (
@@ -26,7 +25,7 @@ export default function JobByTypeCard({ jobTypes }) {
           maxWidth: 700,
           cursor: "pointer",
         }}
-        image={background}
+        image=""
         align="center"
       >
         <Box

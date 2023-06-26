@@ -104,7 +104,7 @@ const add = async (req, res) => {
       website,
     });
 
-    res.location(`/companys/${companyResult.insertId}`).sendStatus(201);
+    res.location(`/companies/${companyResult.insertId}`).sendStatus(201);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
