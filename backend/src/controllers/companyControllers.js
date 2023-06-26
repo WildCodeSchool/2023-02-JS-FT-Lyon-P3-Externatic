@@ -45,8 +45,6 @@ const edit = async (req, res) => {
 
     // TODO: Add validations for email, phone, city, password, name, contact, description, website
 
-    // eslint-disable-next-line no-restricted-syntax
-    console.log(userId);
     // Update user information
     await models.user.update({
       id: userId,
@@ -106,7 +104,7 @@ const add = async (req, res) => {
       website,
     });
 
-    res.location(`/companys/${companyResult.insertId}`).sendStatus(201);
+    res.location(`/companies/${companyResult.insertId}`).sendStatus(201);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);

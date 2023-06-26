@@ -30,8 +30,6 @@ export default function AdminDelete() {
 
   const handleDeleteCandidate = (event) => {
     event.preventDefault();
-    // eslint-disable-next-line no-restricted-syntax
-    console.log(candidateId);
 
     if (candidateId) {
       axios
@@ -46,8 +44,6 @@ export default function AdminDelete() {
 
   const handleDeleteCompany = (event) => {
     event.preventDefault();
-    // eslint-disable-next-line no-restricted-syntax
-    console.log(companyId);
 
     if (companyId) {
       axios

@@ -2,17 +2,17 @@ const AbstractManager = require("./AbstractManager");
 
 class ApplicationManager extends AbstractManager {
   constructor() {
-    super({ table: "applications" });
+    super({ table: "application" });
   }
 
-  insert(applications) {
+  insert(application) {
     return this.database.query(
       `INSERT INTO ${this.table} (candidate_id, job_posting_id, date, status) VALUES (?, ?, ?, ?)`,
       [
-        applications.candidate_id,
-        applications.job_posting_id,
-        applications.date,
-        applications.status,
+        application.candidate_id,
+        application.job_posting_id,
+        application.date,
+        application.status,
       ]
     );
   }
@@ -29,14 +29,14 @@ class ApplicationManager extends AbstractManager {
     );
   }
 
-  update(applications) {
+  update(application) {
     return this.database.query(
-      `UPDATE ${this.table} set candidate_id = ?, job_posting_id = ?, date = ?, status = ? where id = ${applications.id}`,
+      `UPDATE ${this.table} set candidate_id = ?, job_posting_id = ?, date = ?, status = ? where id = ${application.id}`,
       [
-        applications.candidate_id,
-        applications.job_posting_id,
-        applications.date,
-        applications.status,
+        application.candidate_id,
+        application.job_posting_id,
+        application.date,
+        application.status,
       ]
     );
   }
