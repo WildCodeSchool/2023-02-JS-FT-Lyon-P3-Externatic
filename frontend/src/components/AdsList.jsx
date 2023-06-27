@@ -278,7 +278,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       {selectedJob.location}
                     </Typography>
                     <Typography sx={{ marginBottom: "0.2rem" }}>
-                      Type de contrat : {selectedJob.contract_type}
+                      Type de contrat : {selectedJob.job_type_id.name}
                     </Typography>
                     <Typography sx={{ marginBottom: "0.2rem" }}>
                       {selectedJob.remote}
@@ -319,11 +319,12 @@ AdsList.propTypes = {
     PropTypes.shape({
       archived: PropTypes.number,
       company_id: PropTypes.number,
+      job_category_id: PropTypes.number,
+      job_type_id: PropTypes.number,
+      job_location_id: PropTypes.number,
       contact: PropTypes.string,
-      contract_type: PropTypes.string,
       description: PropTypes.string,
       id: PropTypes.number,
-      location: PropTypes.string,
       name: PropTypes.string,
       posting_date: PropTypes.string,
       remote: PropTypes.string,
@@ -343,11 +344,12 @@ AdsList.propTypes = {
     PropTypes.shape({
       archived: PropTypes.number.isRequired,
       company_id: PropTypes.number.isRequired,
+      job_category_id: PropTypes.number.isRequired,
+      job_type_id: PropTypes.number.isRequired,
+      job_location_id: PropTypes.number.isRequired,
       contact: PropTypes.string.isRequired,
-      contract_type: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       id: PropTypes.number.isRequired,
-      location: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       posting_date: PropTypes.string.isRequired,
       remote: PropTypes.string.isRequired,

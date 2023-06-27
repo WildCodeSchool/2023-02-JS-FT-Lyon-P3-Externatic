@@ -75,21 +75,21 @@ ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 CREATE TABLE job_category (
   id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(100) NOT NULL,
+  category VARCHAR(100) NOT NULL,
   PRIMARY KEY (id)
 )
 ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 CREATE TABLE job_type (
   id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(100) NOT NULL,
+  type VARCHAR(100) NOT NULL,
   PRIMARY KEY (id)
 )
 ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 CREATE TABLE job_location (
   id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(100) NOT NULL,
+  location VARCHAR(100) NOT NULL,
   PRIMARY KEY (id)
 )
 ENGINE = InnoDB DEFAULT CHARSET = utf8;
@@ -184,7 +184,7 @@ VALUES
   (1, 6, '2023-06-18', 'acceptée'),
   (1, 2, '2023-06-18', 'rejetée');
 
-  INSERT INTO job_category (name)
+  INSERT INTO job_category (category)
 VALUES
 ('Développeur Web Front-End'),
 ('Développeur Web Back-End'),
@@ -207,7 +207,7 @@ VALUES
 ('UX/UI Designer'),
 ('Administrateur systèmes et réseaux');
 
-  INSERT INTO job_type (name)
+  INSERT INTO job_type (type)
 VALUES
 ('CDI'),
 ('CDD'),
@@ -216,7 +216,7 @@ VALUES
 ('Stage'),
 ('Intérim');
 
-  INSERT INTO job_location (name)
+  INSERT INTO job_location (location)
 VALUES
 ('Paris'),
 ('Lyon'),
