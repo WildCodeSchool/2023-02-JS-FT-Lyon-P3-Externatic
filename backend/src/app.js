@@ -32,6 +32,7 @@ const routerApplication = require("./Routers/routerApplications");
 const routerCandidate = require("./Routers/routerCandidate");
 const routerJob = require("./Routers/routerJob");
 const routerCompany = require("./Routers/routerCompany");
+const routerJobCategory = require("./Routers/routerJobCategory");
 
 app.use(router);
 app.use(routerUsers);
@@ -39,6 +40,7 @@ app.use(routerApplication);
 app.use(routerCandidate);
 app.use(routerJob);
 app.use(routerCompany);
+app.use(routerJobCategory);
 
 // serve the `backend/public` folder for public resources
 

@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
-import AdsList from "../AdsList";
+import AdsList from "./AdsList";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

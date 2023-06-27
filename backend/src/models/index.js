@@ -56,6 +56,11 @@ const CompanyManager = require("./CompanyManager");
 models.company = new CompanyManager();
 models.company.setDatabase(pool);
 
+const JobCategoryManager = require("./JobCategoryManager");
+
+models.category = new JobCategoryManager();
+models.category.setDatabase(pool);
+
 // bonus: use a proxy to personalize error message,
 // when asking for a non existing model
 
