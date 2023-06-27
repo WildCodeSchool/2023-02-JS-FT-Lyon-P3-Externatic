@@ -142,13 +142,16 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                     }}
                   >
                     <Typography sx={{ marginBottom: "0.2rem" }}>
+                      Poste recherché : {selectedJob.category}
+                    </Typography>
+                    <Typography sx={{ marginBottom: "0.2rem" }}>
                       {selectedJob.contact}
                     </Typography>
                     <Typography sx={{ marginBottom: "0.2rem" }}>
                       {selectedJob.location}
                     </Typography>
                     <Typography sx={{ marginBottom: "0.2rem" }}>
-                      Type de contrat : {selectedJob.contract_type}
+                      Type de contrat : {selectedJob.type}
                     </Typography>
                     <Typography sx={{ marginBottom: "0.2rem" }}>
                       {selectedJob.remote}
@@ -272,13 +275,16 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                     }}
                   >
                     <Typography sx={{ marginBottom: "0.2rem" }}>
+                      Poste recherché : {selectedJob.category}
+                    </Typography>
+                    <Typography sx={{ marginBottom: "0.2rem" }}>
                       {selectedJob.contact}
                     </Typography>
                     <Typography sx={{ marginBottom: "0.2rem" }}>
                       {selectedJob.location}
                     </Typography>
                     <Typography sx={{ marginBottom: "0.2rem" }}>
-                      Type de contrat : {selectedJob.job_type_id.name}
+                      Type de contrat : {selectedJob.type}
                     </Typography>
                     <Typography sx={{ marginBottom: "0.2rem" }}>
                       {selectedJob.remote}
