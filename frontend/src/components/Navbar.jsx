@@ -51,8 +51,8 @@ export default function Navbar() {
   const handleLinkLogin = () => {
     navigate("/login");
   };
-  const handleLinkRegister = () => {
-    navigate("/register");
+  const handleLinkLogout = () => {
+    navigate("/logout");
   };
   const handleLinkUser = () => {
     navigate("/espace-candidat");
@@ -202,7 +202,7 @@ export default function Navbar() {
                   Login
                 </Typography>
               </MenuItem>
-              <MenuItem onClick={handleLinkRegister}>
+              <MenuItem onClick={handleLinkLogout}>
                 <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
                   Logout
                 </Typography>

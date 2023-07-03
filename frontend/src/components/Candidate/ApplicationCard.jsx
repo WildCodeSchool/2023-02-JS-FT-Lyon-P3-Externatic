@@ -3,25 +3,29 @@ import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
 
 export default function ApplicationCard({ candidateApplication }) {
   return (
-    <Card sx={{ maxWidth: "100%" }}>
-      <CardContent sx={{ m: 2 }}>
-        <Typography variant="body1" color="text.secondary" gutterBottom>
-          {candidateApplication.title}
-        </Typography>
-        <Typography variant="body1" color="text.secondary" gutterBottom>
-          {candidateApplication.name}
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          {candidateApplication.contract_type}
-        </Typography>
-        <Typography variant="body1" color="text.secondary" gutterBottom>
-          Statut : {candidateApplication.status}
-        </Typography>
-      </CardContent>
-    </Card>
+    <>
+      <Card sx={{ maxWidth: "100%" }}>
+        <CardContent sx={{ m: 2 }}>
+          <Typography variant="body1" color="text.secondary" gutterBottom>
+            {candidateApplication.title}
+          </Typography>
+          <Typography variant="body1" color="text.secondary" gutterBottom>
+            {candidateApplication.name}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {candidateApplication.contract_type}
+          </Typography>
+          <Typography variant="body1" color="text.secondary" gutterBottom>
+            Statut : {candidateApplication.status}
+          </Typography>
+        </CardContent>
+      </Card>
+      <Divider />
+    </>
   );
 }
 

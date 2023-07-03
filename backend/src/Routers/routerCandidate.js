@@ -31,8 +31,13 @@ routerCandidate.get("/candidates/:id", candidateControllers.read);
 routerCandidate.put("/candidates/:id", candidateControllers.edit);
 routerCandidate.delete("/candidates/:id", candidateControllers.destroy);
 
-routerCandidate.post("/monCV", candidateControllers.uploadCV, (req, res) => {
-  res.send("File uploaded");
-});
+routerCandidate.post(
+  "/monCV",
+  verifyToken,
+  candidateControllers.uploadCV,
+  (req, res) => {
+    res.send("File uploaded");
+  }
+);
 
 module.exports = routerCandidate;

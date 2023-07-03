@@ -25,7 +25,7 @@ const columns = [
 const config = {
   method: "get",
   maxBodyLength: Infinity,
-  url: `${BACKEND_URL}/candidates`,
+  url: `${BACKEND_URL}/companies`,
   headers: {},
 };
 

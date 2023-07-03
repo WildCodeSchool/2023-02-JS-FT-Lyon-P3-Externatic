@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 import ApplicationCard from "./ApplicationCard";
+import CandidateContext from "../../Contexts/CandidateContext";
 
 export default function CandidateApplications() {
   const [candidateApplications, setCandidateApplications] = useState([]);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
+  const { candidate } = useContext(CandidateContext);
+
   const config = {
     method: "get",
     maxBodyLength: Infinity,
-    url: `${BACKEND_URL}/candidate-applications/1`,
+    url: `${BACKEND_URL}/candidate-applications/${candidate.id}`,
     headers: {},
   };
 
@@ -21,12 +24,13 @@ export default function CandidateApplications() {
       .request(config)
       .then((response) => {
         setCandidateApplications(response.data);
-        console.warn(candidateApplications);
       })
       .catch((error) => {
         console.error(error);
       });
   };
+
+  console.warn(candidateApplications);
 
   useEffect(() => {
     getCandidateApplications();
@@ -47,14 +51,17 @@ export default function CandidateApplications() {
         Mes Candidatures :
       </Typography>
       {candidateApplications.map((candidateApplication) => (
-        <>
-          <ApplicationCard
-            key={candidateApplication.date}
-            candidateApplication={candidateApplication}
-          />
-          <Divider key={candidateApplication.job_posting_id} />
-        </>
+        <ApplicationCard
+          key={candidateApplication.title}
+          candidateApplication={candidateApplication}
+        />
       ))}
     </Box>
   );
 }
+
+CandidateApplications.propTypes = {
+  candidate: PropTypes.shape({
+    id: PropTypes.number,
+  }).isRequired,
+};
