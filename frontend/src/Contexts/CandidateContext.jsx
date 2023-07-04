@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CandidateContext = createContext();
 
@@ -13,6 +14,7 @@ export function CandidateContextProvider({ children }) {
   );
   const navigate = useNavigate();
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const notifyLogout = toast.success("Déconnexion Effectuée");
 
   useEffect(() => {
     if (!candidate.id) navigate("/");
@@ -23,6 +25,8 @@ export function CandidateContextProvider({ children }) {
       await axios.get(`${BACKEND_URL}/logout`);
       setCandidate({});
       localStorage.removeItem("candidate");
+      navigate("/");
+      notifyLogout();
     } catch (error) {
       console.error(error);
     }

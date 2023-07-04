@@ -1,10 +1,8 @@
 import React, { useRef } from "react";
 import axios from "axios";
-import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-// import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -72,9 +70,3 @@ export default function CVupload() {
     </>
   );
 }
-
-CVupload.propTypes = {
-  candidate: PropTypes.shape({
-    id: PropTypes.number,
-  }).isRequired,
-};

@@ -27,8 +27,6 @@ const register = async (req, res) => {
     const { email, phone, city, hashedPassword, firstname, lastname } =
       req.body;
 
-    // TODO: Add validations for email, phone, city, password, firstname, lastname
-
     // Create a new user entry
     const [userResult] = await models.user.insert({
       email,

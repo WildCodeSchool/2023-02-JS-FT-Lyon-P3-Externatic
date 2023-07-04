@@ -52,16 +52,40 @@ const read = (req, res) => {
     });
 };
 
+const add = async (req, res) => {
+  try {
+    const { email, phone, city, hashedPassword, firstname, lastname } =
+      req.body;
+
+    // Créer une nouvelle insertion dans User
+    const [userResult] = await models.user.insert({
+      email,
+      phone,
+      city,
+      hashedPassword,
+    });
+    const userId = userResult.insertId;
+
+    // Créer une nouvelle insertion dans Candidate
+    const [candidateResult] = await models.candidate.insert({
+      user_id: userId,
+      firstname,
+      lastname,
+    });
+
+    res.location(`/candidates/${candidateResult.insertId}`).sendStatus(201);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+};
+
 const edit = async (req, res) => {
   try {
     const { email, phone, city, password, firstname, lastname, cv } = req.body;
     const userId = req.body.user_id;
     const candidateId = parseInt(req.params.id, 10);
 
-    // TODO: Add validations for email, phone, city, password, firstname, lastname
-
-    // eslint-disable-next-line no-restricted-syntax
-    console.log(userId);
     // Update user information
     await models.user.update({
       id: userId,
@@ -81,36 +105,6 @@ const edit = async (req, res) => {
     });
 
     res.sendStatus(200);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-};
-
-const add = async (req, res) => {
-  try {
-    const { email, phone, city, hashedPassword, firstname, lastname } =
-      req.body;
-
-    // TODO: Add validations for email, phone, city, password, firstname, lastname
-
-    // Create a new user entry
-    const [userResult] = await models.user.insert({
-      email,
-      phone,
-      city,
-      hashedPassword,
-    });
-    const userId = userResult.insertId;
-
-    // Create a new candidate entry
-    const [candidateResult] = await models.candidate.insert({
-      user_id: userId,
-      firstname,
-      lastname,
-    });
-
-    res.location(`/candidates/${candidateResult.insertId}`).sendStatus(201);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
@@ -151,7 +145,7 @@ const uploadCV = (req, res, next) => {
           return res.sendStatus(500);
         }
 
-        console.warn(req.file.path, req.file.originalname);
+        console.warn(`./public/uploads/${uuidv4()}-${originalname}`);
         return next();
       }
     );
