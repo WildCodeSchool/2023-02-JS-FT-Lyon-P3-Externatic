@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import SearchBar from "../components/Ads/SearchBar";
+import SearchBar from "../components/SearchBar";
 
 export default function Ads() {
   return (

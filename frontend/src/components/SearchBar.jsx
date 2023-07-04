@@ -10,6 +10,9 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import AdsList from "./AdsList";
+import { api } from "./api";
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -22,95 +25,35 @@ const MenuProps = {
   },
 };
 
-const jobsTitle = [
-  {
-    id: 1,
-    type: "Développeur Web Front-End",
-  },
-  {
-    id: 2,
-    type: "Développeur Web Back-End",
-  },
-  {
-    id: 3,
-    type: "Développeur Web Full Stack",
-  },
-  {
-    id: 4,
-    type: "Développeur Mobile",
-  },
-  {
-    id: 7,
-    type: "Software Engineer",
-  },
-  {
-    id: 8,
-    type: "Data Scientist",
-  },
-];
-
-const jobsType = [
-  {
-    id: 1,
-    type: "CDI",
-  },
-  {
-    id: 2,
-    type: "CDD",
-  },
-  {
-    id: 3,
-    type: "Freelance",
-  },
-  {
-    id: 4,
-    type: "Alternance",
-  },
-  {
-    id: 5,
-    type: "Stage",
-  },
-  {
-    id: 6,
-    type: "Intérim",
-  },
-];
-const citysAvailable = [
-  {
-    id: 1,
-    type: "Paris",
-  },
-  {
-    id: 2,
-    type: "Lyon",
-  },
-  {
-    id: 3,
-    type: "Bordeaux",
-  },
-  {
-    id: 4,
-    type: "Marseille",
-  },
-  {
-    id: 5,
-    type: "Lille",
-  },
-  {
-    id: 6,
-    type: "Montpellier",
-  },
-  {
-    id: 7,
-    type: "New York",
-  },
-  {
-    id: 8,
-    type: "Los Angeles",
-  },
-];
-
 export default function SearchBar() {
+  //
+  const [filterOptions, setFilterOptions] = useState({
+    jobsTitle: [],
+    jobsType: [],
+    citiesAvailable: [],
+  });
+
+  // Setting up the filters
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const resCitiesAvailables = await api.citiesAvailables();
+        const resContractsAvailables = await api.contractsAvailables();
+        const resJobsAvailables = await api.jobsAvailables();
+
+        setFilterOptions({
+          citiesAvailable: resCitiesAvailables,
+          jobsType: resContractsAvailables,
+          jobsTitle: resJobsAvailables,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchDetails();
+  }, []);
+
+  // Input fields data
   const [infoDataNoFiltered, setInfoDataNoFiltered] = useState();
   const [infoDataFiltered, setInfoDataFiltered] = useState();
   const [inputFilter, setInputFilter] = useState({
@@ -126,8 +69,6 @@ export default function SearchBar() {
     });
   };
 
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
   const handleNoFilterData = async () => {
     try {
       const res = await axios.get(`${BACKEND_URL}/jobs`);
@@ -136,6 +77,7 @@ export default function SearchBar() {
       console.error(error);
     }
   };
+
   useEffect(() => {
     handleNoFilterData();
   }, []);
@@ -143,16 +85,17 @@ export default function SearchBar() {
   const handleFilterData = async () => {
     try {
       const res = await axios.get(`${BACKEND_URL}/jobs`);
+      const filteredData = res.data.filter((job) => {
+        const titleMatch =
+          !inputFilter.jobTitle || job.title === inputFilter.jobTitle;
+        const typeMatch =
+          !inputFilter.jobType || job.contract_type === inputFilter.jobType;
+        const locationMatch =
+          !inputFilter.jobLocation || job.location === inputFilter.jobLocation;
+        return titleMatch && typeMatch && locationMatch;
+      });
+      setInfoDataFiltered(filteredData);
       setInfoDataNoFiltered(res.data);
-      setInfoDataFiltered(
-        res.data.filter((jobs) => {
-          return (
-            jobs.location === inputFilter.jobLocation &&
-            jobs.title === inputFilter.jobTitle &&
-            jobs.contract_type === inputFilter.jobType
-          );
-        })
-      );
     } catch (error) {
       console.error(error);
     }
@@ -198,9 +141,9 @@ export default function SearchBar() {
                 onChange={handleChange}
                 MenuProps={MenuProps}
               >
-                {jobsTitle.map((title) => (
-                  <MenuItem key={title.id} value={title.type}>
-                    <ListItemText primary={title.type} />
+                {filterOptions.jobsTitle.map((title) => (
+                  <MenuItem key={title.id} value={title.category}>
+                    <ListItemText primary={title.category} />
                   </MenuItem>
                 ))}
               </Select>
@@ -217,7 +160,7 @@ export default function SearchBar() {
                 onChange={handleChange}
                 MenuProps={MenuProps}
               >
-                {jobsType.map((job) => (
+                {filterOptions.jobsType.map((job) => (
                   <MenuItem key={job.id} value={job.type}>
                     <ListItemText primary={job.type} />
                   </MenuItem>
@@ -236,9 +179,9 @@ export default function SearchBar() {
                 onChange={handleChange}
                 MenuProps={MenuProps}
               >
-                {citysAvailable.map((job) => (
-                  <MenuItem key={job.id} value={job.type}>
-                    <ListItemText primary={job.type} />
+                {filterOptions.citiesAvailable.map((city) => (
+                  <MenuItem key={city.id} value={city.location}>
+                    <ListItemText primary={city.location} />
                   </MenuItem>
                 ))}
               </Select>
