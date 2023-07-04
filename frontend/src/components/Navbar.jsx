@@ -20,7 +20,7 @@ import logo from "../assets/externatic-logo-long.png";
 import { useCandidateContext } from "../Contexts/CandidateContext";
 
 export default function Navbar() {
-  const { candidate } = useCandidateContext();
+  const { candidate, logout } = useCandidateContext();
 
   const navigate = useNavigate();
 
@@ -55,9 +55,7 @@ export default function Navbar() {
   const handleLinkLogin = () => {
     navigate("/login");
   };
-  const handleLinkLogout = () => {
-    navigate("/logout");
-  };
+
   const handleLinkUser = () => {
     navigate("/espace-candidat");
   };
@@ -228,19 +226,18 @@ export default function Navbar() {
                   Espace Candidat
                 </Typography>
               </MenuItem>
-              {candidate ? (
-                <MenuItem onClick={handleLinkLogout}>
-                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                    Logout
-                  </Typography>
-                </MenuItem>
-              ) : (
-                <MenuItem onClick={handleLinkLogin}>
-                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                    Login
-                  </Typography>
-                </MenuItem>
-              )}
+
+              <MenuItem onClick={logout}>
+                <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                  Logout
+                </Typography>
+              </MenuItem>
+
+              <MenuItem onClick={handleLinkLogin}>
+                <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                  Login
+                </Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

@@ -18,7 +18,7 @@ const candidateControllers = require("../controllers/candidateControllers");
 // Routes Privées
 routerCandidate.post("/register", hashPassword, register);
 routerCandidate.post("/login", getCandidateByEmailMiddleWare, verifyPassword);
-routerCandidate.get("/logout", verifyToken, logout);
+routerCandidate.get("/logout", logout);
 routerCandidate.get(
   "/candidate-profile",
   verifyToken,
