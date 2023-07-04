@@ -22,7 +22,7 @@ CREATE TABLE candidate (
   lastname VARCHAR(50) NOT NULL,
   cv BLOB,
   PRIMARY KEY (id),
-  FOREIGN KEY (user_id) REFERENCES user(id)
+  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 )
 ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -34,7 +34,7 @@ CREATE TABLE company (
   description TEXT,
   website TEXT,
   PRIMARY KEY (id),
-  FOREIGN KEY (user_id) REFERENCES user(id)
+  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 )
 ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -53,11 +53,11 @@ CREATE TABLE job_posting (
   posting_date DATE NOT NULL,
   archived BOOL,
   PRIMARY KEY (id),
-  FOREIGN KEY (company_id) REFERENCES company(id),
-  FOREIGN KEY (user_id) REFERENCES user(id),
-  FOREIGN KEY (job_category_id) REFERENCES job_category(id),
-  FOREIGN KEY (job_type_id) REFERENCES job_type(id),
-  FOREIGN KEY (job_location_id) REFERENCES job_location(id)
+  FOREIGN KEY (company_id) REFERENCES company(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+  FOREIGN KEY (job_category_id) REFERENCES job_category(id) ON DELETE CASCADE,
+  FOREIGN KEY (job_type_id) REFERENCES job_type(id) ON DELETE CASCADE,
+  FOREIGN KEY (job_location_id) REFERENCES job_location(id) ON DELETE CASCADE
 )
 ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
