@@ -344,7 +344,7 @@ AdsList.propTypes = {
       archived: PropTypes.number.isRequired,
       company_id: PropTypes.number.isRequired,
       contact: PropTypes.string.isRequired,
-      contract_type: PropTypes.string.isRequired,
+      contract_type: PropTypes.string,
       description: PropTypes.string.isRequired,
       id: PropTypes.number.isRequired,
       location: PropTypes.string.isRequired,
