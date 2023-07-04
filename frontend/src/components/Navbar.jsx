@@ -14,10 +14,14 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/externatic-logo-long.png";
+import { useCandidateContext } from "../Contexts/CandidateContext";
 
 export default function Navbar() {
+  const { candidate } = useCandidateContext();
+
   const navigate = useNavigate();
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -56,6 +60,9 @@ export default function Navbar() {
   };
   const handleLinkUser = () => {
     navigate("/espace-candidat");
+  };
+  const handleLinkAdmin = () => {
+    navigate("/admin");
   };
 
   return (
@@ -107,6 +114,13 @@ export default function Navbar() {
                   Blog
                 </Typography>
               </MenuItem>
+              {candidate.admin === 1 ? (
+                <MenuItem onClick={handleLinkAdmin}>
+                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                    Admin
+                  </Typography>
+                </MenuItem>
+              ) : null}
             </Menu>
           </Box>
           <Box
@@ -167,6 +181,23 @@ export default function Navbar() {
                 <Typography sx={{ ml: 1 }}>Blog</Typography>
               </Box>
             </Button>
+            {candidate.admin === 1 ? (
+              <Button
+                onClick={handleLinkAdmin}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    display: { xs: "none", md: "flex", alignItems: "center" },
+                    pl: 5,
+                  }}
+                >
+                  <BuildRoundedIcon />
+                  <Typography sx={{ ml: 1 }}>Admin</Typography>
+                </Box>
+              </Button>
+            ) : null}
           </Box>
           <Box
             sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}
@@ -197,16 +228,19 @@ export default function Navbar() {
                   Espace Candidat
                 </Typography>
               </MenuItem>
-              <MenuItem onClick={handleLinkLogin}>
-                <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                  Login
-                </Typography>
-              </MenuItem>
-              <MenuItem onClick={handleLinkLogout}>
-                <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                  Logout
-                </Typography>
-              </MenuItem>
+              {candidate ? (
+                <MenuItem onClick={handleLinkLogout}>
+                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                    Logout
+                  </Typography>
+                </MenuItem>
+              ) : (
+                <MenuItem onClick={handleLinkLogin}>
+                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                    Login
+                  </Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
         </Toolbar>
