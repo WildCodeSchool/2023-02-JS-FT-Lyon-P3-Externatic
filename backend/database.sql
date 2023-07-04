@@ -168,7 +168,6 @@ Travailler en mode versioning : › Code review en équipe + pilotage agile › 
 
 
 INSERT INTO application (candidate_id, job_posting_id, date, status)
-INSERT INTO application (candidate_id, job_posting_id, date, status)
 VALUES
   (1, 1, '2023-06-19', 'en cours'),
   (2, 2, '2023-06-18', 'rejetée'),
