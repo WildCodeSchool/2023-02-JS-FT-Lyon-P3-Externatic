@@ -159,6 +159,7 @@ export default function AdminCreate() {
                     label="First Name"
                     autoFocus
                     onChange={handleInputChange}
+                    value={formData.firstname}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -170,6 +171,7 @@ export default function AdminCreate() {
                     name="lastname"
                     autoComplete="family-name"
                     onChange={handleInputChange}
+                    value={formData.lastname}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -182,6 +184,7 @@ export default function AdminCreate() {
                     label="City"
                     autoFocus
                     onChange={handleInputChange}
+                    value={formData.city}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -193,6 +196,7 @@ export default function AdminCreate() {
                     name="phone"
                     autoComplete="phone"
                     onChange={handleInputChange}
+                    value={formData.phone}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -204,6 +208,7 @@ export default function AdminCreate() {
                     name="email"
                     autoComplete="email"
                     onChange={handleInputChange}
+                    value={formData.email}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -216,6 +221,7 @@ export default function AdminCreate() {
                     id="candidate-password"
                     autoComplete="password"
                     onChange={handleInputChange}
+                    value={formData.password}
                   />
                 </Grid>
               </Grid>
@@ -268,6 +274,7 @@ export default function AdminCreate() {
                     label="Company Name"
                     autoFocus
                     onChange={handleInputChange}
+                    value={formData.name}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -279,6 +286,7 @@ export default function AdminCreate() {
                     name="contact"
                     autoComplete="contact-name"
                     onChange={handleInputChange}
+                    value={formData.contact}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -291,6 +299,7 @@ export default function AdminCreate() {
                     label="description"
                     autoFocus
                     onChange={handleInputChange}
+                    value={formData.description}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -303,6 +312,7 @@ export default function AdminCreate() {
                     label="website"
                     autoFocus
                     onChange={handleInputChange}
+                    value={formData.website}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -315,6 +325,7 @@ export default function AdminCreate() {
                     label="City"
                     autoFocus
                     onChange={handleInputChange}
+                    value={formData.city}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -326,6 +337,7 @@ export default function AdminCreate() {
                     name="phone"
                     autoComplete="phone"
                     onChange={handleInputChange}
+                    value={formData.phone}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -337,6 +349,7 @@ export default function AdminCreate() {
                     name="email"
                     autoComplete="email"
                     onChange={handleInputChange}
+                    value={formData.email}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -349,6 +362,7 @@ export default function AdminCreate() {
                     id="password"
                     autoComplete="new-password"
                     onChange={handleInputChange}
+                    value={formData.password}
                   />
                 </Grid>
               </Grid>
