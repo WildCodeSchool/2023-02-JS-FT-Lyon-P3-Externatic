@@ -28,7 +28,7 @@ class CandidateManager extends AbstractManager {
 
   findAll() {
     return this.database
-      .query(`SELECT candidate.id, candidate.user_id, candidate.firstname, candidate.lastname, candidate.cv, user.email,user.hashedPassword, user.phone, user.city, user.picture
+      .query(`SELECT candidate.id, candidate.user_id, candidate.firstname, candidate.lastname, candidate.cv, user.email, user.phone, user.city, user.picture, user.admin
     FROM ${this.table}
     INNER JOIN user ON candidate.user_id = user.id`);
   }

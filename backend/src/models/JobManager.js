@@ -73,5 +73,4 @@ class JobManager extends AbstractManager {
     );
   }
 }
-
 module.exports = JobManager;

@@ -13,7 +13,7 @@ import { LockOutlinedIcon } from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import logo from "../assets/externatic-logo.png";
 import accueil from "../assets/accueil.jpg";
@@ -32,7 +32,7 @@ function Copyright() {
 
 export default function Register() {
   const navigate = useNavigate();
-  const notify = () => toast.success("Votre compte a bien été créé !");
+  const notifyCreation = () => toast.success("Votre compte a bien été créé !");
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -60,7 +60,7 @@ export default function Register() {
       axios
         .post(`${BACKEND_URL}/register`, { ...formData })
         .then(() => {
-          notify();
+          notifyCreation();
         })
         .then(() => {
           navigate("/");
@@ -213,18 +213,6 @@ export default function Register() {
           <Copyright sx={{ mt: 5 }} />
         </Box>
       </Grid>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </Grid>
   );
 }

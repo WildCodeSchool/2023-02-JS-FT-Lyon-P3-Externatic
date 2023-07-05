@@ -45,8 +45,6 @@ const edit = async (req, res) => {
 
     // TODO: Add validations for email, phone, city, password, name, contact, description, website
 
-    // eslint-disable-next-line no-restricted-syntax
-    console.log(userId);
     // Update user information
     await models.user.update({
       id: userId,

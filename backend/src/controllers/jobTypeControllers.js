@@ -1,7 +1,7 @@
 const models = require("../models");
 
 const browse = (req, res) => {
-  models.application
+  models.jobType
     .findAll()
     .then(([rows]) => {
       res.send(rows);
@@ -12,20 +12,8 @@ const browse = (req, res) => {
     });
 };
 
-const browseById = (req, res) => {
-  models.application
-    .findApplicationsByUserId(req.params.id)
-    .then(([rows]) => {
-      res.send(rows);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-};
-
 const read = (req, res) => {
-  models.application
+  models.jobType
     .find(req.params.id)
     .then(([rows]) => {
       if (rows[0] == null) {
@@ -41,14 +29,14 @@ const read = (req, res) => {
 };
 
 const edit = (req, res) => {
-  const application = req.body;
+  const jobType = req.body;
 
   // TODO validations (length, format...)
 
-  application.id = parseInt(req.params.id, 10);
+  jobType.id = parseInt(req.params.id, 10);
 
-  models.application
-    .update(application)
+  models.jobType
+    .update(jobType)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404);
@@ -63,14 +51,14 @@ const edit = (req, res) => {
 };
 
 const add = (req, res) => {
-  const application = req.body;
+  const jobType = req.body;
 
   // TODO validations (length, format...)
 
-  models.application
-    .insert(application)
+  models.jobType
+    .insert(jobType)
     .then(([result]) => {
-      res.location(`/items/${result.insertId}`).sendStatus(201);
+      res.location(`/joblocation/${result.insertId}`).sendStatus(201);
     })
     .catch((err) => {
       console.error(err);
@@ -79,7 +67,7 @@ const add = (req, res) => {
 };
 
 const destroy = (req, res) => {
-  models.application
+  models.jobType
     .delete(req.params.id)
     .then(([result]) => {
       if (result.affectedRows === 0) {
@@ -96,7 +84,6 @@ const destroy = (req, res) => {
 
 module.exports = {
   browse,
-  browseById,
   read,
   edit,
   add,
