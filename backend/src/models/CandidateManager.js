@@ -50,14 +50,15 @@ class CandidateManager extends AbstractManager {
     );
   }
 
-  delete(candidateId) {
+  deleteByLastName(lastname) {
     return this.database.query(
-      `DELETE candidate, user
-    FROM candidate
-    JOIN user ON candidate.user_id = user.id
-    WHERE candidate.id = ?
-  `,
-      [candidateId]
+      `
+      DELETE candidate, user
+      FROM candidate
+      JOIN user ON candidate.user_id = user.id
+      WHERE candidate.lastname = ?
+      `,
+      [lastname]
     );
   }
 }
