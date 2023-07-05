@@ -68,8 +68,8 @@ CREATE TABLE application (
   date DATE NOT NULL,
   status ENUM ('en cours', 'acceptée', 'rejetée'),
   PRIMARY KEY (id),
-  FOREIGN KEY (candidate_id) REFERENCES candidate(id),
-  FOREIGN KEY (job_posting_id) REFERENCES job_posting(id)
+  FOREIGN KEY (candidate_id) REFERENCES candidate(id) ON DELETE CASCADE,
+  FOREIGN KEY (job_posting_id) REFERENCES job_posting(id) ON DELETE CASCADE
 )
 ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
