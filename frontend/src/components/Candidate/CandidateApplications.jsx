@@ -30,8 +30,6 @@ export default function CandidateApplications() {
       });
   };
 
-  console.warn(candidateApplications);
-
   useEffect(() => {
     getCandidateApplications();
   }, []);
@@ -52,7 +50,7 @@ export default function CandidateApplications() {
       </Typography>
       {candidateApplications.map((candidateApplication) => (
         <ApplicationCard
-          key={candidateApplication.title}
+          key={candidateApplication.id}
           candidateApplication={candidateApplication}
         />
       ))}
@@ -61,7 +59,5 @@ export default function CandidateApplications() {
 }
 
 CandidateApplications.propTypes = {
-  candidate: PropTypes.shape({
-    id: PropTypes.number,
-  }).isRequired,
-};
+  id: PropTypes.number,
+}.isRequired;
