@@ -112,9 +112,16 @@ const edit = async (req, res) => {
   }
 };
 
-const destroy = (req, res) => {
+const destroyByLastName = (req, res) => {
+  const { lastname } = req.query;
+
+  if (!lastname) {
+    res.sendStatus(400);
+    return;
+  }
+
   models.candidate
-    .delete(req.params.id)
+    .deleteByLastName(lastname)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404);
@@ -159,7 +166,7 @@ module.exports = {
   read,
   edit,
   add,
-  destroy,
+  destroyByLastName,
   profile,
   uploadCV,
 };
