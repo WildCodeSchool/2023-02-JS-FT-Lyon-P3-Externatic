@@ -8,7 +8,7 @@ CREATE TABLE user (
   email VARCHAR(100) UNIQUE NOT NULL,
   phone VARCHAR(50),
   city VARCHAR(100),
-  picture BLOB,
+  picture VARCHAR(200),
   hashedPassword VARCHAR(100) NOT NULL,
   admin BOOL DEFAULT 0,
   PRIMARY KEY (id)
@@ -20,7 +20,7 @@ CREATE TABLE candidate (
   user_id INT NOT NULL,
   firstname VARCHAR(50) NOT NULL,
   lastname VARCHAR(50) NOT NULL,
-  cv BLOB,
+  cv VARCHAR(200),
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 )
