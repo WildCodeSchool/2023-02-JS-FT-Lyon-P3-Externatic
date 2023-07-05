@@ -23,6 +23,7 @@ export function CandidateContextProvider({ children }) {
       await axios.get(`${BACKEND_URL}/logout`);
       setCandidate({});
       localStorage.removeItem("candidate");
+      navigate("/");
     } catch (error) {
       console.error(error);
     }

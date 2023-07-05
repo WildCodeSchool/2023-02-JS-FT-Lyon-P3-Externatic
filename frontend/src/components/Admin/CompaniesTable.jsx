@@ -5,6 +5,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
   { field: "name", headerName: "Company Name", width: 120 },
@@ -23,7 +25,7 @@ const columns = [
 const config = {
   method: "get",
   maxBodyLength: Infinity,
-  url: "http://localhost:6001/companies",
+  url: `${BACKEND_URL}/companies`,
   headers: {},
 };
 
