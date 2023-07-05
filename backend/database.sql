@@ -8,7 +8,7 @@ CREATE TABLE user (
   email VARCHAR(100) UNIQUE NOT NULL,
   phone VARCHAR(50),
   city VARCHAR(100),
-  picture BLOB,
+  picture VARCHAR(200),
   hashedPassword VARCHAR(100) NOT NULL,
   admin BOOL DEFAULT 0,
   PRIMARY KEY (id)
@@ -20,7 +20,7 @@ CREATE TABLE candidate (
   user_id INT NOT NULL,
   firstname VARCHAR(50) NOT NULL,
   lastname VARCHAR(50) NOT NULL,
-  cv BLOB,
+  cv VARCHAR(200),
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 )
@@ -68,8 +68,8 @@ CREATE TABLE application (
   date DATE NOT NULL,
   status ENUM ('en cours', 'acceptée', 'rejetée'),
   PRIMARY KEY (id),
-  FOREIGN KEY (candidate_id) REFERENCES candidate(id),
-  FOREIGN KEY (job_posting_id) REFERENCES job_posting(id)
+  FOREIGN KEY (candidate_id) REFERENCES candidate(id) ON DELETE CASCADE,
+  FOREIGN KEY (job_posting_id) REFERENCES job_posting(id) ON DELETE CASCADE
 )
 ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
