@@ -222,20 +222,19 @@ export default function Navbar() {
               onClose={handleCloseUserMenu}
             >
               {candidate.id ? (
-                <>
-                  <MenuItem onClick={handleLinkUser}>
-                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                      Espace Candidat
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={logout}>
-                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                      Logout
-                    </Typography>
-                  </MenuItem>
-                </>
+                <MenuItem onClick={handleLinkUser}>
+                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                    Espace Candidat
+                  </Typography>
+                </MenuItem>
               ) : null}
-
+              {candidate.id ? (
+                <MenuItem onClick={logout}>
+                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                    Logout
+                  </Typography>
+                </MenuItem>
+              ) : null}
               {!candidate.id ? (
                 <MenuItem onClick={handleLinkLogin}>
                   <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
