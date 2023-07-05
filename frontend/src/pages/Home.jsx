@@ -7,12 +7,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import CardMedia from "@mui/material/CardMedia";
-// import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import TopAnnoncesCard from "../components/Home/TopAnnoncesCard";
 import JobByTypeCard from "../components/Home/JobByTypeCard";
 import backgroundImage from "../assets/tim-mossholder-GOMhuCj-O9w-unsplash-1024x683.jpg";
 import externaticLogo from "../assets/EXTERNATIC-LOGO-VERTICAL-RVB-removebg-preview.png";
+import { api } from "../components/api";
 
 function Copyright() {
   return (
@@ -27,16 +27,26 @@ function Copyright() {
 }
 
 export default function Home() {
+  const [jobsTypes, setJobsTypes] = React.useState([]);
   const navigate = useNavigate();
-  const jobTypes = {
-    devBack: { text: "Développeur Back-end", img: "" },
-    devFront: { text: "Dévelopeur Front-End", img: "" },
-    devWeb: { text: "Développeur Web", img: "" },
-    devData: { text: "Data Scientist", img: "" },
-    prodcuctOwner: { text: "Product Owner", img: "" },
-    chefProject: { text: "Chef de projet IT", img: "" },
-    devOps: { text: "DevOps", img: "" },
-  };
+
+  React.useEffect(() => {
+    try {
+      const getAlljobOffers = async () => {
+        const jobs = [];
+        const res = await api.getAlljobOffers();
+        for (let i = 0; i < res.length; i += 1) {
+          if (!jobs.includes(res[i].category)) {
+            jobs.push(res[i].category);
+            setJobsTypes(jobs);
+          }
+        }
+      };
+      getAlljobOffers();
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   return (
     <>
@@ -191,24 +201,11 @@ export default function Home() {
             flexWrap="wrap"
             justifyContent="center"
           >
-            <ReactLink to="/annonces">
-              <JobByTypeCard jobTypes={jobTypes.devFront} />
-            </ReactLink>
-            <ReactLink to="/annonces">
-              <JobByTypeCard jobTypes={jobTypes.devBack} />
-            </ReactLink>
-            <ReactLink to="/annonces">
-              <JobByTypeCard jobTypes={jobTypes.prodcuctOwner} />
-            </ReactLink>
-            <ReactLink to="/annonces">
-              <JobByTypeCard jobTypes={jobTypes.devData} />
-            </ReactLink>
-            <ReactLink to="/annonces">
-              <JobByTypeCard jobTypes={jobTypes.chefProject} />
-            </ReactLink>
-            <ReactLink to="/annonces">
-              <JobByTypeCard jobTypes={jobTypes.devOps} />
-            </ReactLink>
+            {jobsTypes.map((offer) => (
+              <ReactLink to="/annonces">
+                <JobByTypeCard key={offer.id} jobTypes={offer} />
+              </ReactLink>
+            ))}
           </Box>
         </Container>
         {/* Footer */}

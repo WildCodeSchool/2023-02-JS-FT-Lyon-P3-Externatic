@@ -36,6 +36,16 @@ export const api = {
 
     return undefined;
   },
+
+  getAlljobOffers: async () => {
+    try {
+      const res = await instance.get("/jobs");
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+    return undefined;
+  },
 };
 
 export default { api };

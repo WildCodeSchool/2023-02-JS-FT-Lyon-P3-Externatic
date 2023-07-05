@@ -7,7 +7,7 @@ export default function JobByTypeCard({ jobTypes }) {
   return (
     <main className={styles.JobByTypeCardContainer}>
       <section className={styles.JobByTypeCardText}>
-        <div>{jobTypes.text}</div>
+        <div>{jobTypes}</div>
         <div>00 Jobs</div>
       </section>
       <img
@@ -20,7 +20,5 @@ export default function JobByTypeCard({ jobTypes }) {
 }
 
 JobByTypeCard.propTypes = {
-  jobTypes: PropTypes.shape({
-    text: PropTypes.string.isRequired,
-  }).isRequired,
+  jobTypes: PropTypes.string.isRequired,
 };
