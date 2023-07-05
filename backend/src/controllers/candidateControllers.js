@@ -54,7 +54,7 @@ const read = (req, res) => {
 
 const add = async (req, res) => {
   try {
-    const { email, phone, city, hashedPassword, firstname, lastname } =
+    const { email, phone, city, hashedPassword, firstname, lastname, admin } =
       req.body;
 
     // Créer une nouvelle insertion dans User
@@ -63,6 +63,7 @@ const add = async (req, res) => {
       phone,
       city,
       hashedPassword,
+      admin,
     });
     const userId = userResult.insertId;
 

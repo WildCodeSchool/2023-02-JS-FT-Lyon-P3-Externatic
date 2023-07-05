@@ -24,7 +24,7 @@ const getCandidateByEmailMiddleWare = (req, res, next) => {
 
 const register = async (req, res) => {
   try {
-    const { email, phone, city, hashedPassword, firstname, lastname } =
+    const { email, phone, city, hashedPassword, firstname, lastname, admin } =
       req.body;
 
     // Create a new user entry
@@ -33,6 +33,7 @@ const register = async (req, res) => {
       phone,
       city,
       hashedPassword,
+      admin,
     });
     const userId = userResult.insertId;
 
