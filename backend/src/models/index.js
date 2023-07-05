@@ -30,9 +30,46 @@ pool.getConnection().catch(() => {
 const models = {};
 
 const ItemManager = require("./ItemManager");
+const UserManager = require("./UserManager");
+const ApplicationManager = require("./ApplicationManager");
 
 models.item = new ItemManager();
+models.user = new UserManager();
+models.application = new ApplicationManager();
+
 models.item.setDatabase(pool);
+models.user.setDatabase(pool);
+models.application.setDatabase(pool);
+
+const CandidateManager = require("./CandidateManager");
+
+models.candidate = new CandidateManager();
+models.candidate.setDatabase(pool);
+
+const JobManager = require("./JobManager");
+
+models.job = new JobManager();
+models.job.setDatabase(pool);
+
+const CompanyManager = require("./CompanyManager");
+
+models.company = new CompanyManager();
+models.company.setDatabase(pool);
+
+const JoblocationManager = require("./JoblocationManager");
+
+models.jobLocation = new JoblocationManager();
+models.jobLocation.setDatabase(pool);
+
+const JobTypeManager = require("./JobtypeManager");
+
+models.jobType = new JobTypeManager();
+models.jobType.setDatabase(pool);
+
+const JobCategoryManager = require("./JobCategoryManager");
+
+models.category = new JobCategoryManager();
+models.category.setDatabase(pool);
 
 // bonus: use a proxy to personalize error message,
 // when asking for a non existing model
