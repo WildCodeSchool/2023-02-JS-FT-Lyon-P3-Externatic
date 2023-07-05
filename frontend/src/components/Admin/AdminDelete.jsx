@@ -18,11 +18,11 @@ export default function AdminDelete() {
   const notifyDeletion = () => toast.success("Suppression Effectuée");
   const notifyErrorDeletion = () => toast.error("problème à la suppression");
 
-  const [candidateId, setCandidateId] = useState("");
+  const [lastname, setLastname] = useState("");
   const [companyId, setCompanyId] = useState("");
 
   const handleCandidateInputChange = (event) => {
-    setCandidateId(parseInt(event.target.value, 10));
+    setLastname(event.target.value);
   };
 
   const handleCompanyInputChange = (event) => {
@@ -32,11 +32,11 @@ export default function AdminDelete() {
   const handleDeleteCandidate = (event) => {
     event.preventDefault();
 
-    if (candidateId) {
+    if (lastname) {
       axios
-        .delete(`${BACKEND_URL}/candidates/${candidateId}`)
+        .delete(`${BACKEND_URL}/candidates?lastname=${lastname}`)
         .then(() => {
-          setCandidateId("");
+          setLastname("");
           notifyDeletion();
         })
         .catch(() => notifyErrorDeletion());
@@ -94,10 +94,10 @@ export default function AdminDelete() {
             >
               <TextField
                 id="delete-candidate"
-                label="Entrer l'ID du Candidat à supprimer"
-                name="id"
+                label="Entrer le Nom du Candidat à supprimer"
+                name="lastname"
                 sx={{ width: "30%" }}
-                value={candidateId}
+                value={lastname}
                 onChange={handleCandidateInputChange}
               />
               <Button
