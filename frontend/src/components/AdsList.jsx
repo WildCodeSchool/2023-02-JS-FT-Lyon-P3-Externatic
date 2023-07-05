@@ -16,10 +16,32 @@ import { PropTypes } from "prop-types";
 
 export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-  const { id } = useParams();
+  const { ids } = useParams();
   const [open, setOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [favorites, setFavorites] = useState(
+    JSON.parse(localStorage.getItem("favoriteJobs") || "[]")
+  );
+
+  useEffect(() => {
+    localStorage.setItem("favoriteJobs", JSON.stringify(favorites));
+  }, [favorites]);
+
+  const checkIsFavorite = (job) => {
+    return favorites.some((favoriteJob) => favoriteJob.id === job.id);
+  };
+  const handleToggleFavorite = (job) => {
+    if (checkIsFavorite(job)) {
+      const updatedFavorites = favorites.filter(
+        (favoriteJob) => favoriteJob.id !== job.id
+      );
+      setFavorites(updatedFavorites);
+    } else {
+      const updatedFavorites = [...favorites, job];
+      setFavorites(updatedFavorites);
+    }
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -28,13 +50,10 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
     setOpen(true);
   };
 
-  const handleToggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-  };
   useEffect(() => {
-    if (id) {
+    if (ids) {
       axios
-        .get(`${BACKEND_URL}/jobs/${id}`)
+        .get(`${BACKEND_URL}/jobs/${ids}`)
         .then((response) => {
           setSelectedJob(response.data);
         })
@@ -42,7 +61,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
           console.error(error);
         });
     }
-  }, [id]);
+  }, [ids]);
 
   return (
     <>
@@ -79,7 +98,11 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                     <Button size="small" onClick={() => handleOpen(jobOffer)}>
                       View
                     </Button>
-                    <Button size="small">Share</Button>
+                    <Button onClick={() => handleToggleFavorite(jobOffer)}>
+                      {checkIsFavorite(jobOffer)
+                        ? "Retirer des favoris"
+                        : "Ajouter aux favoris"}
+                    </Button>
                   </CardActions>
                 </Card>
               </Grid>
@@ -103,17 +126,17 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
               {selectedJob && (
                 <Box sx={{ display: "flex" }}>
                   <Box sx={{ m: "2rem" }}>
+                    <Button onClick={() => handleToggleFavorite(selectedJob)}>
+                      {checkIsFavorite(selectedJob)
+                        ? "Retirer des favoris"
+                        : "Ajouter aux favoris"}
+                    </Button>
                     <Typography gutterBottom variant="h5" component="h2">
                       {selectedJob.name}
                     </Typography>
                     <Typography gutterBottom variant="h5" component="h3">
                       {selectedJob.title}
                     </Typography>
-                    <Button onClick={handleToggleFavorite}>
-                      {isFavorite
-                        ? "Retirer des favoris"
-                        : "Ajouter aux favoris"}
-                    </Button>
                     <Typography sx={{ marginBottom: "1rem" }}>
                       {selectedJob.description}
                     </Typography>
@@ -212,7 +235,11 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                     <Button size="small" onClick={() => handleOpen(jobOffer)}>
                       View
                     </Button>
-                    <Button size="small">Share</Button>
+                    <Button onClick={() => handleToggleFavorite(jobOffer)}>
+                      {checkIsFavorite(jobOffer)
+                        ? "Retirer des favoris"
+                        : "Ajouter aux favoris"}
+                    </Button>
                   </CardActions>
                 </Card>
               </Grid>
@@ -236,17 +263,17 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
               {selectedJob && (
                 <Box sx={{ display: "flex" }}>
                   <Box sx={{ m: "2rem" }}>
+                    <Button onClick={() => handleToggleFavorite(selectedJob)}>
+                      {checkIsFavorite(selectedJob)
+                        ? "Retirer des favoris"
+                        : "Ajouter aux favoris"}
+                    </Button>
                     <Typography gutterBottom variant="h5" component="h2">
                       {selectedJob.name}
                     </Typography>
                     <Typography gutterBottom variant="h5" component="h3">
                       {selectedJob.title}
                     </Typography>
-                    <Button onClick={handleToggleFavorite}>
-                      {isFavorite
-                        ? "Retirer des favoris"
-                        : "Ajouter aux favoris"}
-                    </Button>
                     <Typography sx={{ marginBottom: "1rem" }}>
                       {selectedJob.description}
                     </Typography>

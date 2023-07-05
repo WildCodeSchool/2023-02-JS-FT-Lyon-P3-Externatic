@@ -122,7 +122,6 @@ VALUES
   ('user11@example.com', '888888888', 'City11', NULL, '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('user12@example.com', '888845668', 'City12', NULL, '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0);
   
-
 INSERT INTO candidate (user_id, firstname, lastname, cv)
 VALUES
   (1, 'John', 'Doe', NULL),
