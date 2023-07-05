@@ -202,7 +202,7 @@ export default function Navbar() {
           >
             <Tooltip title="Espace Utilisateur">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Avatar" />
+                <Avatar src={candidate.picture} alt="Avatar" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -221,23 +221,28 @@ export default function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleLinkUser}>
-                <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                  Espace Candidat
-                </Typography>
-              </MenuItem>
+              {candidate.id ? (
+                <>
+                  <MenuItem onClick={handleLinkUser}>
+                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                      Espace Candidat
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem onClick={logout}>
+                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                      Logout
+                    </Typography>
+                  </MenuItem>
+                </>
+              ) : null}
 
-              <MenuItem onClick={logout}>
-                <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                  Logout
-                </Typography>
-              </MenuItem>
-
-              <MenuItem onClick={handleLinkLogin}>
-                <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                  Login
-                </Typography>
-              </MenuItem>
+              {!candidate.id ? (
+                <MenuItem onClick={handleLinkLogin}>
+                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                    Login
+                  </Typography>
+                </MenuItem>
+              ) : null}
             </Menu>
           </Box>
         </Toolbar>
