@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
+import Backdrop from "@mui/material/Backdrop";
+import Link from "@mui/material/Link";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
@@ -18,7 +20,39 @@ import { useCandidateContext } from "../Contexts/CandidateContext";
 export default function CandidateProfile() {
   const { candidate } = useCandidateContext();
   const navigate = useNavigate();
-  const favorites = JSON.parse(localStorage.getItem("favoriteJobs")) || [];
+  const [open, setOpen] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [favorites, setFavorites] = useState(
+    JSON.parse(localStorage.getItem("favoriteJobs") || "[]")
+  );
+
+  useEffect(() => {
+    localStorage.setItem("favoriteJobs", JSON.stringify(favorites));
+  }, [favorites]);
+
+  const checkIsFavorite = (job) => {
+    return favorites.some((favoriteJob) => favoriteJob.id === job.id);
+  };
+  const handleToggleFavorite = (job) => {
+    if (checkIsFavorite(job)) {
+      const updatedFavorites = favorites.filter(
+        (favoriteJob) => favoriteJob.id !== job.id
+      );
+      setFavorites(updatedFavorites);
+    } else {
+      const updatedFavorites = [...favorites, job];
+      setFavorites(updatedFavorites);
+    }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = (job) => {
+    setSelectedJob(job);
+    setOpen(true);
+  };
+
   useEffect(() => {
     if (!candidate?.id) {
       navigate("/login");
@@ -100,13 +134,112 @@ export default function CandidateProfile() {
                             )}...`}</Typography>
                           </CardContent>
                           <CardActions>
-                            <Button size="small">View</Button>
+                            <Button
+                              size="small"
+                              onClick={() => handleOpen(favorite)}
+                            >
+                              View
+                            </Button>
                           </CardActions>
                         </Card>
                       </Grid>
                     ))}
                   </Grid>
                 )}
+                <Backdrop
+                  sx={{
+                    color: "#fff",
+                    zIndex: (theme) => theme.zIndex.drawer + 1,
+                  }}
+                  open={open}
+                  onClick={handleClose}
+                >
+                  <Box
+                    sx={{
+                      backgroundColor: "white",
+                      color: "black",
+                      width: "50%",
+                    }}
+                  >
+                    {selectedJob && (
+                      <Box sx={{ display: "flex" }}>
+                        <Box sx={{ m: "2rem" }}>
+                          <Button
+                            onClick={() => handleToggleFavorite(selectedJob)}
+                          >
+                            {checkIsFavorite(selectedJob)
+                              ? "Retirer des favoris"
+                              : "Ajouter aux favoris"}
+                          </Button>
+                          <Typography gutterBottom variant="h5" component="h2">
+                            {selectedJob.name}
+                          </Typography>
+                          <Typography gutterBottom variant="h5" component="h3">
+                            {selectedJob.title}
+                          </Typography>
+                          <Typography sx={{ marginBottom: "1rem" }}>
+                            {selectedJob.description}
+                          </Typography>
+                          <Typography sx={{ marginBottom: "1rem" }}>
+                            {selectedJob.requirements}
+                          </Typography>
+                          <Typography sx={{ marginBottom: "1rem" }}>
+                            {selectedJob.salary}
+                          </Typography>
+                          <Button
+                            variant="contained"
+                            size="large"
+                            sx={{ marginTop: "1rem" }}
+                          >
+                            Postuler
+                          </Button>
+                        </Box>
+                        <Box
+                          sx={{
+                            borderRadius: "3rem",
+                            border: "0.1px solid grey",
+                            marginTop: "2rem",
+                            marginRight: "1rem",
+                            padding: "1rem",
+                            height: "15rem",
+                          }}
+                        >
+                          <Typography sx={{ marginBottom: "0.2rem" }}>
+                            Poste recherché : {selectedJob.category}
+                          </Typography>
+                          <Typography sx={{ marginBottom: "0.2rem" }}>
+                            {selectedJob.contact}
+                          </Typography>
+                          <Typography sx={{ marginBottom: "0.2rem" }}>
+                            {selectedJob.location}
+                          </Typography>
+                          <Typography sx={{ marginBottom: "0.2rem" }}>
+                            Type de contrat : {selectedJob.type}
+                          </Typography>
+                          <Typography sx={{ marginBottom: "0.2rem" }}>
+                            {selectedJob.remote}
+                          </Typography>
+                          <Typography>
+                            Date de publication : {selectedJob.posting_date}
+                          </Typography>
+                          <Link
+                            href={selectedJob.website}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <Button
+                              variant="contained"
+                              size="small"
+                              sx={{ marginTop: "1rem" }}
+                            >
+                              Site Web
+                            </Button>
+                          </Link>
+                        </Box>
+                      </Box>
+                    )}
+                  </Box>
+                </Backdrop>
               </Paper>
             </Grid>
           </Grid>
