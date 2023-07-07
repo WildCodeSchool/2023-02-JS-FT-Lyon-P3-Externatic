@@ -469,9 +469,6 @@ AdsList.propTypes = {
     PropTypes.shape({
       archived: PropTypes.number.isRequired,
       company_id: PropTypes.number.isRequired,
-      job_category_id: PropTypes.number.isRequired,
-      job_type_id: PropTypes.number.isRequired,
-      job_location_id: PropTypes.number.isRequired,
       contact: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       id: PropTypes.number.isRequired,
