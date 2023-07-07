@@ -1,7 +1,6 @@
 SET foreign_key_checks = 0;
 DROP TABLE IF EXISTS user, candidate, company, job_posting, application, job_category, job_type, job_location;
 
-USE db_externatic;
 
 CREATE TABLE user (
   id INT NOT NULL AUTO_INCREMENT,
@@ -122,7 +121,6 @@ VALUES
   ('user11@example.com', '888888888', 'City11', "https://xsgames.co/randomusers/avatar.php?g=pixel", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('user12@example.com', '888845668', 'City12', "https://xsgames.co/randomusers/avatar.php?g=pixel", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0);
   
-
 INSERT INTO candidate (user_id, firstname, lastname, cv)
 VALUES
   (1, 'Admin', 'Test', NULL),
