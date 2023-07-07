@@ -58,6 +58,15 @@ export default function CandidateProfile() {
       navigate("/login");
     }
   }, []);
+
+  const formatText = (text) => {
+    return text.split("\n").map((line) => (
+      <React.Fragment key={selectedJob.id}>
+        {line}
+        <br />
+      </React.Fragment>
+    ));
+  };
   return (
     <>
       <Navbar />
@@ -178,10 +187,10 @@ export default function CandidateProfile() {
                             {selectedJob.title}
                           </Typography>
                           <Typography sx={{ marginBottom: "1rem" }}>
-                            {selectedJob.description}
+                            {formatText(selectedJob.description)}
                           </Typography>
                           <Typography sx={{ marginBottom: "1rem" }}>
-                            {selectedJob.requirements}
+                            {formatText(selectedJob.requirements)}
                           </Typography>
                           <Typography sx={{ marginBottom: "1rem" }}>
                             {selectedJob.salary}
@@ -205,7 +214,7 @@ export default function CandidateProfile() {
                           }}
                         >
                           <Typography sx={{ marginBottom: "0.2rem" }}>
-                            Poste recherché : {selectedJob.category}
+                            Poste recherché: {selectedJob.category}
                           </Typography>
                           <Typography sx={{ marginBottom: "0.2rem" }}>
                             {selectedJob.contact}
@@ -214,13 +223,13 @@ export default function CandidateProfile() {
                             {selectedJob.location}
                           </Typography>
                           <Typography sx={{ marginBottom: "0.2rem" }}>
-                            Type de contrat : {selectedJob.type}
+                            Type de contrat: {selectedJob.type}
                           </Typography>
                           <Typography sx={{ marginBottom: "0.2rem" }}>
                             {selectedJob.remote}
                           </Typography>
                           <Typography>
-                            Date de publication : {selectedJob.posting_date}
+                            Date de publication: {selectedJob.posting_date}
                           </Typography>
                           <Link
                             href={selectedJob.website}
