@@ -132,22 +132,25 @@ const destroyByLastName = (req, res) => {
     });
 };
 
-const uploadCV = (req, res) => {
+const uploadCV = async (req, res) => {
   const { originalname, filename } = req.file;
+  const cvPath = `./public/uploads/cv/${uuidv4()}-${originalname}`;
 
-  fs.rename(
-    `./public/uploads/cv/${filename}`,
-    `./public/uploads/cv/${uuidv4()}-${originalname}`,
-    (error) => {
-      if (error) {
-        console.error(error);
-        return res.sendStatus(500);
-      }
+  try {
+    await fs.promises.rename(`./public/uploads/cv/${filename}`, cvPath);
 
-      console.warn(`./public/uploads/cv/${uuidv4()}-${originalname}`);
-      return res.sendStatus(200);
-    }
-  );
+    const candidateId = req.payloads.sub;
+
+    await models.candidate.updateCV({
+      id: candidateId,
+      cv: cvPath,
+    });
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
 };
 
 module.exports = {
