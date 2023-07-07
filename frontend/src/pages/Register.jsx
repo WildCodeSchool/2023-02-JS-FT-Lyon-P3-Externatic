@@ -126,6 +126,7 @@ export default function Register() {
                   label="Prénom"
                   autoFocus
                   onChange={handleInputChange}
+                  value={formData.firstname}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -137,6 +138,7 @@ export default function Register() {
                   name="lastname"
                   autoComplete="family-name"
                   onChange={handleInputChange}
+                  value={formData.lastname}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -148,6 +150,7 @@ export default function Register() {
                   name="city"
                   autoComplete="city"
                   onChange={handleInputChange}
+                  value={formData.city}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -159,6 +162,7 @@ export default function Register() {
                   name="phone"
                   autoComplete="phone"
                   onChange={handleInputChange}
+                  value={formData.phone}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -170,6 +174,7 @@ export default function Register() {
                   name="email"
                   autoComplete="email"
                   onChange={handleInputChange}
+                  value={formData.email}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -182,6 +187,7 @@ export default function Register() {
                   id="password"
                   autoComplete="new-password"
                   onChange={handleInputChange}
+                  value={formData.password}
                 />
               </Grid>
               <Grid item xs={12}>

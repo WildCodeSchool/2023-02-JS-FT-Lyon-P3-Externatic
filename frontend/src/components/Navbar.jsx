@@ -197,12 +197,14 @@ export default function Navbar() {
               </Button>
             ) : null}
           </Box>
-          <Box
-            sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}
-          >
+          <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Espace Utilisateur">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar src={candidate.picture} alt="Avatar" />
+                <Avatar
+                  src={candidate.picture}
+                  alt="Avatar"
+                  sx={{ maxWidth: "100%" }}
+                />
               </IconButton>
             </Tooltip>
             <Menu
