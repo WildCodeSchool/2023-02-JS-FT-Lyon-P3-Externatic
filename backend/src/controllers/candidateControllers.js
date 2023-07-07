@@ -1,9 +1,6 @@
 const fs = require("fs");
-const multer = require("multer");
 
 const { v4: uuidv4 } = require("uuid");
-
-const upload = multer({ dest: "./public/uploads/" });
 
 const models = require("../models");
 
@@ -135,30 +132,22 @@ const destroyByLastName = (req, res) => {
     });
 };
 
-const uploadCV = (req, res, next) => {
-  upload.single("monCV")(req, res, (err) => {
-    if (err) {
-      console.error(err);
-      return res.sendStatus(500);
-    }
+const uploadCV = (req, res) => {
+  const { originalname, filename } = req.file;
 
-    const { originalname, filename } = req.file;
-
-    fs.rename(
-      `./public/uploads/${filename}`,
-      `./public/uploads/${uuidv4()}-${originalname}`,
-      (error) => {
-        if (error) {
-          console.error(error);
-          return res.sendStatus(500);
-        }
-
-        console.warn(`./public/uploads/${uuidv4()}-${originalname}`);
-        return next();
+  fs.rename(
+    `./public/uploads/cv/${filename}`,
+    `./public/uploads/cv/${uuidv4()}-${originalname}`,
+    (error) => {
+      if (error) {
+        console.error(error);
+        return res.sendStatus(500);
       }
-    );
-    return next();
-  });
+
+      console.warn(`./public/uploads/cv/${uuidv4()}-${originalname}`);
+      return res.sendStatus(200);
+    }
+  );
 };
 
 module.exports = {

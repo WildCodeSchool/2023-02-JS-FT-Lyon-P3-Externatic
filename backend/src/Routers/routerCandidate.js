@@ -1,5 +1,7 @@
 const express = require("express");
+const multer = require("multer");
 
+const upload = multer({ dest: "./public/uploads/cv/" });
 const {
   hashPassword,
   verifyPassword,
@@ -34,10 +36,8 @@ routerCandidate.delete("/candidates", candidateControllers.destroyByLastName);
 routerCandidate.post(
   "/monCV",
   verifyToken,
-  candidateControllers.uploadCV,
-  (req, res) => {
-    res.send("File uploaded");
-  }
+  upload.single("monCV"),
+  candidateControllers.uploadCV
 );
 
 module.exports = routerCandidate;
