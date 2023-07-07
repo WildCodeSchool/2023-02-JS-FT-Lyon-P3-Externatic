@@ -71,7 +71,7 @@ export default function AdminCreate() {
 
     if (validateForm()) {
       axios
-        .post(`${BACKEND_URL}/companies`, { ...formData })
+        .post(`${BACKEND_URL}/register`, { ...formData })
         .then(() => {
           setFormData({
             name: "",

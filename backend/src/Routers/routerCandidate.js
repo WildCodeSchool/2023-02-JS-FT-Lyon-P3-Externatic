@@ -2,7 +2,7 @@ const express = require("express");
 
 const {
   hashPassword,
-  verifyPassword,
+  verifyCandidatePassword,
   verifyToken,
   logout,
 } = require("../services/auth");
@@ -17,20 +17,17 @@ const candidateControllers = require("../controllers/candidateControllers");
 
 // Routes Privées
 routerCandidate.post("/register", hashPassword, register);
-routerCandidate.post("/login", getCandidateByEmailMiddleWare, verifyPassword);
-routerCandidate.get("/logout", logout);
+routerCandidate.post(
+  "/login",
+  getCandidateByEmailMiddleWare,
+  verifyCandidatePassword
+);
+routerCandidate.get("/logoutCandidate", logout);
 routerCandidate.get(
   "/candidate-profile",
   verifyToken,
   candidateControllers.profile
 );
-
-// Routes Publiques
-routerCandidate.get("/candidates", candidateControllers.browse);
-routerCandidate.get("/candidates/:id", candidateControllers.read);
-routerCandidate.put("/candidates/:id", candidateControllers.edit);
-routerCandidate.delete("/candidates", candidateControllers.destroyByLastName);
-
 routerCandidate.post(
   "/monCV",
   verifyToken,
@@ -39,5 +36,11 @@ routerCandidate.post(
     res.send("File uploaded");
   }
 );
+
+// Routes Publiques
+routerCandidate.get("/candidates", candidateControllers.browse);
+routerCandidate.get("/candidates/:id", candidateControllers.read);
+routerCandidate.put("/candidates/:id", candidateControllers.edit);
+routerCandidate.delete("/candidates", candidateControllers.destroyByLastName);
 
 module.exports = routerCandidate;

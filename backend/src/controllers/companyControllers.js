@@ -77,7 +77,7 @@ const add = async (req, res) => {
       email,
       phone,
       city,
-      password,
+      hashedPassword,
       name,
       contact,
       description,
@@ -91,7 +91,7 @@ const add = async (req, res) => {
       email,
       phone,
       city,
-      password,
+      hashedPassword,
     });
     const userId = userResult.insertId;
 
@@ -127,10 +127,28 @@ const destroy = (req, res) => {
     });
 };
 
+const profile = (req, res) => {
+  const id = req.payloads.sub;
+  models.company
+    .find(id)
+    .then(([companies]) => {
+      if (companies[0] == null) {
+        res.sendStatus(404);
+      } else {
+        res.send(companies[0]);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
   edit,
   add,
   destroy,
+  profile,
 };

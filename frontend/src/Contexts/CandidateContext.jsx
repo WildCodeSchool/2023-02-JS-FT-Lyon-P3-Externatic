@@ -18,9 +18,9 @@ export function CandidateContextProvider({ children }) {
     if (!candidate.id) navigate("/");
   }, [candidate.id]);
 
-  const logout = async () => {
+  const logoutCandidate = async () => {
     try {
-      await axios.get(`${BACKEND_URL}/logout`);
+      await axios.get(`${BACKEND_URL}/logoutCandidate`);
       setCandidate({});
       localStorage.removeItem("candidate");
       navigate("/");
@@ -29,7 +29,7 @@ export function CandidateContextProvider({ children }) {
     }
   };
 
-  const login = (_candidate) => {
+  const loginCandidate = (_candidate) => {
     setCandidate(_candidate);
     localStorage.setItem("candidate", JSON.stringify(_candidate));
   };
@@ -37,8 +37,8 @@ export function CandidateContextProvider({ children }) {
   const memo = useMemo(() => {
     return {
       candidate,
-      logout,
-      login,
+      logoutCandidate,
+      loginCandidate,
     };
   }, [candidate]);
 

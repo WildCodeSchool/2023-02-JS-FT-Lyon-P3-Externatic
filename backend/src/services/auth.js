@@ -19,7 +19,7 @@ const hashPassword = (req, res, next) => {
     });
 };
 
-const verifyPassword = (req, res) => {
+const verifyCandidatePassword = (req, res) => {
   // req.user.hashedPassword doit nous être fournis par un middleware précedent
   // correspondant au mot de passe hashé, stocké dans la BDD pour l'utilisateur en train de se connecter
   // On verifie si le mot de passe en clair reçu dans req.body.password, une fois hashé, correspond
@@ -55,6 +55,41 @@ const verifyPassword = (req, res) => {
     });
 };
 
+const verifyCompanyPassword = (req, res) => {
+  // req.user.hashedPassword doit nous être fournis par un middleware précedent
+  // correspondant au mot de passe hashé, stocké dans la BDD pour l'utilisateur en train de se connecter
+  // On verifie si le mot de passe en clair reçu dans req.body.password, une fois hashé, correspond
+  // au mot de passe hashé stocké dans la BDD pour le user.
+  argon2
+    .verify(req.company.hashedPassword, req.body.password)
+    .then((isVerified) => {
+      // si la comparaison est positive, l'utilisateur est validé (email + password)
+      if (isVerified) {
+        // on créé un token, encodé avec le mot de passe contenu dans le fichier d'environnement
+        const token = jwt.sign(
+          { sub: req.company.id, role: req.company.role || "USER" },
+          JWT_SECRET,
+          {
+            algorithm: "HS512",
+            expiresIn: JWT_TIMING,
+          }
+        );
+        delete req.body.password;
+        delete req.company.hashedPassword;
+        res
+          .cookie("access_token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+          })
+          .send(req.company);
+      } else res.sendStatus(401);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(400);
+    });
+};
+
 const verifyToken = (req, res, next) => {
   try {
     const token = req.cookies.access_token;
@@ -77,7 +112,8 @@ const logout = (req, res) => {
 
 module.exports = {
   hashPassword,
-  verifyPassword,
+  verifyCandidatePassword,
+  verifyCompanyPassword,
   verifyToken,
   logout,
 };

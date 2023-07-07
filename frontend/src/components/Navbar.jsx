@@ -18,9 +18,11 @@ import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/externatic-logo-long.png";
 import { useCandidateContext } from "../Contexts/CandidateContext";
+import { useCompanyContext } from "../Contexts/CompanyContext";
 
 export default function Navbar() {
-  const { candidate, logout } = useCandidateContext();
+  const { candidate, logoutCandidate } = useCandidateContext();
+  const { company, logoutCompany } = useCompanyContext();
 
   const navigate = useNavigate();
 
@@ -59,6 +61,11 @@ export default function Navbar() {
   const handleLinkUser = () => {
     navigate("/espace-candidat");
   };
+
+  const handleLinkCompany = () => {
+    navigate("/espace-recruteur");
+  };
+
   const handleLinkAdmin = () => {
     navigate("/admin");
   };
@@ -228,8 +235,22 @@ export default function Navbar() {
                   </Typography>
                 </MenuItem>
               ) : null}
+              {company.id ? (
+                <MenuItem onClick={handleLinkCompany}>
+                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                    Espace Recruteur
+                  </Typography>
+                </MenuItem>
+              ) : null}
               {candidate.id ? (
-                <MenuItem onClick={logout}>
+                <MenuItem onClick={logoutCandidate}>
+                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                    Logout
+                  </Typography>
+                </MenuItem>
+              ) : null}
+              {company.id ? (
+                <MenuItem onClick={logoutCompany}>
                   <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
                     Logout
                   </Typography>
