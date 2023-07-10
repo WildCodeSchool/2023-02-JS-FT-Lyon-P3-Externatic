@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "@mui/material/Button";
@@ -13,6 +13,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { PropTypes } from "prop-types";
+import CandidateContext from "../Contexts/CandidateContext";
 
 export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -45,8 +46,10 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
   const handleClose = () => {
     setOpen(false);
   };
+  const [offerId, setOfferid] = useState();
   const handleOpen = (job) => {
     setSelectedJob(job);
+    setOfferid(job.id);
     setOpen(true);
   };
 
@@ -62,6 +65,36 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
         });
     }
   }, [ids]);
+
+  // Post offer in hte database
+  const { candidate } = useContext(CandidateContext);
+  // const [candidateId, setCandidateId] = useState();
+  const [openSubscribeModal, setOpenSubscribeModal] = useState(false);
+  const [actualDate, setActualDate] = useState();
+
+  const handlePost = () => {
+    if (!candidate.id) {
+      setOpenSubscribeModal(true);
+    } else {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getUTCDate();
+
+      setActualDate(`${year}-${month}-${day}`);
+      axios.post(
+        `http://localhost:6001/applications`,
+        1,
+        offerId,
+        actualDate,
+        "en cours"
+      );
+      // .then((res) => console.info(res))
+      // .catch((error) => {
+      //   console.error(error);
+      // });
+    }
+  };
 
   return (
     <>
@@ -108,6 +141,35 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
               </Grid>
             ))}
           </Grid>
+
+          {/* Subscribe modal annoncement */}
+          {openSubscribeModal && (
+            <Backdrop
+              sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              open={openSubscribeModal}
+              onClick={() => {
+                setOpenSubscribeModal(false);
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "white",
+                  color: "black",
+                  width: "40%",
+                  height: "40%",
+                  borderRadius: "1em",
+                }}
+              >
+                <Typography gutterBottom variant="h5" component="h2">
+                  Please Login to Apply to anny offer.
+                </Typography>
+              </Box>
+            </Backdrop>
+          )}
+
           <Backdrop
             sx={{
               color: "#fff",
@@ -150,6 +212,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       variant="contained"
                       size="large"
                       sx={{ marginTop: "1rem" }}
+                      onClick={handlePost}
                     >
                       Postuler
                     </Button>
@@ -287,6 +350,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       variant="contained"
                       size="large"
                       sx={{ marginTop: "1rem" }}
+                      onClick={handlePost}
                     >
                       Postuler
                     </Button>
