@@ -184,6 +184,10 @@ export default function CandidateProfile() {
                         backgroundColor: "#888888",
                         borderRadius: "3px",
                       },
+                      "@media (min-width: 768px)": {
+                        marginRight: "3rem",
+                        marginLeft: "3rem",
+                      },
                     }}
                   >
                     {selectedJob && (
@@ -324,6 +328,15 @@ export default function CandidateProfile() {
                               Site Web
                             </Button>
                           </Link>
+
+                          <Button
+                            href={`mailto:${selectedJob.email}`}
+                            variant="contained"
+                            size="small"
+                            sx={{ marginTop: "1rem", marginLeft: "0.5rem" }}
+                          >
+                            Nous contacter
+                          </Button>
                         </CardContent>
                       </Box>
                     )}

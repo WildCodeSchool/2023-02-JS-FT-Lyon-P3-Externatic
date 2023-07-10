@@ -171,6 +171,10 @@ export default function TopAnnoncesCard() {
               backgroundColor: "#888888",
               borderRadius: "3px",
             },
+            "@media (min-width: 768px)": {
+              marginRight: "3rem",
+              marginLeft: "3rem",
+            },
           }}
         >
           {selectedJob && (
@@ -178,7 +182,6 @@ export default function TopAnnoncesCard() {
               sx={{
                 "@media (min-width: 768px)": {
                   display: "flex",
-                  textAlign: "center",
                 },
               }}
             >
@@ -224,7 +227,7 @@ export default function TopAnnoncesCard() {
                   Postuler
                 </Button>
               </CardContent>
-              <CardContent sx={{ textAlign: "center" }}>
+              <CardContent>
                 <Paper
                   sx={{
                     borderRadius: "0.8rem",
@@ -310,6 +313,7 @@ export default function TopAnnoncesCard() {
                     Site Web
                   </Button>
                 </Link>
+
                 <Button
                   href={`mailto:${selectedJob.email}`}
                   variant="contained"
