@@ -1,9 +1,6 @@
 const fs = require("fs");
-const multer = require("multer");
 
 const { v4: uuidv4 } = require("uuid");
-
-const upload = multer({ dest: "./public/uploads/" });
 
 const models = require("../models");
 
@@ -135,30 +132,25 @@ const destroyByLastName = (req, res) => {
     });
 };
 
-const uploadCV = (req, res, next) => {
-  upload.single("monCV")(req, res, (err) => {
-    if (err) {
-      console.error(err);
-      return res.sendStatus(500);
-    }
+const uploadCV = async (req, res) => {
+  const { originalname, filename } = req.file;
+  const cvPath = `./public/uploads/cv/${uuidv4()}-${originalname}`;
 
-    const { originalname, filename } = req.file;
+  try {
+    await fs.promises.rename(`./public/uploads/cv/${filename}`, cvPath);
 
-    fs.rename(
-      `./public/uploads/${filename}`,
-      `./public/uploads/${uuidv4()}-${originalname}`,
-      (error) => {
-        if (error) {
-          console.error(error);
-          return res.sendStatus(500);
-        }
+    const candidateId = req.payloads.sub;
 
-        console.warn(`./public/uploads/${uuidv4()}-${originalname}`);
-        return next();
-      }
-    );
-    return next();
-  });
+    await models.candidate.updateCV({
+      id: candidateId,
+      cv: cvPath,
+    });
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
 };
 
 module.exports = {

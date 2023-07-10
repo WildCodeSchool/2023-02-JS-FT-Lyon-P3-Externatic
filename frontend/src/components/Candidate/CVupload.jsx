@@ -20,7 +20,7 @@ export default function CVupload() {
     formData.append("monCV", inputRef.current.files[0]);
 
     axios
-      .post(`${BACKEND_URL}/monCV`, formData)
+      .post(`${BACKEND_URL}/monCV`, formData, { withCredentials: true })
       .then((response) => {
         console.warn(JSON.stringify(response.data));
         notifyUpload();
