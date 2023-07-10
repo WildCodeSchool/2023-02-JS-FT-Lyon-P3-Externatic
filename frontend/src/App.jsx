@@ -34,11 +34,11 @@ function App() {
         <CssBaseline />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/annonces" element={<Ads />} />
           <Route path="/espace-candidat" element={<CandidateProfile />} />
           <Route path="/espace-recruteur" element={<CompanyProfile />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </ThemeProvider>

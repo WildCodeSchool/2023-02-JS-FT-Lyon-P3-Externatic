@@ -50,6 +50,13 @@ class CandidateManager extends AbstractManager {
     );
   }
 
+  updateCV(candidate) {
+    return this.database.query(
+      `update ${this.table} set cv = ? where user_id = ${candidate.id}`,
+      [candidate.cv]
+    );
+  }
+
   deleteByLastName(lastname) {
     return this.database.query(
       `
