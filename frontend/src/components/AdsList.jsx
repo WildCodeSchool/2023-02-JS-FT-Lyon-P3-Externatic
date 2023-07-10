@@ -147,6 +147,10 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                   backgroundColor: "#888888",
                   borderRadius: "3px",
                 },
+                "@media (min-width: 768px)": {
+                  marginRight: "3rem",
+                  marginLeft: "3rem",
+                },
               }}
             >
               {selectedJob && (
