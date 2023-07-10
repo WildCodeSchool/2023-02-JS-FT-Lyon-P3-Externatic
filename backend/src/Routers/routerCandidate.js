@@ -1,7 +1,8 @@
 const express = require("express");
 const multer = require("multer");
 
-const upload = multer({ dest: "./public/uploads/cv/" });
+const uploadCV = multer({ dest: "./public/cv/" });
+
 const {
   hashPassword,
   verifyCandidatePassword,
@@ -33,7 +34,7 @@ routerCandidate.get(
 routerCandidate.post(
   "/monCV",
   verifyToken,
-  upload.single("monCV"),
+  uploadCV.single("monCV"),
   candidateControllers.uploadCV
 );
 

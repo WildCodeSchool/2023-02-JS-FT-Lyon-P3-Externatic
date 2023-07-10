@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -11,7 +12,6 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
 import logo from "../assets/externatic-logo.png";
 import accueil from "../assets/accueil.jpg";
 import { useCandidateContext } from "../Contexts/CandidateContext";
@@ -42,6 +42,10 @@ export default function Login() {
 
   const validateForm = () => {
     return true;
+  };
+
+  const handleLinkRegister = () => {
+    navigate("/register");
   };
 
   const handleSubmit = (e) => {
@@ -153,14 +157,14 @@ export default function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/register" variant="body2">
-                  Mot de Passe Oublié?
-                </Link>
+                <Button onClick={handleLinkRegister} variant="text">
+                  "Mot de passe oublié?"
+                </Button>
               </Grid>
               <Grid item>
-                <Link href="/register" variant="body2">
+                <Button onClick={handleLinkRegister} variant="text">
                   "Nouveau chez nous? Créer un compte"
-                </Link>
+                </Button>
               </Grid>
             </Grid>
             <Copyright sx={{ mt: 5 }} />
