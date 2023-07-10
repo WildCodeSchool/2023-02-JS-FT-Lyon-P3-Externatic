@@ -63,6 +63,10 @@ export default function Navbar() {
     navigate("/admin");
   };
 
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+  const imagePath = `${BACKEND_URL}/${candidate.picture}`;
+
   return (
     <AppBar position="sticky" color="secondary">
       <Container maxWidth="xxl">
@@ -115,7 +119,7 @@ export default function Navbar() {
               {candidate.admin === 1 ? (
                 <MenuItem onClick={handleLinkAdmin}>
                   <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                    Admin
+                    Espace Admin
                   </Typography>
                 </MenuItem>
               ) : null}
@@ -201,7 +205,7 @@ export default function Navbar() {
             <Tooltip title="Espace Utilisateur">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
-                  src={candidate.picture}
+                  src={imagePath}
                   alt="Avatar"
                   sx={{ maxWidth: "100%" }}
                 />
@@ -227,6 +231,13 @@ export default function Navbar() {
                 <MenuItem onClick={handleLinkUser}>
                   <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
                     Espace Candidat
+                  </Typography>
+                </MenuItem>
+              ) : null}
+              {candidate.admin === 1 ? (
+                <MenuItem onClick={handleLinkAdmin}>
+                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                    Espace Admin
                   </Typography>
                 </MenuItem>
               ) : null}
