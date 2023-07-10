@@ -63,6 +63,10 @@ export default function Navbar() {
     navigate("/admin");
   };
 
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+  const imagePath = `${BACKEND_URL}/${candidate.picture}`;
+
   return (
     <AppBar position="sticky" color="secondary">
       <Container maxWidth="xxl">
@@ -201,7 +205,7 @@ export default function Navbar() {
             <Tooltip title="Espace Utilisateur">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
-                  src={candidate.picture}
+                  src={imagePath}
                   alt="Avatar"
                   sx={{ maxWidth: "100%" }}
                 />

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -31,9 +31,11 @@ export default function CandidateCard({ candidate }) {
     setOpenPhoto(true);
   };
 
-  const { VITE_BACKEND_URL } = import.meta.env.VITE_BACKEND_URL;
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-  const imagePath = `${VITE_BACKEND_URL}${candidate.picture}`;
+  const imagePath = `${BACKEND_URL}/${candidate.picture}`;
+
+  useEffect(() => {}, [candidate.picture]);
 
   return (
     <Card sx={{ maxWidth: "100%", mb: { xs: 3, md: 3 } }}>
@@ -182,6 +184,6 @@ CandidateCard.defaultProps = {
     lastname: "nom candidat",
     email: "candidat@mail.com",
     city: "Paris",
-    picture: "../../assets/profilePicture.jpg",
+    picture: "https://xsgames.co/randomusers/avatar.php?g=female",
   },
 };

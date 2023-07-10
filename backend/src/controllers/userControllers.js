@@ -88,12 +88,12 @@ const destroy = (req, res) => {
 
 const uploadPhoto = async (req, res) => {
   const { originalname, filename } = req.file;
-  const photoPath = `./public/uploads/pictures/${uuidv4()}-${originalname}`;
+  const photoPath = `/picture/${uuidv4()}-${originalname}`;
 
   try {
     await fs.promises.rename(
-      `./public/uploads/pictures/${filename}`,
-      photoPath
+      `./public/picture/${filename}`,
+      `./public/${photoPath}`
     );
 
     const userId = req.payloads.sub;

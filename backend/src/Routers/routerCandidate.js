@@ -1,7 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 
-const uploadCV = multer({ dest: "./public/uploads/cv/" });
+const uploadCV = multer({ dest: "./public/cv/" });
 
 const {
   hashPassword,
