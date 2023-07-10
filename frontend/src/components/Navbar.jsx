@@ -115,7 +115,7 @@ export default function Navbar() {
               {candidate.admin === 1 ? (
                 <MenuItem onClick={handleLinkAdmin}>
                   <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                    Admin
+                    Espace Admin
                   </Typography>
                 </MenuItem>
               ) : null}
@@ -227,6 +227,13 @@ export default function Navbar() {
                 <MenuItem onClick={handleLinkUser}>
                   <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
                     Espace Candidat
+                  </Typography>
+                </MenuItem>
+              ) : null}
+              {candidate.admin === 1 ? (
+                <MenuItem onClick={handleLinkAdmin}>
+                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                    Espace Admin
                   </Typography>
                 </MenuItem>
               ) : null}

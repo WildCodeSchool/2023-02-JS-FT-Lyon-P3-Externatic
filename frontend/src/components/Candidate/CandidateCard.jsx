@@ -31,6 +31,10 @@ export default function CandidateCard({ candidate }) {
     setOpenPhoto(true);
   };
 
+  const { VITE_BACKEND_URL } = import.meta.env.VITE_BACKEND_URL;
+
+  const imagePath = `${VITE_BACKEND_URL}${candidate.picture}`;
+
   return (
     <Card sx={{ maxWidth: "100%", mb: { xs: 3, md: 3 } }}>
       <Box
@@ -51,7 +55,7 @@ export default function CandidateCard({ candidate }) {
         >
           <Avatar
             alt="Candidate Picture"
-            src={candidate.picture}
+            src={imagePath}
             sx={{ width: 150, height: 150 }}
           />
           <Button
@@ -65,7 +69,7 @@ export default function CandidateCard({ candidate }) {
           <Backdrop
             sx={{
               color: "#fff",
-              zIndex: (theme) => theme.zIndex.drawer + 1,
+              zIndex: (theme) => theme.zIndex.drawer + 10,
             }}
             open={openPhoto}
           >
