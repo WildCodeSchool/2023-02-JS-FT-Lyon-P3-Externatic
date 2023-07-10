@@ -13,6 +13,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import Pagination from "@mui/material/Pagination";
 import Avatar from "@mui/material/Avatar";
 import { PropTypes } from "prop-types";
 
@@ -20,10 +21,15 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const { ids } = useParams();
   const [open, setOpen] = useState(false);
+  const [page, setPage] = useState(1);
   const [selectedJob, setSelectedJob] = useState(null);
   const [favorites, setFavorites] = useState(
     JSON.parse(localStorage.getItem("favoriteJobs") || "[]")
   );
+
+  const handlePaginationChange = (event, value) => {
+    setPage(value); // Update the current page number
+  };
 
   useEffect(() => {
     localStorage.setItem("favoriteJobs", JSON.stringify(favorites));
@@ -76,49 +82,58 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
 
   return (
     <>
-      {infoDataNoFiltered && (
+      {!infoDataFiltered && infoDataNoFiltered && (
         <Container sx={{ py: 8, textAlign: "center" }} maxWidth="xl">
           <Grid container spacing={4}>
-            {infoDataNoFiltered.map((jobOffer) => (
-              <Grid item key={jobOffer.id} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <CardMedia
-                    component="div"
+            {infoDataNoFiltered
+              .slice((page - 1) * 9, page * 9)
+              .map((jobOffer) => (
+                <Grid item key={jobOffer.id} xs={12} sm={6} md={4}>
+                  <Card
                     sx={{
-                      // 16:9
-                      pt: "56.25%",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
                     }}
-                    image="https://source.unsplash.com/random?wallpapers"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {jobOffer.name}
-                    </Typography>
-                    <Typography>{`${jobOffer.description.slice(
-                      0,
-                      150
-                    )}...`}</Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" onClick={() => handleOpen(jobOffer)}>
-                      View
-                    </Button>
-                    <Button onClick={() => handleToggleFavorite(jobOffer)}>
-                      {checkIsFavorite(jobOffer)
-                        ? "Retirer des favoris"
-                        : "Ajouter aux favoris"}
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
+                  >
+                    <CardMedia
+                      component="div"
+                      sx={{
+                        // 16:9
+                        pt: "56.25%",
+                      }}
+                      image="https://source.unsplash.com/random?wallpapers"
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {jobOffer.name}
+                      </Typography>
+                      <Typography>{`${jobOffer.description.slice(
+                        0,
+                        150
+                      )}...`}</Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button size="small" onClick={() => handleOpen(jobOffer)}>
+                        View
+                      </Button>
+                      <Button onClick={() => handleToggleFavorite(jobOffer)}>
+                        {checkIsFavorite(jobOffer)
+                          ? "Retirer des favoris"
+                          : "Ajouter aux favoris"}
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
           </Grid>
+          <Pagination
+            count={Math.ceil(infoDataNoFiltered.length / 9)} // Calculate the total number of pages
+            color="primary"
+            onChange={handlePaginationChange} // Handle page change events
+            page={page} // Pass the current page number
+            sx={{ display: "flex", justifyContent: "center", mt: "2rem" }}
+          />
           <Backdrop
             sx={{
               color: "#fff",
@@ -310,46 +325,55 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
       {infoDataFiltered && (
         <Container sx={{ py: 8, textAlign: "center" }} maxWidth="xl">
           <Grid container spacing={4}>
-            {infoDataFiltered.map((jobOffer) => (
-              <Grid item key={jobOffer.id} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <CardMedia
-                    component="div"
+            {infoDataFiltered
+              .slice((page - 1) * 9, page * 9)
+              .map((jobOffer) => (
+                <Grid item key={jobOffer.id} xs={12} sm={6} md={4}>
+                  <Card
                     sx={{
-                      // 16:9
-                      pt: "56.25%",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
                     }}
-                    image="https://source.unsplash.com/random?wallpapers"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {jobOffer.name}
-                    </Typography>
-                    <Typography>{`${jobOffer.description.slice(
-                      0,
-                      150
-                    )}...`}</Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" onClick={() => handleOpen(jobOffer)}>
-                      View
-                    </Button>
-                    <Button onClick={() => handleToggleFavorite(jobOffer)}>
-                      {checkIsFavorite(jobOffer)
-                        ? "Retirer des favoris"
-                        : "Ajouter aux favoris"}
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
+                  >
+                    <CardMedia
+                      component="div"
+                      sx={{
+                        // 16:9
+                        pt: "56.25%",
+                      }}
+                      image="https://source.unsplash.com/random?wallpapers"
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {jobOffer.name}
+                      </Typography>
+                      <Typography>{`${jobOffer.description.slice(
+                        0,
+                        150
+                      )}...`}</Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button size="small" onClick={() => handleOpen(jobOffer)}>
+                        View
+                      </Button>
+                      <Button onClick={() => handleToggleFavorite(jobOffer)}>
+                        {checkIsFavorite(jobOffer)
+                          ? "Retirer des favoris"
+                          : "Ajouter aux favoris"}
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
           </Grid>
+          <Pagination
+            count={Math.ceil(infoDataFiltered.length / 9)} // Calculate the total number of pages
+            color="primary"
+            onChange={handlePaginationChange} // Handle page change events
+            page={page} // Pass the current page number
+            sx={{ justifyContent: "center", mt: "1rem" }}
+          />
           <Backdrop
             sx={{
               color: "#fff",
