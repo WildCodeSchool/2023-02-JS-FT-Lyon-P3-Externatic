@@ -287,6 +287,15 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                         Site Web
                       </Button>
                     </Link>
+
+                    <Button
+                      href={`mailto:${selectedJob.email}`}
+                      variant="contained"
+                      size="small"
+                      sx={{ marginTop: "1rem", marginLeft: "0.5rem" }}
+                    >
+                      Nous contacter
+                    </Button>
                   </CardContent>
                 </Box>
               )}
@@ -349,13 +358,50 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
               sx={{
                 backgroundColor: "white",
                 color: "black",
-                width: "50%",
+                marginRight: "1rem",
+                marginLeft: "1rem",
+                overflow: "auto",
+                maxHeight: "600px",
+                scrollbarWidth: "thin",
+                scrollbarColor: "#888888 #f5f5f5",
+                "&::-webkit-scrollbar": {
+                  width: "6px",
+                },
+                "&::-webkit-scrollbar-track": {
+                  backgroundColor: "#f5f5f5",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: "#888888",
+                  borderRadius: "3px",
+                },
               }}
             >
               {selectedJob && (
-                <Box sx={{ display: "flex" }}>
-                  <Box sx={{ m: "2rem" }}>
-                    <Button onClick={() => handleToggleFavorite(selectedJob)}>
+                <Box
+                  sx={{
+                    "@media (min-width: 768px)": {
+                      display: "flex",
+                    },
+                  }}
+                >
+                  <CardContent>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="/static/images/avatar/1.jpg"
+                      sx={{
+                        height: "77px",
+                        width: "77px",
+                        position: "absolute",
+                        mt: "-50px",
+                        mx: "auto",
+                        left: 0,
+                        right: 0,
+                      }}
+                    />
+                    <Button
+                      onClick={() => handleToggleFavorite(selectedJob)}
+                      sx={{ display: "flex", justifyContent: "start" }}
+                    >
                       {checkIsFavorite(selectedJob)
                         ? "Retirer des favoris"
                         : "Ajouter aux favoris"}
@@ -372,9 +418,6 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                     <Typography sx={{ marginBottom: "1rem" }}>
                       {formatText(selectedJob.requirements)}
                     </Typography>
-                    <Typography sx={{ marginBottom: "1rem" }}>
-                      {selectedJob.salary}
-                    </Typography>
                     <Button
                       variant="contained"
                       size="large"
@@ -382,35 +425,82 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                     >
                       Postuler
                     </Button>
-                  </Box>
-                  <Box
-                    sx={{
-                      borderRadius: "3rem",
-                      border: "0.1px solid grey",
-                      marginTop: "2rem",
-                      marginRight: "1rem",
-                      padding: "1rem",
-                      height: "15rem",
-                    }}
-                  >
-                    <Typography sx={{ marginBottom: "0.2rem" }}>
-                      Poste recherché : {selectedJob.category}
-                    </Typography>
-                    <Typography sx={{ marginBottom: "0.2rem" }}>
-                      {selectedJob.contact}
-                    </Typography>
-                    <Typography sx={{ marginBottom: "0.2rem" }}>
-                      {selectedJob.location}
-                    </Typography>
-                    <Typography sx={{ marginBottom: "0.2rem" }}>
-                      Type de contrat : {selectedJob.type}
-                    </Typography>
-                    <Typography sx={{ marginBottom: "0.2rem" }}>
-                      {selectedJob.remote}
-                    </Typography>
-                    <Typography>
-                      Date de publication : {selectedJob.posting_date}
-                    </Typography>
+                  </CardContent>
+                  <CardContent>
+                    <Paper
+                      sx={{
+                        borderRadius: "0.8rem",
+                        border: "0.1px solid grey",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          marginBottom: "0.2rem",
+                          marginLeft: "0.5rem",
+                          marginRight: "0.5rem",
+                        }}
+                      >
+                        {selectedJob.category}
+                      </Typography>
+                    </Paper>
+                    <Paper
+                      sx={{
+                        borderRadius: "0.8rem",
+                        border: "0.1px solid grey",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      <Typography sx={{ marginBottom: "0.2rem" }}>
+                        {selectedJob.location}
+                      </Typography>
+                    </Paper>
+                    <Paper
+                      sx={{
+                        borderRadius: "0.8rem",
+                        border: "0.1px solid grey",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      <Typography sx={{ marginBottom: "0.2rem" }}>
+                        {selectedJob.type}
+                      </Typography>
+                    </Paper>
+                    <Paper
+                      sx={{
+                        borderRadius: "0.8rem",
+                        border: "0.1px solid grey",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      <Typography sx={{ marginBottom: "0.2rem" }}>
+                        {selectedJob.remote}
+                      </Typography>
+                    </Paper>
+                    <Paper
+                      sx={{
+                        borderRadius: "0.8rem",
+                        border: "0.1px solid grey",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      <Typography sx={{ marginBottom: "0.2rem" }}>
+                        {selectedJob.salary}
+                      </Typography>
+                    </Paper>
+                    <Paper
+                      sx={{
+                        borderRadius: "0.8rem",
+                        border: "0.1px solid grey",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      <Typography
+                        sx={{ marginLeft: "1rem", marginRight: "1rem" }}
+                      >
+                        {selectedJob.posting_date}
+                      </Typography>
+                    </Paper>
                     <Link
                       href={selectedJob.website}
                       target="_blank"
@@ -424,7 +514,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                         Site Web
                       </Button>
                     </Link>
-                  </Box>
+                  </CardContent>
                 </Box>
               )}
             </Box>
