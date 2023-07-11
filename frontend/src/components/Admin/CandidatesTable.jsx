@@ -57,7 +57,7 @@ export default function CandidatesTable() {
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h4" gutterBottom sx={{ mt: 4 }}>
+      <Typography variant="h4" sx={{ py: 4 }}>
         Liste des Candidats
       </Typography>
       <DataGrid
@@ -70,7 +70,6 @@ export default function CandidatesTable() {
           },
         }}
         pageSizeOptions={[10, 20]}
-        checkboxSelection
       />
     </Container>
   );
