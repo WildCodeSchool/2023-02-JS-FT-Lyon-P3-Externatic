@@ -8,19 +8,19 @@ const {
 } = require("../services/auth");
 const {
   getCompanyByEmailMiddleWare,
-  register,
+  registerCompany,
 } = require("../controllers/authControllers");
 
 const routerCompany = express.Router();
 const companyControllers = require("../controllers/companyControllers");
 
-routerCompany.post("/register", hashPassword, register);
+routerCompany.post("/register-company", hashPassword, registerCompany);
 routerCompany.post(
-  "/login",
+  "/login-company",
   getCompanyByEmailMiddleWare,
   verifyCompanyPassword
 );
-routerCompany.get("/logout", logout);
+routerCompany.get("/logout-company", logout);
 routerCompany.get("/company-profile", verifyToken, companyControllers.profile);
 
 routerCompany.get("/companies", companyControllers.browse);

@@ -30,8 +30,8 @@ CREATE TABLE company (
   user_id INT NOT NULL,
   name VARCHAR(50) NOT NULL,
   contact VARCHAR(50),
-  description TEXT,
-  website TEXT,
+  description VARCHAR(400),
+  website VARCHAR(200),
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 )
@@ -94,6 +94,8 @@ CREATE TABLE job_location (
 ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 
+
+
 INSERT INTO user (email, phone, city, picture, hashedPassword, admin)
 VALUES
   ('admin@mail.com', '1234567890', 'Admin City', "https://xsgames.co/randomusers/avatar.php?g=pixel", '$argon2id$v=19$m=19456,t=2,p=1$OHrIYr3oh1aV8bMvuQQfVg$ulKfOEOlASVNSqHrFtqRQyxUu85biaS/jmsjTH203iE', 1),
@@ -125,9 +127,18 @@ VALUES
   ('user15@example.com', '666666666', 'City9', "https://xsgames.co/randomusers/avatar.php?g=pixel", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('user16@example.com', '777777777', 'City10', "https://xsgames.co/randomusers/avatar.php?g=pixel", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('user17@example.com', '888888888', 'City11', "https://xsgames.co/randomusers/avatar.php?g=pixel", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
-  ('user18@example.com', '888845668', 'City12', "https://xsgames.co/randomusers/avatar.php?g=pixel", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0);
-  
-  
+  ('user18@example.com', '888845668', 'City12', "https://xsgames.co/randomusers/avatar.php?g=pixel", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
+  ('johnny.dodoe@example.com', '1234567890', 'San Francisco', 'https://xsgames.co/randomusers/avatar.php?g=male', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
+  ('jeanne.richard@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
+  ('david.caplan@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
+  ('eliane.robert@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
+  ('marcel.renfor@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
+  ('jacky.klein@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
+  ('sebastien.clarck@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
+  ('william.peel@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
+  ('philip.morris@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
+  ('brad.pitttt@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0);
+
 INSERT INTO candidate (user_id, firstname, lastname, cv)
 VALUES
   (1, 'Admin', 'Test', NULL),

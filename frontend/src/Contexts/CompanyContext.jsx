@@ -20,7 +20,7 @@ export function CompanyContextProvider({ children }) {
 
   const logoutCompany = async () => {
     try {
-      await axios.get(`${BACKEND_URL}/logout`);
+      await axios.get(`${BACKEND_URL}/logout-company`);
       setCompany({});
       localStorage.removeItem("company");
       navigate("/");

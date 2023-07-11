@@ -20,7 +20,7 @@ export function CandidateContextProvider({ children }) {
 
   const logoutCandidate = async () => {
     try {
-      await axios.get(`${BACKEND_URL}/logoutCandidate`);
+      await axios.get(`${BACKEND_URL}/logout-candidate`);
       setCandidate({});
       localStorage.removeItem("candidate");
       navigate("/");

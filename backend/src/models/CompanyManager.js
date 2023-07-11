@@ -25,7 +25,7 @@ class CompanyManager extends AbstractManager {
     INNER JOIN user ON company.user_id = user.id`);
   }
 
-  findByEmailWithPassword(email) {
+  findCompanyByEmailWithPassword(email) {
     return this.database.query(
       `SELECT * FROM ${this.table} 
       INNER JOIN user ON company.user_id = user.id

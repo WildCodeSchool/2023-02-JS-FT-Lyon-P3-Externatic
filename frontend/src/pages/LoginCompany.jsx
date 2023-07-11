@@ -14,7 +14,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import logo from "../assets/externatic-logo.png";
 import accueil from "../assets/accueil.jpg";
-import { useCandidateContext } from "../Contexts/CandidateContext";
+import { useCompanyContext } from "../Contexts/CompanyContext";
 
 function Copyright() {
   return (
@@ -31,7 +31,7 @@ function Copyright() {
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function Login() {
-  const { login } = useCandidateContext();
+  const { loginCompany } = useCompanyContext();
   const [msg, setMsg] = useState("");
   const [userInfos, setUserInfos] = useState({
     email: "",
@@ -45,16 +45,18 @@ export default function Login() {
   };
 
   const handleLinkRegister = () => {
-    navigate("/register");
+    navigate("/register-company");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm) {
       axios
-        .post(`${BACKEND_URL}/login`, userInfos, { withCredentials: true })
-        .then(({ data: candidate }) => {
-          login(candidate);
+        .post(`${BACKEND_URL}/login-company`, userInfos, {
+          withCredentials: true,
+        })
+        .then(({ data: company }) => {
+          loginCompany(company);
           navigate("/");
         })
         .catch((error) => {

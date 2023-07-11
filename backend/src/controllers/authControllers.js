@@ -4,7 +4,7 @@ const getCandidateByEmailMiddleWare = (req, res, next) => {
   // We just wanna check if candidate exist with this mail
   const { email } = req.body;
   models.candidate
-    .findByEmailWithPassword(email)
+    .findCandidateByEmailWithPassword(email)
     .then(([candidates]) => {
       if (candidates[0]) {
         // if candidate exist, push it to req.candidate so we can access like req.candidate.id, req.candidate.firstname, etc
@@ -25,7 +25,7 @@ const getCandidateByEmailMiddleWare = (req, res, next) => {
 const getCompanyByEmailMiddleWare = (req, res, next) => {
   const { email } = req.body;
   models.company
-    .findByEmailWithPassword(email)
+    .findCompanyByEmailWithPassword(email)
     .then(([companies]) => {
       if (companies[0]) {
         [req.company] = companies;

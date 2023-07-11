@@ -19,13 +19,13 @@ const routerCandidate = express.Router();
 const candidateControllers = require("../controllers/candidateControllers");
 
 // Routes Privées
-routerCandidate.post("/register", hashPassword, register);
+routerCandidate.post("/register-candidate", hashPassword, register);
 routerCandidate.post(
-  "/login",
+  "/login-candidate",
   getCandidateByEmailMiddleWare,
   verifyCandidatePassword
 );
-routerCandidate.get("/logoutCandidate", logout);
+routerCandidate.get("/logout-candidate", logout);
 routerCandidate.get(
   "/candidate-profile",
   verifyToken,
