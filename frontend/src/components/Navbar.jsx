@@ -197,7 +197,7 @@ export default function Navbar() {
                 <Typography sx={{ ml: 1 }}>Blog</Typography>
               </Box>
             </Button>
-            {candidate.admin === 1 ? (
+            {candidate.admin === 1 || company.admin === 1 ? (
               <Button
                 onClick={handleLinkAdmin}
                 sx={{ my: 2, color: "white", display: "block" }}
@@ -255,7 +255,7 @@ export default function Navbar() {
                   </Typography>
                 </MenuItem>
               ) : null}
-              {candidate.admin === 1 ? (
+              {candidate.admin === 1 || company.admin === 1 ? (
                 <MenuItem onClick={handleLinkAdmin}>
                   <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
                     Espace Admin
