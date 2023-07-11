@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import CandidateProfile from "./pages/CandidateProfile";
 import Ads from "./pages/Ads";
+import Blog from "./pages/Blog";
 import Register from "./pages/Register";
 import RegisterCompany from "./pages/RegisterCompany";
 import ChooseAction from "./components/Admin/ChooseAction";
@@ -49,6 +50,7 @@ function App() {
           <Route path="/register-candidate" element={<Register />} />
           <Route path="/espace-pro" element={<CompanyProfile />} />
           <Route path="/annonces" element={<Ads />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="/espace-candidat" element={<CandidateProfile />} />
           <Route path="/admin" element={<Admin />}>
             <Route index element={<ChooseAction />} />

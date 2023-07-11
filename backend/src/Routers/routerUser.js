@@ -4,7 +4,10 @@ const multer = require("multer");
 const routerUser = express.Router();
 const { verifyToken } = require("../services/auth");
 
-const uploadPicture = multer({ dest: "./public/picture/" });
+const uploadPicture = multer({
+  dest: "./public/picture/",
+  limits: { fileSize: 1048576 },
+});
 
 const userControllers = require("../controllers/userControllers");
 

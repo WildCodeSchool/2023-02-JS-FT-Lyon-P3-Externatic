@@ -1,7 +1,10 @@
 const express = require("express");
 const multer = require("multer");
 
-const uploadCV = multer({ dest: "./public/cv/" });
+const uploadCV = multer({
+  dest: "./public/cv/",
+  limits: { fileSize: 1048576 },
+});
 
 const {
   hashPassword,
