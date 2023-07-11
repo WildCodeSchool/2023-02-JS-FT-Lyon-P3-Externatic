@@ -134,10 +134,13 @@ const destroyByLastName = (req, res) => {
 
 const uploadCV = async (req, res) => {
   const { originalname, filename } = req.file;
-  const cvPath = `./public/uploads/cv/${uuidv4()}-${originalname}`;
+  const cvPath = `${uuidv4()}-${originalname}`;
 
   try {
-    await fs.promises.rename(`./public/uploads/cv/${filename}`, cvPath);
+    await fs.promises.rename(
+      `./public/cv/${filename}`,
+      `./public/cv/${cvPath}`
+    );
 
     const candidateId = req.payloads.sub;
 
