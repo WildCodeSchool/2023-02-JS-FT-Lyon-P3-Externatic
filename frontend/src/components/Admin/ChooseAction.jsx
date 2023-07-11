@@ -2,7 +2,7 @@ import React from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function ChooseAction() {
   return (
@@ -21,7 +21,7 @@ export default function ChooseAction() {
             alignItems: "center",
           }}
         >
-          <ArrowLeftIcon />
+          <ArrowBackIcon sx={{ mr: 1 }} />
           Choisissez l'action à réaliser{" "}
         </Box>
       </Typography>

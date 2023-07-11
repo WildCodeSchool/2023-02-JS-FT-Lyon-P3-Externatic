@@ -30,18 +30,38 @@ function NavAdmin() {
       divider={<Divider light flexItem />}
       sx={{ p: 4 }}
     >
-      <Button size="large" variant="text" onClick={handleLinkCreate}>
+      <Button
+        size="large"
+        variant="outlined"
+        sx={{ width: 250 }}
+        onClick={handleLinkCreate}
+      >
         <AddIcon sx={{ mr: 1 }} />
         Création
       </Button>
-      <Button size="large" variant="text" onClick={handleLinkDelete}>
+      <Button
+        size="large"
+        variant="outlined"
+        sx={{ width: 250 }}
+        onClick={handleLinkDelete}
+      >
         <RemoveIcon sx={{ mr: 1 }} />
         Suppression
       </Button>
-      <Button size="large" variant="text" onClick={handleLinkCandidates}>
+      <Button
+        size="large"
+        sx={{ width: 250 }}
+        variant="outlined"
+        onClick={handleLinkCandidates}
+      >
         Liste des Candidats
       </Button>
-      <Button size="large" variant="text" onClick={handleLinkCompanies}>
+      <Button
+        size="large"
+        sx={{ width: 250 }}
+        variant="outlined"
+        onClick={handleLinkCompanies}
+      >
         Liste des Entreprises
       </Button>
     </Stack>
