@@ -38,8 +38,7 @@ function UpdateCandidate() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.warn(formData);
-    console.warn(candidate.id);
+
     if (validateForm) {
       axios
         .put(`${BACKEND_URL}/candidates/${candidate.id}`, { ...formData })
