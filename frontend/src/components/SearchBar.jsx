@@ -87,9 +87,9 @@ export default function SearchBar() {
       const res = await axios.get(`${BACKEND_URL}/jobs`);
       const filteredData = res.data.filter((job) => {
         const titleMatch =
-          !inputFilter.jobTitle || job.title === inputFilter.jobTitle;
+          !inputFilter.jobTitle || job.category === inputFilter.jobTitle;
         const typeMatch =
-          !inputFilter.jobType || job.contract_type === inputFilter.jobType;
+          !inputFilter.jobType || job.type === inputFilter.jobType;
         const locationMatch =
           !inputFilter.jobLocation || job.location === inputFilter.jobLocation;
         return titleMatch && typeMatch && locationMatch;

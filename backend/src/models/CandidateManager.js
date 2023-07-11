@@ -50,14 +50,22 @@ class CandidateManager extends AbstractManager {
     );
   }
 
-  delete(candidateId) {
+  updateCV(candidate) {
     return this.database.query(
-      `DELETE candidate, user
-    FROM candidate
-    JOIN user ON candidate.user_id = user.id
-    WHERE candidate.id = ?
-  `,
-      [candidateId]
+      `update ${this.table} set cv = ? where user_id = ${candidate.id}`,
+      [candidate.cv]
+    );
+  }
+
+  deleteByLastName(lastname) {
+    return this.database.query(
+      `
+      DELETE candidate, user
+      FROM candidate
+      JOIN user ON candidate.user_id = user.id
+      WHERE candidate.lastname = ?
+      `,
+      [lastname]
     );
   }
 }

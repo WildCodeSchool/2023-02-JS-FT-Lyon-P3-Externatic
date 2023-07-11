@@ -1,4 +1,7 @@
 const express = require("express");
+const multer = require("multer");
+
+const uploadCV = multer({ dest: "./public/cv/" });
 
 const {
   hashPassword,
@@ -24,20 +27,17 @@ routerCandidate.get(
   verifyToken,
   candidateControllers.profile
 );
+routerCandidate.post(
+  "/monCV",
+  verifyToken,
+  uploadCV.single("monCV"),
+  candidateControllers.uploadCV
+);
 
 // Routes Publiques
 routerCandidate.get("/candidates", candidateControllers.browse);
 routerCandidate.get("/candidates/:id", candidateControllers.read);
 routerCandidate.put("/candidates/:id", candidateControllers.edit);
-routerCandidate.delete("/candidates/:id", candidateControllers.destroy);
-
-routerCandidate.post(
-  "/monCV",
-  verifyToken,
-  candidateControllers.uploadCV,
-  (req, res) => {
-    res.send("File uploaded");
-  }
-);
+routerCandidate.delete("/candidates", candidateControllers.destroyByLastName);
 
 module.exports = routerCandidate;

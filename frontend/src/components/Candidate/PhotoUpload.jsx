@@ -8,9 +8,10 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Typography from "@mui/material/Typography";
 
-export default function CVupload() {
+export default function PhotoUpload() {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-  const notifyUpload = () => toast.success("Votre CV a bien été enregistré !");
+  const notifyUpload = () =>
+    toast.success("Votre Photo a bien été enregistrée !");
   const notifyUploadError = () => toast.error("Problème à l'enregistrement !");
 
   const inputRef = useRef();
@@ -19,10 +20,10 @@ export default function CVupload() {
     evt.preventDefault();
 
     const formData = new FormData();
-    formData.append("monCV", inputRef.current.files[0]);
+    formData.append("maPhoto", inputRef.current.files[0]);
 
     axios
-      .post(`${BACKEND_URL}/monCV`, formData, { withCredentials: true })
+      .post(`${BACKEND_URL}/maPhoto`, formData, { withCredentials: true })
       .then((response) => {
         console.warn(JSON.stringify(response.data));
         notifyUpload();
@@ -47,12 +48,11 @@ export default function CVupload() {
           border: "4px solid #CB1F61",
         }}
       >
-        <Typography variant="body1" color="initial" sx={{ p: 1 }}>
-          Vous pouvez charger votre CV pour le rendre disponible pour les
-          recruteurs.
+        <Typography variant="body1" color="initial">
+          Choisissez un fichier pour votre photo de profil
         </Typography>
         <form encType="multipart/form-data" onSubmit={handleSubmit}>
-          <Input type="file" name="monCV" inputRef={inputRef} sx={{ m: 2 }} />
+          <Input type="file" name="monCV" inputRef={inputRef} sx={{ mr: 2 }} />
           <Button type="submit" variant="outlined">
             Envoyer
           </Button>
