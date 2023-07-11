@@ -124,14 +124,14 @@ export default function CandidateCard({ candidate }) {
           </Typography>
           {candidate.cv === null ? (
             <Button size="small" onClick={handleCvClick}>
-              <UploadFileIcon />
+              <UploadFileIcon sx={{ mr: 1 }} />
               <Typography variant="body2" color="text.secondary">
                 Intégrer Votre CV
               </Typography>
             </Button>
           ) : (
             <Button size="small" onClick={handleCvClick}>
-              <TopicIcon />
+              <TopicIcon sx={{ mr: 1 }} />
               <Typography variant="body2" color="text.secondary">
                 Changer le CV
               </Typography>
@@ -168,7 +168,7 @@ export default function CandidateCard({ candidate }) {
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
           <Button size="small" onClick={handleUpdateOpen}>
-            <DriveFileRenameOutlineIcon />
+            <DriveFileRenameOutlineIcon sx={{ mr: 1 }} />
             Modifier mes Informations
           </Button>
           <Backdrop
