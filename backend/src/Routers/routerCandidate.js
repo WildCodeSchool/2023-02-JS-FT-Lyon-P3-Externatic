@@ -3,7 +3,7 @@ const multer = require("multer");
 
 const uploadCV = multer({
   dest: "./public/cv/",
-  limits: { fileSize: 1048576 },
+  limits: { fileSize: 5000000000000 },
 });
 
 const {
