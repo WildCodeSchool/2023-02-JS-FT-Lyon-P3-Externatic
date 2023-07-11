@@ -55,7 +55,7 @@ export default function Register() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.warn(formData);
+
     if (validateForm) {
       axios
         .post(`${BACKEND_URL}/register`, { ...formData })
