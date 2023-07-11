@@ -62,9 +62,10 @@ export default function Navbar() {
     navigate("/espace-candidat");
   };
 
-  const handleLinkCompany = () => {
+  /* const handleLinkCompany = () => {
     navigate("/espace-recruteur");
   };
+  */
 
   const handleLinkAdmin = () => {
     navigate("/admin");
