@@ -99,11 +99,10 @@ export default function AdminCreate() {
       component="main"
       maxWidth="lg"
       sx={{
-        pt: "6rem",
         pb: "3rem",
       }}
     >
-      <Typography variant="h4" color="initial">
+      <Typography variant="h4" color="initial" sx={{ py: 4 }}>
         Création
       </Typography>
       <Accordion>
@@ -384,7 +383,7 @@ export default function AdminCreate() {
           aria-controls="panel3a-content"
           id="panel3a-header"
         >
-          <Typography>Créer un nouvel Admin</Typography>
+          <Typography>Créer une nouvelle Annonce</Typography>
         </AccordionSummary>
       </Accordion>
     </Container>

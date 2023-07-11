@@ -13,9 +13,13 @@ import Backdrop from "@mui/material/Backdrop";
 import TopicIcon from "@mui/icons-material/Topic";
 import CVupload from "./CVupload";
 import PhotoUpload from "./PhotoUpload";
+import UpdateCandidate from "./UpdateCandidate";
 
 export default function CandidateCard({ candidate }) {
   const [openCv, setOpenCV] = React.useState(false);
+  const [openUpdate, setOpenUpdate] = React.useState(false);
+  const [openPhoto, setOpenPhoto] = React.useState(false);
+
   const handleCvClose = () => {
     setOpenCV(false);
   };
@@ -23,12 +27,19 @@ export default function CandidateCard({ candidate }) {
     setOpenCV(true);
   };
 
-  const [openPhoto, setOpenPhoto] = React.useState(false);
   const handlePhotoClose = () => {
     setOpenPhoto(false);
   };
   const handlePhotoOpen = () => {
     setOpenPhoto(true);
+  };
+
+  const handleUpdateOpen = () => {
+    setOpenUpdate(true);
+  };
+
+  const handleUpdateClose = () => {
+    setOpenUpdate(false);
   };
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -113,14 +124,14 @@ export default function CandidateCard({ candidate }) {
           </Typography>
           {candidate.cv === null ? (
             <Button size="small" onClick={handleCvClick}>
-              <UploadFileIcon />
+              <UploadFileIcon sx={{ mr: 1 }} />
               <Typography variant="body2" color="text.secondary">
                 Intégrer Votre CV
               </Typography>
             </Button>
           ) : (
             <Button size="small" onClick={handleCvClick}>
-              <TopicIcon />
+              <TopicIcon sx={{ mr: 1 }} />
               <Typography variant="body2" color="text.secondary">
                 Changer le CV
               </Typography>
@@ -156,10 +167,36 @@ export default function CandidateCard({ candidate }) {
         </Backdrop>
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-          <Button size="small">
-            <DriveFileRenameOutlineIcon />
+          <Button size="small" onClick={handleUpdateOpen}>
+            <DriveFileRenameOutlineIcon sx={{ mr: 1 }} />
             Modifier mes Informations
           </Button>
+          <Backdrop
+            sx={{
+              color: "#fff",
+              zIndex: (theme) => theme.zIndex.drawer + 10,
+            }}
+            open={openUpdate}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <UpdateCandidate />
+              <Button
+                size="small"
+                variant="contained"
+                onClick={handleUpdateClose}
+                sx={{ m: 2 }}
+              >
+                Fermer
+              </Button>
+            </Box>
+          </Backdrop>
         </CardActions>
       </Box>
     </Card>

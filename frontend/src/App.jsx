@@ -4,11 +4,14 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import CandidateProfile from "./pages/CandidateProfile";
-import CompanyProfile from "./pages/CompanyProfile";
 import Ads from "./pages/Ads";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-
+import ChooseAction from "./components/Admin/ChooseAction";
+import AdminCreate from "./components/Admin/AdminCreate";
+import AdminDelete from "./components/Admin/AdminDelete";
+import CandidatesTable from "./components/Admin/CandidatesTable";
+import CompaniesTable from "./components/Admin/CompaniesTable";
 import "./App.css";
 
 function App() {
@@ -37,8 +40,13 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/annonces" element={<Ads />} />
           <Route path="/espace-candidat" element={<CandidateProfile />} />
-          <Route path="/espace-recruteur" element={<CompanyProfile />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={<Admin />}>
+            <Route index element={<ChooseAction />} />
+            <Route path="admin-create" element={<AdminCreate />} />
+            <Route path="admin-delete" element={<AdminDelete />} />
+            <Route path="candidates-list" element={<CandidatesTable />} />
+            <Route path="companies-list" element={<CompaniesTable />} />
+          </Route>
           <Route path="/login" element={<Login />} />
         </Routes>
       </ThemeProvider>
