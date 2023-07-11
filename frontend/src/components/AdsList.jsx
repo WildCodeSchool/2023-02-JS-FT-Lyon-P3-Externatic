@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, React } from "react";
+import { useState, useEffect, useContext, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "@mui/material/Button";
@@ -16,7 +16,9 @@ import Container from "@mui/material/Container";
 import Pagination from "@mui/material/Pagination";
 import Avatar from "@mui/material/Avatar";
 import { PropTypes } from "prop-types";
+import { toast } from "react-toastify";
 import CandidateContext from "../Contexts/CandidateContext";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -54,10 +56,9 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
   const handleClose = () => {
     setOpen(false);
   };
-  const [offerId, setOfferid] = useState();
+
   const handleOpen = (job) => {
     setSelectedJob(job);
-    setOfferid(job.id);
     setOpen(true);
   };
 
@@ -74,42 +75,45 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
     }
   }, [ids]);
 
-  // Post offer in hte database
+  // Post offer in the database
   const { candidate } = useContext(CandidateContext);
-  // const [candidateId, setCandidateId] = useState();
+
   const [openSubscribeModal, setOpenSubscribeModal] = useState(false);
-  const [actualDate, setActualDate] = useState();
 
-  const handlePost = () => {
-    if (!candidate.id) {
-      setOpenSubscribeModal(true);
-    } else {
-      const date = new Date();
-      const year = date.getFullYear();
-      const month = date.getMonth() + 1;
-      const day = date.getUTCDate();
-
-      setActualDate(`${year}-${month}-${day}`);
-      axios.post(
-        `http://localhost:6001/applications`,
-        1,
-        offerId,
-        actualDate,
-        "en cours"
-      );
-      // .then((res) => console.info(res))
-      // .catch((error) => {
-      //   console.error(error);
-      // });
+  const handlePostOffer = (jobOffer) => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getUTCDate();
+    const newDate = `${year}-${month}-${day}`;
+    try {
+      if (!candidate.id) {
+        setOpenSubscribeModal(true);
+      } else {
+        axios
+          .post(`${BACKEND_URL}/applications`, {
+            candidate_id: candidate.id,
+            job_posting_id: jobOffer.id,
+            date: newDate,
+            status: "en cours",
+          })
+          .then(toast.success("Votre Candidature a été prise en compte."))
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    } catch (error) {
+      console.error(error);
     }
+    return undefined;
   };
 
   const formatText = (text) => {
     return text.split("\n").map((line) => (
-      <React.Fragment key={selectedJob.id}>
+      <Fragment key={line}>
         {line}
         <br />
-      </React.Fragment>
+      </Fragment>
     ));
   };
 
@@ -183,7 +187,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                 }}
               >
                 <Typography gutterBottom variant="h5" component="h2">
-                  Please Login to Apply to anny offer.
+                  Veuillez vous connecter pour postuler à une offre.
                 </Typography>
               </Box>
             </Backdrop>
@@ -276,7 +280,9 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       variant="contained"
                       size="large"
                       sx={{ marginTop: "1rem" }}
-                      onClick={handlePost}
+                      onClick={() => {
+                        handlePostOffer(selectedJob);
+                      }}
                     >
                       Postuler
                     </Button>
@@ -435,7 +441,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
             color="primary"
             onChange={handlePaginationChange} // Handle page change events
             page={page} // Pass the current page number
-            sx={{ justifyContent: "center", mt: "1rem" }}
+            sx={{ display: "flex", justifyContent: "center", mt: "1rem" }}
           />
           <Backdrop
             sx={{
@@ -513,7 +519,9 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       variant="contained"
                       size="large"
                       sx={{ marginTop: "1rem" }}
-                      onClick={handlePost}
+                      onClick={() => {
+                        handlePostOffer(selectedJob);
+                      }}
                     >
                       Postuler
                     </Button>
