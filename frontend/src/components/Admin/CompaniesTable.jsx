@@ -48,8 +48,8 @@ export default function CompaniesTable() {
   }, []);
 
   return (
-    <Container maxWidth="lg" sx={{ my: 4 }}>
-      <Typography variant="h4" gutterBottom>
+    <Container maxWidth="lg">
+      <Typography variant="h4" sx={{ py: 4 }}>
         Liste des Entreprises
       </Typography>
       <div style={{ height: "100%", width: "100%" }}>
@@ -63,7 +63,6 @@ export default function CompaniesTable() {
             },
           }}
           pageSizeOptions={[10, 20]}
-          checkboxSelection
         />
       </div>
     </Container>
