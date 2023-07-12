@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useContext, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "@mui/material/Button";
@@ -16,6 +16,9 @@ import Container from "@mui/material/Container";
 import Pagination from "@mui/material/Pagination";
 import Avatar from "@mui/material/Avatar";
 import { PropTypes } from "prop-types";
+import { toast } from "react-toastify";
+import CandidateContext from "../Contexts/CandidateContext";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -53,6 +56,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
   const handleClose = () => {
     setOpen(false);
   };
+
   const handleOpen = (job) => {
     setSelectedJob(job);
     setOpen(true);
@@ -71,12 +75,45 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
     }
   }, [ids]);
 
+  // Post offer in the database
+  const { candidate } = useContext(CandidateContext);
+
+  const [openSubscribeModal, setOpenSubscribeModal] = useState(false);
+
+  const handlePostOffer = (jobOffer) => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getUTCDate();
+    const newDate = `${year}-${month}-${day}`;
+    try {
+      if (!candidate.id) {
+        setOpenSubscribeModal(true);
+      } else {
+        axios
+          .post(`${BACKEND_URL}/applications`, {
+            candidate_id: candidate.id,
+            job_posting_id: jobOffer.id,
+            date: newDate,
+            status: "en cours",
+          })
+          .then(toast.success("Votre Candidature a été prise en compte."))
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    return undefined;
+  };
+
   const formatText = (text) => {
     return text.split("\n").map((line) => (
-      <React.Fragment key={selectedJob.id}>
+      <Fragment key={line}>
         {line}
         <br />
-      </React.Fragment>
+      </Fragment>
     ));
   };
 
@@ -127,6 +164,35 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                 </Grid>
               ))}
           </Grid>
+
+          {/* Subscribe modal annoncement */}
+          {openSubscribeModal && (
+            <Backdrop
+              sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              open={openSubscribeModal}
+              onClick={() => {
+                setOpenSubscribeModal(false);
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "white",
+                  color: "black",
+                  width: "40%",
+                  height: "40%",
+                  borderRadius: "1em",
+                }}
+              >
+                <Typography gutterBottom variant="h5" component="h2">
+                  Veuillez vous connecter pour postuler à une offre.
+                </Typography>
+              </Box>
+            </Backdrop>
+          )}
+
           <Pagination
             count={Math.ceil(infoDataNoFiltered.length / 9)} // Calculate the total number of pages
             color="primary"
@@ -214,6 +280,9 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       variant="contained"
                       size="large"
                       sx={{ marginTop: "1rem" }}
+                      onClick={() => {
+                        handlePostOffer(selectedJob);
+                      }}
                     >
                       Postuler
                     </Button>
@@ -372,7 +441,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
             color="primary"
             onChange={handlePaginationChange} // Handle page change events
             page={page} // Pass the current page number
-            sx={{ justifyContent: "center", mt: "1rem" }}
+            sx={{ display: "flex", justifyContent: "center", mt: "1rem" }}
           />
           <Backdrop
             sx={{
@@ -450,6 +519,9 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       variant="contained"
                       size="large"
                       sx={{ marginTop: "1rem" }}
+                      onClick={() => {
+                        handlePostOffer(selectedJob);
+                      }}
                     >
                       Postuler
                     </Button>
