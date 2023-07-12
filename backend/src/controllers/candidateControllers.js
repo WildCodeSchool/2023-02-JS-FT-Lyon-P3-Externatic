@@ -80,7 +80,7 @@ const add = async (req, res) => {
 
 const edit = async (req, res) => {
   try {
-    const { email, phone, city, password, firstname, lastname, cv } = req.body;
+    const { email, phone, city, firstname, lastname } = req.body;
     const userId = req.body.user_id;
     const candidateId = parseInt(req.params.id, 10);
 
@@ -90,7 +90,6 @@ const edit = async (req, res) => {
       email,
       phone,
       city,
-      password,
     });
 
     // Update candidate information
@@ -99,7 +98,6 @@ const edit = async (req, res) => {
       user_id: userId,
       firstname,
       lastname,
-      cv,
     });
 
     res.sendStatus(200);
@@ -134,10 +132,13 @@ const destroyByLastName = (req, res) => {
 
 const uploadCV = async (req, res) => {
   const { originalname, filename } = req.file;
-  const cvPath = `./public/uploads/cv/${uuidv4()}-${originalname}`;
+  const cvPath = `${uuidv4()}-${originalname}`;
 
   try {
-    await fs.promises.rename(`./public/uploads/cv/${filename}`, cvPath);
+    await fs.promises.rename(
+      `./public/cv/${filename}`,
+      `./public/cv/${cvPath}`
+    );
 
     const candidateId = req.payloads.sub;
 

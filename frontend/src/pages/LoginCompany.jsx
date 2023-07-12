@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -11,10 +12,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
 import logo from "../assets/externatic-logo.png";
 import accueil from "../assets/accueil.jpg";
-import { useCandidateContext } from "../Contexts/CandidateContext";
+import { useCompanyContext } from "../Contexts/CompanyContext";
 
 function Copyright() {
   return (
@@ -31,7 +31,7 @@ function Copyright() {
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function Login() {
-  const { login } = useCandidateContext();
+  const { loginCompany } = useCompanyContext();
   const [msg, setMsg] = useState("");
   const [userInfos, setUserInfos] = useState({
     email: "",
@@ -44,13 +44,19 @@ export default function Login() {
     return true;
   };
 
+  const handleLinkRegister = () => {
+    navigate("/register-company");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm) {
       axios
-        .post(`${BACKEND_URL}/login`, userInfos, { withCredentials: true })
-        .then(({ data: candidate }) => {
-          login(candidate);
+        .post(`${BACKEND_URL}/login-company`, userInfos, {
+          withCredentials: true,
+        })
+        .then(({ data: company }) => {
+          loginCompany(company);
           navigate("/");
         })
         .catch((error) => {
@@ -153,14 +159,14 @@ export default function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/register" variant="body2">
-                  Mot de Passe Oublié?
-                </Link>
+                <Button onClick={handleLinkRegister} variant="text">
+                  "Mot de passe oublié?"
+                </Button>
               </Grid>
               <Grid item>
-                <Link href="/register" variant="body2">
+                <Button onClick={handleLinkRegister} variant="text">
                   "Nouveau chez nous? Créer un compte"
-                </Link>
+                </Button>
               </Grid>
             </Grid>
             <Copyright sx={{ mt: 5 }} />

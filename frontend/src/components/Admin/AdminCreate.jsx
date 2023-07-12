@@ -45,7 +45,7 @@ export default function AdminCreate() {
 
     if (validateForm()) {
       axios
-        .post(`${BACKEND_URL}/register`, { ...formData })
+        .post(`${BACKEND_URL}/register-candidate`, { ...formData })
         .then(() => {
           setFormData({
             firstname: "",
@@ -71,7 +71,7 @@ export default function AdminCreate() {
 
     if (validateForm()) {
       axios
-        .post(`${BACKEND_URL}/companies`, { ...formData })
+        .post(`${BACKEND_URL}/register-company`, { ...formData })
         .then(() => {
           setFormData({
             name: "",
@@ -82,7 +82,7 @@ export default function AdminCreate() {
             password: "",
             phone: "",
             city: "",
-            admin: 0,
+            admin: false,
             terms: false,
           });
           notifyCreation();
@@ -99,11 +99,10 @@ export default function AdminCreate() {
       component="main"
       maxWidth="lg"
       sx={{
-        pt: "6rem",
         pb: "3rem",
       }}
     >
-      <Typography variant="h4" color="initial">
+      <Typography variant="h4" color="initial" sx={{ py: 4 }}>
         Création
       </Typography>
       <Accordion>
@@ -384,7 +383,7 @@ export default function AdminCreate() {
           aria-controls="panel3a-content"
           id="panel3a-header"
         >
-          <Typography>Créer un nouvel Admin</Typography>
+          <Typography>Créer une nouvelle Annonce</Typography>
         </AccordionSummary>
       </Accordion>
     </Container>

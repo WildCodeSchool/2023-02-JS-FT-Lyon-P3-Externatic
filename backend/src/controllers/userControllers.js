@@ -1,3 +1,7 @@
+const fs = require("fs");
+
+const { v4: uuidv4 } = require("uuid");
+
 const models = require("../models");
 
 const browse = (req, res) => {
@@ -82,10 +86,35 @@ const destroy = (req, res) => {
     });
 };
 
+const uploadPhoto = async (req, res) => {
+  const { originalname, filename } = req.file;
+  const photoPath = `/picture/${uuidv4()}-${originalname}`;
+
+  try {
+    await fs.promises.rename(
+      `./public/picture/${filename}`,
+      `./public/${photoPath}`
+    );
+
+    const userId = req.payloads.sub;
+
+    await models.user.updatePicture({
+      id: userId,
+      picture: photoPath,
+    });
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
+
 module.exports = {
   browse,
   read,
   edit,
   add,
   destroy,
+  uploadPhoto,
 };

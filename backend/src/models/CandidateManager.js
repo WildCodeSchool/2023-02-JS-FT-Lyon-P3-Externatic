@@ -17,7 +17,7 @@ class CandidateManager extends AbstractManager {
     );
   }
 
-  findByEmailWithPassword(email) {
+  findCandidateByEmailWithPassword(email) {
     return this.database.query(
       `SELECT * FROM ${this.table} 
       INNER JOIN user ON candidate.user_id = user.id
@@ -45,8 +45,8 @@ class CandidateManager extends AbstractManager {
 
   update(candidate) {
     return this.database.query(
-      `update ${this.table} set user_id = ${candidate.user_id}, firstname = ?, lastname = ?, cv = ? where id = ${candidate.id}`,
-      [candidate.user_id, candidate.firstname, candidate.lastname, candidate.cv]
+      `update ${this.table} set user_id = ${candidate.user_id}, firstname = ?, lastname = ? where id = ${candidate.id}`,
+      [candidate.firstname, candidate.lastname]
     );
   }
 

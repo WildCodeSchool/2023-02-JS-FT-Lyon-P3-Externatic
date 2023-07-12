@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -10,16 +10,41 @@ import Typography from "@mui/material/Typography";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import Backdrop from "@mui/material/Backdrop";
+import TopicIcon from "@mui/icons-material/Topic";
 import CVupload from "./CVupload";
+import PhotoUpload from "./PhotoUpload";
+import UpdateCandidate from "./UpdateCandidate";
 
 export default function CandidateCard({ candidate }) {
-  const [open, setOpen] = React.useState(false);
-  const handleClose = () => {
-    setOpen(false);
+  const [openCv, setOpenCV] = React.useState(false);
+  const [openUpdate, setOpenUpdate] = React.useState(false);
+  const [openPhoto, setOpenPhoto] = React.useState(false);
+
+  const handleCvClose = () => {
+    setOpenCV(false);
   };
   const handleCvClick = () => {
-    setOpen(true);
+    setOpenCV(true);
   };
+
+  const handlePhotoClose = () => {
+    setOpenPhoto(false);
+  };
+  const handlePhotoOpen = () => {
+    setOpenPhoto(true);
+  };
+
+  const handleUpdateOpen = () => {
+    setOpenUpdate(true);
+  };
+
+  const handleUpdateClose = () => {
+    setOpenUpdate(false);
+  };
+
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+  const imagePath = `${BACKEND_URL}/${candidate.picture}`;
 
   return (
     <Card sx={{ maxWidth: "100%", mb: { xs: 3, md: 3 } }}>
@@ -41,16 +66,43 @@ export default function CandidateCard({ candidate }) {
         >
           <Avatar
             alt="Candidate Picture"
-            src={candidate.picture}
+            src={imagePath}
             sx={{ width: 150, height: 150 }}
           />
           <Button
             variant="text"
             color="primary"
             sx={{ fontSize: 9, fontWeight: 400, m: 1 }}
+            onClick={handlePhotoOpen}
           >
             changer ma photo
           </Button>
+          <Backdrop
+            sx={{
+              color: "#fff",
+              zIndex: (theme) => theme.zIndex.drawer + 10,
+            }}
+            open={openPhoto}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <PhotoUpload />
+              <Button
+                size="small"
+                variant="contained"
+                onClick={handlePhotoClose}
+                sx={{ m: 2 }}
+              >
+                Fermer
+              </Button>
+            </Box>
+          </Backdrop>
         </Box>
         <CardContent sx={{ mx: 2 }}>
           <Typography gutterBottom variant="h4" component="div">
@@ -68,18 +120,29 @@ export default function CandidateCard({ candidate }) {
           <Typography variant="body1" color="text.secondary" gutterBottom>
             {candidate.phone}
           </Typography>
+          {candidate.cv === null ? (
+            <Button size="small" onClick={handleCvClick}>
+              <UploadFileIcon sx={{ mr: 1 }} />
+              <Typography variant="body2" color="text.secondary">
+                Intégrer Votre CV
+              </Typography>
+            </Button>
+          ) : (
+            <Button size="small" onClick={handleCvClick}>
+              <TopicIcon sx={{ mr: 1 }} />
+              <Typography variant="body2" color="text.secondary">
+                Changer le CV
+              </Typography>
+            </Button>
+          )}
         </CardContent>
-        <Button size="small" onClick={handleCvClick}>
-          <UploadFileIcon />
-          Intégrer mon CV
-        </Button>
 
         <Backdrop
           sx={{
             color: "#fff",
             zIndex: (theme) => theme.zIndex.drawer + 1,
           }}
-          open={open}
+          open={openCv}
         >
           <Box
             sx={{
@@ -93,7 +156,7 @@ export default function CandidateCard({ candidate }) {
             <Button
               size="small"
               variant="contained"
-              onClick={handleClose}
+              onClick={handleCvClose}
               sx={{ m: 2 }}
             >
               Fermer
@@ -102,10 +165,36 @@ export default function CandidateCard({ candidate }) {
         </Backdrop>
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-          <Button size="small">
-            <DriveFileRenameOutlineIcon />
+          <Button size="small" onClick={handleUpdateOpen}>
+            <DriveFileRenameOutlineIcon sx={{ mr: 1 }} />
             Modifier mes Informations
           </Button>
+          <Backdrop
+            sx={{
+              color: "#fff",
+              zIndex: (theme) => theme.zIndex.drawer + 10,
+            }}
+            open={openUpdate}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <UpdateCandidate />
+              <Button
+                size="small"
+                variant="contained"
+                onClick={handleUpdateClose}
+                sx={{ m: 2 }}
+              >
+                Fermer
+              </Button>
+            </Box>
+          </Backdrop>
         </CardActions>
       </Box>
     </Card>
@@ -130,6 +219,6 @@ CandidateCard.defaultProps = {
     lastname: "nom candidat",
     email: "candidat@mail.com",
     city: "Paris",
-    picture: "../../assets/profilePicture.jpg",
+    picture: "https://xsgames.co/randomusers/avatar.php?g=female",
   },
 };
