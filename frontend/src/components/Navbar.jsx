@@ -18,9 +18,11 @@ import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/externatic-logo-long.png";
 import { useCandidateContext } from "../Contexts/CandidateContext";
+import { useCompanyContext } from "../Contexts/CompanyContext";
 
 export default function Navbar() {
-  const { candidate, logout } = useCandidateContext();
+  const { candidate, logoutCandidate } = useCandidateContext();
+  const { company, logoutCompany } = useCompanyContext();
 
   const navigate = useNavigate();
 
@@ -59,13 +61,25 @@ export default function Navbar() {
   const handleLinkUser = () => {
     navigate("/espace-candidat");
   };
+
+  const handleLinkCompany = () => {
+    navigate("/espace-pro");
+  };
+
   const handleLinkAdmin = () => {
     navigate("/admin");
   };
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-  const imagePath = `${BACKEND_URL}/${candidate.picture}`;
+  let imagePath;
+  if (candidate.id) {
+    imagePath = `${BACKEND_URL}/${candidate.picture}`;
+  } else if (company.id) {
+    imagePath = `${BACKEND_URL}/${company.picture}`;
+  } else {
+    imagePath = null;
+  }
 
   return (
     <AppBar position="sticky" color="secondary">
@@ -234,6 +248,13 @@ export default function Navbar() {
                   </Typography>
                 </MenuItem>
               ) : null}
+              {company.id ? (
+                <MenuItem onClick={handleLinkCompany}>
+                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                    Espace Pro
+                  </Typography>
+                </MenuItem>
+              ) : null}
               {candidate.admin === 1 ? (
                 <MenuItem onClick={handleLinkAdmin}>
                   <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
@@ -242,13 +263,20 @@ export default function Navbar() {
                 </MenuItem>
               ) : null}
               {candidate.id ? (
-                <MenuItem onClick={logout}>
+                <MenuItem onClick={logoutCandidate}>
                   <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
                     Logout
                   </Typography>
                 </MenuItem>
               ) : null}
-              {!candidate.id ? (
+              {company.id ? (
+                <MenuItem onClick={logoutCompany}>
+                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                    Logout
+                  </Typography>
+                </MenuItem>
+              ) : null}
+              {!candidate.id && !company.id ? (
                 <MenuItem onClick={handleLinkLogin}>
                   <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
                     Login

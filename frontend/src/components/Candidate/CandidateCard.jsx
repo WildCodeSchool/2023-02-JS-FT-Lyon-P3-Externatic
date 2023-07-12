@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -45,8 +45,6 @@ export default function CandidateCard({ candidate }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const imagePath = `${BACKEND_URL}/${candidate.picture}`;
-
-  useEffect(() => {}, [candidate.picture]);
 
   return (
     <Card sx={{ maxWidth: "100%", mb: { xs: 3, md: 3 } }}>
@@ -124,14 +122,14 @@ export default function CandidateCard({ candidate }) {
           </Typography>
           {candidate.cv === null ? (
             <Button size="small" onClick={handleCvClick}>
-              <UploadFileIcon />
+              <UploadFileIcon sx={{ mr: 1 }} />
               <Typography variant="body2" color="text.secondary">
                 Intégrer Votre CV
               </Typography>
             </Button>
           ) : (
             <Button size="small" onClick={handleCvClick}>
-              <TopicIcon />
+              <TopicIcon sx={{ mr: 1 }} />
               <Typography variant="body2" color="text.secondary">
                 Changer le CV
               </Typography>
@@ -168,7 +166,7 @@ export default function CandidateCard({ candidate }) {
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
           <Button size="small" onClick={handleUpdateOpen}>
-            <DriveFileRenameOutlineIcon />
+            <DriveFileRenameOutlineIcon sx={{ mr: 1 }} />
             Modifier mes Informations
           </Button>
           <Backdrop

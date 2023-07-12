@@ -58,7 +58,7 @@ export default function Register() {
 
     if (validateForm) {
       axios
-        .post(`${BACKEND_URL}/register-candidate`, { ...formData })
+        .post(`${BACKEND_URL}/register-company`, { ...formData })
         .then(() => {
           notifyCreation();
         })

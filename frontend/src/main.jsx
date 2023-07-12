@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import { CandidateContextProvider } from "./Contexts/CandidateContext";
+import { CompanyContextProvider } from "./Contexts/CompanyContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -12,19 +13,21 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <CandidateContextProvider>
-        <App />
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
+        <CompanyContextProvider>
+          <App />
+          <ToastContainer
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+        </CompanyContextProvider>
       </CandidateContextProvider>
     </BrowserRouter>
   </React.StrictMode>

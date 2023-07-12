@@ -1,17 +1,21 @@
 import { Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import CompanyProfile from "./pages/CompanyProfile";
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import CandidateProfile from "./pages/CandidateProfile";
 import Ads from "./pages/Ads";
 import Register from "./pages/Register";
-import Login from "./pages/Login";
 import ChooseAction from "./components/Admin/ChooseAction";
 import AdminCreate from "./components/Admin/AdminCreate";
 import AdminDelete from "./components/Admin/AdminDelete";
 import CandidatesTable from "./components/Admin/CandidatesTable";
 import CompaniesTable from "./components/Admin/CompaniesTable";
+import LoginChoice from "./pages/LoginChoice";
+import LoginCompany from "./pages/LoginCompany";
+import LoginCandidate from "./pages/LoginCandidate";
+
 import "./App.css";
 
 function App() {
@@ -47,7 +51,10 @@ function App() {
             <Route path="candidates-list" element={<CandidatesTable />} />
             <Route path="companies-list" element={<CompaniesTable />} />
           </Route>
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<LoginChoice />} />
+          <Route path="/login-candidate" element={<LoginCandidate />} />
+          <Route path="/login-company" element={<LoginCompany />} />
+          <Route path="/espace-pro" element={<CompanyProfile />} />
         </Routes>
       </ThemeProvider>
     </div>

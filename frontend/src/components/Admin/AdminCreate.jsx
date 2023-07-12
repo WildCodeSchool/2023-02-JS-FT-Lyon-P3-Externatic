@@ -45,7 +45,7 @@ export default function AdminCreate() {
 
     if (validateForm()) {
       axios
-        .post(`${BACKEND_URL}/register`, { ...formData })
+        .post(`${BACKEND_URL}/register-candidate`, { ...formData })
         .then(() => {
           setFormData({
             firstname: "",
@@ -71,7 +71,7 @@ export default function AdminCreate() {
 
     if (validateForm()) {
       axios
-        .post(`${BACKEND_URL}/companies`, { ...formData })
+        .post(`${BACKEND_URL}/register-company`, { ...formData })
         .then(() => {
           setFormData({
             name: "",
@@ -82,7 +82,7 @@ export default function AdminCreate() {
             password: "",
             phone: "",
             city: "",
-            admin: 0,
+            admin: false,
             terms: false,
           });
           notifyCreation();
