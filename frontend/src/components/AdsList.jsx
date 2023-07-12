@@ -372,7 +372,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
             color="primary"
             onChange={handlePaginationChange} // Handle page change events
             page={page} // Pass the current page number
-            sx={{ justifyContent: "center", mt: "1rem" }}
+            sx={{ display: "flex", justifyContent: "center", mt: "2rem" }}
           />
           <Backdrop
             sx={{

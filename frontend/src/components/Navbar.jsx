@@ -183,7 +183,7 @@ export default function Navbar() {
               </Box>
             </Button>
             <Button
-              onClick={handleLinkAdds}
+              onClick={handleLinkBlog}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               <Box

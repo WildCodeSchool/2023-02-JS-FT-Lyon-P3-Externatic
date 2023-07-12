@@ -106,7 +106,15 @@ export default function Home() {
                 }}
                 variant="contained"
               >
-                M'inscrire
+                M'inscrire en tant que candidat
+              </Button>
+              <Button
+                onClick={() => {
+                  navigate("/register-company");
+                }}
+                variant="contained"
+              >
+                M'inscrire en tant qu'entreprise
               </Button>
               <Button
                 onClick={() => {
