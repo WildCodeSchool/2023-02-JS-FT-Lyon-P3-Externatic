@@ -21,7 +21,7 @@ function Copyright() {
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        DevPaf
+        Externatic / Team PAF
       </Link>{" "}
       {new Date().getFullYear()}
     </Typography>
@@ -110,7 +110,7 @@ export default function Login() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Login
+            Login Pro
           </Typography>
           {msg && (
             <Typography variant="body2" color="error">

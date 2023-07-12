@@ -4,8 +4,6 @@ import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -23,7 +21,7 @@ function Copyright() {
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Externatic/Wild Code School
+        Externatic / Team PAF
       </Link>{" "}
       {new Date().getFullYear()}
     </Typography>
@@ -37,10 +35,15 @@ export default function Register() {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const [formData, setFormData] = useState({
-    firstname: "",
-    lastname: "",
+    name: "",
+    contact: "",
+    description: "",
+    website: "",
     email: "",
     password: "",
+    phone: "",
+    city: "",
+    admin: false,
     terms: false,
   });
 
@@ -111,7 +114,7 @@ export default function Register() {
             sx={{ m: 1, bgcolor: "secondary.main" }}
           />
           <Typography component="h1" variant="h5">
-            Créer mon Profil
+            Créer mon Profil Pro
           </Typography>
           <Box
             component="form"
@@ -123,46 +126,73 @@ export default function Register() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstname"
+                  name="name"
                   required
                   fullWidth
-                  id="firstName"
-                  label="Prénom"
+                  id="name"
+                  label="Company Name"
                   autoFocus
                   onChange={handleInputChange}
-                  value={formData.firstname}
+                  value={formData.name}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
-                  id="lastname"
-                  label="Nom"
-                  name="lastname"
-                  autoComplete="family-name"
+                  id="contact"
+                  label="Contact Name"
+                  name="contact"
+                  autoComplete="contact-name"
                   onChange={handleInputChange}
-                  value={formData.lastname}
+                  value={formData.contact}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
+                  autoComplete="description"
+                  name="description"
+                  required
+                  fullWidth
+                  id="description"
+                  label="description"
+                  autoFocus
+                  onChange={handleInputChange}
+                  value={formData.description}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="website"
+                  name="website"
+                  required
+                  fullWidth
+                  id="website"
+                  label="website"
+                  autoFocus
+                  onChange={handleInputChange}
+                  value={formData.website}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="city"
+                  name="city"
                   required
                   fullWidth
                   id="city"
-                  label="Votre Ville"
-                  name="city"
-                  autoComplete="city"
+                  label="City"
+                  autoFocus
                   onChange={handleInputChange}
                   value={formData.city}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
                   id="phone"
-                  label="Votre Numéro de Téléphone"
+                  label="Phone Number"
                   name="phone"
                   autoComplete="phone"
                   onChange={handleInputChange}
@@ -174,7 +204,7 @@ export default function Register() {
                   required
                   fullWidth
                   id="email"
-                  label="Adresse Mail"
+                  label="Email Address"
                   name="email"
                   autoComplete="email"
                   onChange={handleInputChange}
@@ -186,20 +216,12 @@ export default function Register() {
                   required
                   fullWidth
                   name="password"
-                  label="Mot De Passe"
+                  label="Password"
                   type="password"
                   id="password"
                   autoComplete="new-password"
                   onChange={handleInputChange}
                   value={formData.password}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="Je veux recevoir les offres d'emploi par mail"
                 />
               </Grid>
             </Grid>
