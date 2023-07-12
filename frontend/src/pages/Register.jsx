@@ -111,7 +111,7 @@ export default function Register() {
             sx={{ m: 1, bgcolor: "secondary.main" }}
           />
           <Typography component="h1" variant="h5">
-            Créer mon Profil
+            Créer mon Profil Candidat
           </Typography>
           <Box
             component="form"
