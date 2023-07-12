@@ -6,7 +6,9 @@ import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import CandidateProfile from "./pages/CandidateProfile";
 import Ads from "./pages/Ads";
+import Blog from "./pages/Blog";
 import Register from "./pages/Register";
+import RegisterCompany from "./pages/RegisterCompany";
 import ChooseAction from "./components/Admin/ChooseAction";
 import AdminCreate from "./components/Admin/AdminCreate";
 import AdminDelete from "./components/Admin/AdminDelete";
@@ -41,8 +43,14 @@ function App() {
         <CssBaseline />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<LoginChoice />} />
+          <Route path="/login-candidate" element={<LoginCandidate />} />
+          <Route path="/login-company" element={<LoginCompany />} />
+          <Route path="/register-company" element={<RegisterCompany />} />
+          <Route path="/register-candidate" element={<Register />} />
+          <Route path="/espace-pro" element={<CompanyProfile />} />
           <Route path="/annonces" element={<Ads />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="/espace-candidat" element={<CandidateProfile />} />
           <Route path="/admin" element={<Admin />}>
             <Route index element={<ChooseAction />} />
@@ -51,10 +59,6 @@ function App() {
             <Route path="candidates-list" element={<CandidatesTable />} />
             <Route path="companies-list" element={<CompaniesTable />} />
           </Route>
-          <Route path="/login" element={<LoginChoice />} />
-          <Route path="/login-candidate" element={<LoginCandidate />} />
-          <Route path="/login-company" element={<LoginCompany />} />
-          <Route path="/espace-pro" element={<CompanyProfile />} />
         </Routes>
       </ThemeProvider>
     </div>

@@ -72,7 +72,7 @@ export default function Register() {
   };
 
   const handleLinkLogin = () => {
-    navigate("/login");
+    navigate("/login-candidate");
   };
 
   return (

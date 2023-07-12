@@ -45,7 +45,7 @@ export default function Login() {
   };
 
   const handleLinkRegister = () => {
-    navigate("/register");
+    navigate("/register-candidate");
   };
 
   const handleSubmit = (e) => {
