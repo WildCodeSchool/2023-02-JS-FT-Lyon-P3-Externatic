@@ -110,7 +110,7 @@ export default function Login() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Login
+            Login Candidat
           </Typography>
           {msg && (
             <Typography variant="body2" color="error">

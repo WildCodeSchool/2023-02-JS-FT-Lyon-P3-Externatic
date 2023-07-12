@@ -72,8 +72,17 @@ const register = async (req, res) => {
 
 const registerCompany = async (req, res) => {
   try {
-    const { email, phone, city, hashedPassword, admin, name, contact } =
-      req.body;
+    const {
+      email,
+      phone,
+      city,
+      hashedPassword,
+      admin,
+      name,
+      contact,
+      website,
+      description,
+    } = req.body;
 
     // Create a new user entry
     const [userResult] = await models.user.insert({
@@ -90,6 +99,8 @@ const registerCompany = async (req, res) => {
       user_id: userId,
       name,
       contact,
+      website,
+      description,
     });
 
     res.location(`/companies/${companyResult.insertId}`).sendStatus(201);

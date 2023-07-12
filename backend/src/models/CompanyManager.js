@@ -8,7 +8,7 @@ class CompanyManager extends AbstractManager {
   find(companyId) {
     return this.database.query(
       `
-      SELECT company.id, company.user_id, company.name, company.contact, company.description, user.email, user.phone, user.city, user.picture, user.admin
+      SELECT company.id, company.user_id, company.name, company.contact, company.description, company.website, user.email, user.phone, user.city, user.picture, user.admin
       FROM company
       INNER JOIN user ON company.user_id = user.id
       WHERE company.id = ?
@@ -19,7 +19,7 @@ class CompanyManager extends AbstractManager {
 
   findAll() {
     return this.database
-      .query(`SELECT company.id, company.user_id, company.name, company.contact, company.description, user.email, user.phone, user.city, user.picture, user.admin
+      .query(`SELECT company.id, company.user_id, company.name, company.contact,company.website, company.description, user.email, user.phone, user.city, user.picture, user.admin
     FROM ${this.table}
     INNER JOIN user ON company.user_id = user.id`);
   }
@@ -51,14 +51,8 @@ class CompanyManager extends AbstractManager {
 
   update(company) {
     return this.database.query(
-      `update ${this.table} set user_id = ${company.user_id}, name = ?, contact = ?, description = ?, website = ? where id = ${company.id}`,
-      [
-        company.user_id,
-        company.name,
-        company.contact,
-        company.description,
-        company.website,
-      ]
+      `update ${this.table} set name = ?, contact = ?, description = ?, website = ? where user_id = ${company.id}`,
+      [company.name, company.contact, company.description, company.website]
     );
   }
 
