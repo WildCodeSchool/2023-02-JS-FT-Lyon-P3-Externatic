@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -45,8 +45,6 @@ export default function CandidateCard({ candidate }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const imagePath = `${BACKEND_URL}/${candidate.picture}`;
-
-  useEffect(() => {}, [candidate.picture]);
 
   return (
     <Card sx={{ maxWidth: "100%", mb: { xs: 3, md: 3 } }}>
