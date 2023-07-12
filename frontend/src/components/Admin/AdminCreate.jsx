@@ -263,6 +263,23 @@ export default function AdminCreate() {
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={formData.admin === 1}
+                        onChange={(event) =>
+                          setFormData({
+                            ...formData,
+                            admin: event.target.checked ? 1 : 0,
+                          })
+                        }
+                        name="admin"
+                      />
+                    }
+                    label="Admin"
+                  />
+                </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     autoComplete="given-name"
