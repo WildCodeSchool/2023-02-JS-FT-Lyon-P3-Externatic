@@ -50,7 +50,7 @@ CREATE TABLE job_posting (
   remote ENUM ('Télétravail', 'Hybride', 'Presentiel'),
   salary VARCHAR(50),
   posting_date DATE NOT NULL,
-  archived BOOL,
+  archived BOOL DEFAULT false,
   PRIMARY KEY (id),
   FOREIGN KEY (company_id) REFERENCES company(id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
@@ -129,7 +129,7 @@ VALUES
   ('user17@example.com', '888888888', 'City11', "https://xsgames.co/randomusers/avatar.php?g=pixel", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('user18@example.com', '888845668', 'City12', "https://xsgames.co/randomusers/avatar.php?g=pixel", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('johnny.dodoe@example.com', '1234567890', 'San Francisco', 'https://xsgames.co/randomusers/avatar.php?g=male', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
-  ('jeanne.richard@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
+  ('andiscours@lapost.net', '0624840405', 'Lyon', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('david.caplan@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('eliane.robert@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('marcel.renfor@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
@@ -156,7 +156,7 @@ VALUES
 
 INSERT INTO company (user_id, name, contact, description, website)
 VALUES
-  (13, 'ABC Corporation', 'John Anderson', 'A multinational corporation specializing in technology solutions', 'www.abccorp.com'),
+  (13, 'Wild Code School', 'Gwen Stacy', 'test', 'www.abccorp.com'),
   (14, 'XYZ Inc.', 'Sarah Johnson', 'An innovative startup focusing on artificial intelligence', 'www.xyzinc.com'),
   (15, 'Global Logistics', 'Robert Smith', 'A leading logistics company providing supply chain solutions', 'www.globallogistics.com'),
   (16, 'Sunshine Hotels', 'Emily Davis', 'A chain of luxury hotels and resorts worldwide', 'www.sunshinehotels.com'),

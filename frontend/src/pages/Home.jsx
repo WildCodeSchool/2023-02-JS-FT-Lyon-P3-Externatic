@@ -102,7 +102,7 @@ export default function Home() {
             >
               <Button
                 onClick={() => {
-                  navigate("/register");
+                  navigate("/register-candidate");
                 }}
                 variant="contained"
               >
