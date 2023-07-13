@@ -21,9 +21,13 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Switch from "@mui/material/Switch";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 export default function CreateOffer() {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const [description, setDescription] = useState("");
+
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -34,6 +38,35 @@ export default function CreateOffer() {
       },
     },
   };
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link", "image"],
+      ["clean"],
+    ],
+  };
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+  ];
+
   const notifyCreation = () => toast.success("Nouvelle offre d'emploi posté!");
   const notifyCreationError = () =>
     toast.error("Problème lors de la publication");
@@ -56,6 +89,10 @@ export default function CreateOffer() {
     posting_date: newDate,
   });
 
+  const handleQuillChange = (value) => {
+    setDescription(value);
+  };
+
   const handleInputChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
@@ -63,7 +100,11 @@ export default function CreateOffer() {
   const handleSubmitJobOffer = (event) => {
     event.preventDefault();
     axios
-      .post(`${BACKEND_URL}/jobs`, { ...formData }, { withCredentials: true })
+      .post(
+        `${BACKEND_URL}/jobs`,
+        { ...formData, description },
+        { withCredentials: true }
+      )
       .then(() => {
         setFormData({
           company_id: null,
@@ -206,18 +247,6 @@ export default function CreateOffer() {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    name="description"
-                    required
-                    fullWidth
-                    id="description"
-                    label="description"
-                    autoFocus
-                    onChange={handleInputChange}
-                    value={formData.description}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
                     name="requirements"
                     required
                     fullWidth
@@ -311,6 +340,13 @@ export default function CreateOffer() {
                   </Select>
                 </FormControl>
               </Grid>
+              <ReactQuill
+                defaultValue="text"
+                modules={modules}
+                formats={formats}
+                value={description}
+                onChange={handleQuillChange}
+              />
               <Button
                 type="submit"
                 fullWidth
