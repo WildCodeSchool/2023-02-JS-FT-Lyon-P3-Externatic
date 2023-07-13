@@ -80,7 +80,7 @@ const verifyCompanyPassword = (req, res) => {
             sub: req.company.id,
             userId: req.company.user_id,
             email: req.company.email,
-            phone: req.company.phone,
+            phone: req.company.user_phone,
             city: req.company.city,
             picture: req.company.picture,
             admin: req.company.admin,
