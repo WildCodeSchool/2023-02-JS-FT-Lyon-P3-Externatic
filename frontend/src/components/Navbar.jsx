@@ -74,9 +74,9 @@ export default function Navbar() {
 
   let imagePath;
   if (candidate.id) {
-    imagePath = `${BACKEND_URL}/${candidate.picture}`;
+    imagePath = `${BACKEND_URL}/picture/${candidate.picture}`;
   } else if (company.id) {
-    imagePath = `${BACKEND_URL}/${company.picture}`;
+    imagePath = `${BACKEND_URL}/picture/${company.picture}`;
   } else {
     imagePath = null;
   }
