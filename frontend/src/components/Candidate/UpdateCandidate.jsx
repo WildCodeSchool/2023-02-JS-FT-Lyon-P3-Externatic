@@ -1,20 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Container from "@mui/material/Container";
-import CandidateContext from "../../Contexts/CandidateContext";
+import { useCandidateContext } from "../../Contexts/CandidateContext";
 
 function UpdateCandidate() {
-  const navigate = useNavigate();
   const notifyCreation = () => toast("Votre compte a bien été modifié !");
 
-  const { candidate } = useContext(CandidateContext);
+  const { candidate, loginCandidate } = useCandidateContext();
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -41,12 +39,21 @@ function UpdateCandidate() {
 
     if (validateForm) {
       axios
-        .put(`${BACKEND_URL}/candidates/${candidate.id}`, { ...formData })
-        .then(() => {
+        .put(
+          `${BACKEND_URL}/candidates/${candidate.id}`,
+          { ...formData },
+          { withCredentials: true }
+        )
+        .then((response) => {
           notifyCreation();
-        })
-        .then(() => {
-          navigate("/espace-candidat");
+          loginCandidate({
+            ...candidate,
+            firstname: response.data.firstname,
+            lastname: response.data.lastname,
+            city: response.data.city,
+            phone: response.data.phone,
+            email: response.data.email,
+          });
         })
         .catch((err) => {
           console.error(err);

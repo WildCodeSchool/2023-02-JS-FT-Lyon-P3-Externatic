@@ -100,7 +100,7 @@ const edit = async (req, res) => {
       lastname,
     });
 
-    res.sendStatus(200);
+    res.send({ email, phone, city, firstname, lastname });
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
@@ -147,7 +147,7 @@ const uploadCV = async (req, res) => {
       cv: cvPath,
     });
 
-    res.sendStatus(200);
+    res.send({ cvPath });
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
