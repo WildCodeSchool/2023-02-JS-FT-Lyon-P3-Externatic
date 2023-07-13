@@ -52,7 +52,8 @@ const edit = (req, res) => {
 
 const add = (req, res) => {
   const job = req.body;
-
+  job.company_id = req.payloads.sub;
+  job.user_id = req.payloads.sub;
   // TODO validations (length, format...)
 
   models.job
