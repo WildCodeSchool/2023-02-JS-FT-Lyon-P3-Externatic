@@ -33,7 +33,7 @@ export default function CompanyCard({ company }) {
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-  const imagePath = `${BACKEND_URL}/${company.picture}`;
+  const imagePath = `${BACKEND_URL}/picture/${company.picture}`;
 
   return (
     <Card sx={{ maxWidth: "100%", mb: { xs: 3, md: 3 } }}>

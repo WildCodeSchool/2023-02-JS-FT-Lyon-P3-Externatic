@@ -19,7 +19,7 @@ class CandidateManager extends AbstractManager {
 
   findCandidateByEmailWithPassword(email) {
     return this.database.query(
-      `SELECT * FROM ${this.table} 
+      `SELECT ${this.table}.*, user.hashedPassword, user.email, user.phone, user.city, user.picture, user.admin FROM ${this.table} 
       INNER JOIN user ON candidate.user_id = user.id
       WHERE email = ?`,
       [email]
