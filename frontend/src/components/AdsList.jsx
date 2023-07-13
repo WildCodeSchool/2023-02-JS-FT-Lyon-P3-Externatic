@@ -372,7 +372,9 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       <Typography
                         sx={{ marginLeft: "1rem", marginRight: "1rem" }}
                       >
-                        {selectedJob.posting_date}
+                        {new Date(
+                          selectedJob.posting_date
+                        ).toLocaleDateString()}
                       </Typography>
                     </Paper>
                     <Link
@@ -611,7 +613,9 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       <Typography
                         sx={{ marginLeft: "1rem", marginRight: "1rem" }}
                       >
-                        {selectedJob.posting_date}
+                        {new Date(
+                          selectedJob.posting_date
+                        ).toLocaleDateString()}
                       </Typography>
                     </Paper>
                     <Link
