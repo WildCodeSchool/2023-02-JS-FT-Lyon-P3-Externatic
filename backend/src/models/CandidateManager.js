@@ -5,7 +5,7 @@ class CandidateManager extends AbstractManager {
     super({ table: "candidate" });
   }
 
-  find(candidateId) {
+  find(id) {
     return this.database.query(
       `
       SELECT candidate.id, candidate.user_id, candidate.firstname, candidate.lastname, candidate.cv, user.email, user.hashedPassword, user.phone, user.city, user.picture
@@ -13,7 +13,7 @@ class CandidateManager extends AbstractManager {
       INNER JOIN user ON candidate.user_id = user.id
       WHERE candidate.id = ?
     `,
-      [candidateId]
+      [id]
     );
   }
 

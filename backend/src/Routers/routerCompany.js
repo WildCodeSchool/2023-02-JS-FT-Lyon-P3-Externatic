@@ -25,7 +25,7 @@ routerCompany.get("/company-profile", verifyToken, companyControllers.profile);
 
 routerCompany.get("/companies", companyControllers.browse);
 routerCompany.get("/companies/:id", companyControllers.read);
-routerCompany.put("/companies/:id", companyControllers.edit);
-routerCompany.delete("/companies/:id", companyControllers.destroy);
+routerCompany.put("/companies/:id", verifyToken, companyControllers.edit);
+routerCompany.delete("/companies/:id", verifyToken, companyControllers.destroy);
 
 module.exports = routerCompany;
