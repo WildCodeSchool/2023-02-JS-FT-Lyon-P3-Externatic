@@ -48,10 +48,10 @@ export default function CompanyApplications() {
       >
         Mes Candidatures :
       </Typography>
-      {companyApplications.map((CompanyApplication) => (
+      {companyApplications.map((companyApplication) => (
         <ApplicationCard
-          key={CompanyApplication.id}
-          CompanyApplication={CompanyApplication}
+          key={companyApplication.id}
+          companyApplication={companyApplication}
         />
       ))}
     </Box>

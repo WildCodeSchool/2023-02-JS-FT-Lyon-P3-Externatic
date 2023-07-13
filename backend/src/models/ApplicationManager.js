@@ -33,7 +33,7 @@ class ApplicationManager extends AbstractManager {
       `SELECT * FROM ${this.table} AS app
        JOIN job_posting AS jp ON app.job_posting_id = jp.id
        JOIN company AS co ON jp.company_id = co.id
-       WHERE company_id = ?`,
+       WHERE co.id = ?`,
       [companyId]
     );
   }
