@@ -7,9 +7,10 @@ class ApplicationManager extends AbstractManager {
 
   insert(application) {
     return this.database.query(
-      `INSERT INTO ${this.table} (candidate_id, job_posting_id, date, status) VALUES (?, ?, ?, ?)`,
+      `INSERT INTO ${this.table} (candidate_id, company_id, job_posting_id, date, status) VALUES (?, ?, ?, ?, ?)`,
       [
         application.candidate_id,
+        application.company_id,
         application.job_posting_id,
         application.date,
         application.status,
@@ -24,6 +25,16 @@ class ApplicationManager extends AbstractManager {
        JOIN company AS co ON jp.company_id = co.id
        WHERE app.candidate_id = ?`,
       [userId]
+    );
+  }
+
+  findApplicationsByCompanyId(companyId) {
+    return this.database.query(
+      `SELECT * FROM ${this.table} AS app
+       JOIN job_posting AS jp ON app.job_posting_id = jp.id
+       JOIN company AS co ON jp.company_id = co.id
+       WHERE company_id = ?`,
+      [companyId]
     );
   }
 

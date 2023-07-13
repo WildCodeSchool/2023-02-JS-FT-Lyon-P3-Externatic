@@ -63,11 +63,13 @@ ENGINE = InnoDB DEFAULT CHARSET = utf8;
 CREATE TABLE application (
   id INT NOT NULL AUTO_INCREMENT,
   candidate_id INT NOT NULL,
+  company_id INT NOT NULL,
   job_posting_id INT NOT NULL,
   date DATE NOT NULL,
   status ENUM ('en cours', 'acceptée', 'rejetée'),
   PRIMARY KEY (id),
   FOREIGN KEY (candidate_id) REFERENCES candidate(id) ON DELETE CASCADE,
+  FOREIGN KEY (company_id) REFERENCES company(id) ON DELETE CASCADE,
   FOREIGN KEY (job_posting_id) REFERENCES job_posting(id) ON DELETE CASCADE
 )
 ENGINE = InnoDB DEFAULT CHARSET = utf8;
@@ -248,21 +250,21 @@ VALUES (
 
 
 
-INSERT INTO application (candidate_id, job_posting_id, date, status)
+INSERT INTO application (candidate_id, company_id, job_posting_id, date, status)
 VALUES
-  (1, 1, '2023-06-19', 'en cours'),
-  (2, 2, '2023-06-18', 'rejetée'),
-  (3, 3, '2023-06-17', 'acceptée'),
-  (4, 1, '2023-06-16', 'rejetée'),
-  (5, 2, '2023-06-15', 'en cours'),
-  (6, 4, '2023-06-14', 'acceptée'),
-  (7, 3, '2023-06-13', 'rejetée'),
-  (8, 2, '2023-06-12', 'en cours'),
-  (9, 1, '2023-06-11', 'acceptée'),
-  (10, 4, '2023-06-10', 'en cours'),
-  (1, 5, '2023-06-18', 'rejetée'),
-  (1, 6, '2023-06-18', 'acceptée'),
-  (1, 2, '2023-06-18', 'rejetée');
+  (1, 28, 1, '2023-06-19', 'en cours'),
+  (2, 28, 2, '2023-06-18', 'rejetée'),
+  (3, 28, 3, '2023-06-17', 'acceptée'),
+  (4, 3, 1, '2023-06-16', 'rejetée'),
+  (5, 1, 2, '2023-06-15', 'en cours'),
+  (6, 5, 4, '2023-06-14', 'acceptée'),
+  (7, 29, 3, '2023-06-13', 'rejetée'),
+  (8, 29, 2, '2023-06-12', 'en cours'),
+  (9, 2, 1, '2023-06-11', 'acceptée'),
+  (10, 17, 4, '2023-06-10', 'en cours'),
+  (1, 15, 5, '2023-06-18', 'rejetée'),
+  (1, 16, 6, '2023-06-18', 'acceptée'),
+  (1, 12, 2, '2023-06-18', 'rejetée');
 
   INSERT INTO job_category (category)
 VALUES

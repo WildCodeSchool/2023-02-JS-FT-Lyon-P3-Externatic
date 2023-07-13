@@ -1,5 +1,7 @@
 import React from "react";
+// eslint-disable-next-line import/no-unresolved
 import ReactQuill from "react-quill";
+// eslint-disable-next-line import/no-unresolved
 import "react-quill/dist/quill.snow.css";
 
 export default function TextEditor() {
