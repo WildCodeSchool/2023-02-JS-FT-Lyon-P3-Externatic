@@ -51,14 +51,8 @@ class CompanyManager extends AbstractManager {
 
   update(company) {
     return this.database.query(
-      `update ${this.table} set user_id = ${company.user_id}, name = ?, contact = ?, description = ?, website = ? where id = ${company.id}`,
-      [
-        company.user_id,
-        company.name,
-        company.contact,
-        company.description,
-        company.website,
-      ]
+      `update ${this.table} set name = ?, contact = ?, description = ?, website = ? where user_id = ${company.id}`,
+      [company.name, company.contact, company.description, company.website]
     );
   }
 

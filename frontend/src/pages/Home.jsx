@@ -19,7 +19,7 @@ function Copyright() {
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Externatic / Team PAF
       </Link>{" "}
       {new Date().getFullYear()}
     </Typography>
@@ -41,15 +41,15 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <Container maxWidth="xl">
+      <Container maxWidth="xxl">
         <Box
           sx={{
             bgcolor: "background.paper",
-            pt: 8,
+            pt: 6,
             pb: 6,
           }}
         >
-          <Container maxWidth="xl">
+          <Container maxWidth="xxl">
             <Box
               sx={{
                 display: "flex",
@@ -58,9 +58,9 @@ export default function Home() {
             >
               <CardMedia
                 sx={{
-                  m: 3,
-                  height: 250,
-                  width: 370,
+                  m: { xs: "none", md: 3 },
+                  height: { xs: 200, md: 250 },
+                  width: { xs: 300, md: 370 },
                 }}
                 image={externaticLogo}
                 title="externatic logo"
@@ -69,7 +69,7 @@ export default function Home() {
             </Box>
             <Typography
               component="h1"
-              variant="h3"
+              variant={{ xs: "h5", md: "h3" }}
               align="center"
               color="text.primary"
               gutterBottom
@@ -79,10 +79,10 @@ export default function Home() {
               uniquement chez les client finaux
             </Typography>
             <Typography
-              variant="h5"
+              variant={{ xs: "h6", md: "h4" }}
               color="text.secondary"
               paragraph
-              maxWidth={900}
+              maxWidth="lg"
               margin="auto"
             >
               Si vous recherchez des opportunités d'emploi dans le domaine
@@ -96,7 +96,7 @@ export default function Home() {
             </Typography>
             <Stack
               sx={{ pt: 4, m: 3 }}
-              direction="row"
+              direction={{ xs: "column", md: "row" }}
               spacing={3}
               justifyContent="center"
             >
@@ -123,6 +123,14 @@ export default function Home() {
                 variant="outlined"
               >
                 Voir les Offres
+              </Button>
+              <Button
+                onClick={() => {
+                  navigate("/register-company");
+                }}
+                variant="contained"
+              >
+                M'inscrire en tant qu'entreprise
               </Button>
             </Stack>
             <Box sx={{ display: "flex", justifyContent: "center" }}>

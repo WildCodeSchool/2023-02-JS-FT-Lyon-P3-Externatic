@@ -99,7 +99,7 @@ ENGINE = InnoDB DEFAULT CHARSET = utf8;
 INSERT INTO user (email, phone, city, picture, hashedPassword, admin)
 VALUES
   ('admin@mail.com', '1234567890', 'Admin City', "https://xsgames.co/randomusers/avatar.php?g=pixel", '$argon2id$v=19$m=19456,t=2,p=1$OHrIYr3oh1aV8bMvuQQfVg$ulKfOEOlASVNSqHrFtqRQyxUu85biaS/jmsjTH203iE', 1),
-  ('jane.smith@example.com', '9876543210', 'Los Angeles', "https://xsgames.co/randomusers/avatar.php?g=female", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
+  ('marcelooxhenrique@gmail.com', '9876543210', 'Los Angeles', "https://xsgames.co/randomusers/avatar.php?g=female", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('michael.brown@example.com', '5555555555', 'Chicago', "https://xsgames.co/randomusers/avatar.php?g=male", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('emily.johnson@example.com', '9999999999', 'San Francisco', "https://xsgames.co/randomusers/avatar.php?g=female", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('william.davis@example.com', '1111111111', 'Houston', "https://xsgames.co/randomusers/avatar.php?g=male", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),

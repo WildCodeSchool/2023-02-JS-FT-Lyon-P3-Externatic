@@ -19,17 +19,17 @@ class UserManager extends AbstractManager {
     );
   }
 
-  update(candidate) {
+  update(user) {
     return this.database.query(
       `UPDATE ${this.table} set email = ?, phone = ? where id = ?`,
-      [candidate.email, candidate.phone, candidate.id]
+      [user.email, user.phone, user.id]
     );
   }
 
-  updatePicture(candidate) {
+  updatePicture(user) {
     return this.database.query(
-      `update ${this.table} set picture = ? where id = ${candidate.id}`,
-      [candidate.picture]
+      `update ${this.table} set picture = ? where id = ${user.id}`,
+      [user.picture]
     );
   }
 }

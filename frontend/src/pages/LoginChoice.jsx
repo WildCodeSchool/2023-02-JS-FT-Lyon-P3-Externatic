@@ -15,7 +15,7 @@ function Copyright() {
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Externatic / Team Paf
+        Externatic / Team PAF
       </Link>{" "}
       {new Date().getFullYear()}
     </Typography>
@@ -69,7 +69,7 @@ export default function LoginChoice() {
           <img src={logo} alt="logo" width="200px" />
         </Box>
         <Stack
-          spacing={2}
+          spacing={4}
           direction={{ xs: "column", md: "row" }}
           justifyContent="center"
           alignItems="center"
