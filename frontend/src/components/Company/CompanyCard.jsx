@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import Backdrop from "@mui/material/Backdrop";
 import Typography from "@mui/material/Typography";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
-import PhotoUpload from "../Candidate/PhotoUpload";
+import PhotoUploadCompany from "./PhotoUploadCompany";
 import UpdateCompany from "./UpdateCompany";
 
 export default function CompanyCard({ company }) {
@@ -81,7 +81,7 @@ export default function CompanyCard({ company }) {
                 justifyContent: "center",
               }}
             >
-              <PhotoUpload />
+              <PhotoUploadCompany />
               <Button
                 size="small"
                 variant="contained"
