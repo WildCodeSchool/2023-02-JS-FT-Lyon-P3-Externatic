@@ -7,12 +7,15 @@ import Paper from "@mui/material/Paper";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Typography from "@mui/material/Typography";
+import { useCandidateContext } from "../../Contexts/CandidateContext";
 
 export default function PhotoUpload() {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const notifyUpload = () =>
     toast.success("Votre Photo a bien été enregistrée !");
   const notifyUploadError = () => toast.error("Problème à l'enregistrement !");
+
+  const { candidate, loginCandidate } = useCandidateContext();
 
   const inputRef = useRef();
 
@@ -25,8 +28,9 @@ export default function PhotoUpload() {
     axios
       .post(`${BACKEND_URL}/maPhoto`, formData, { withCredentials: true })
       .then((response) => {
-        console.warn(JSON.stringify(response.data));
+        console.warn(response.data.photoPath);
         notifyUpload();
+        loginCandidate({ ...candidate, picture: response.data.photoPath });
       })
       .catch((error) => {
         console.error(error);

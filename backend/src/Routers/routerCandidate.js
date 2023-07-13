@@ -45,6 +45,10 @@ routerCandidate.post(
 routerCandidate.get("/candidates", candidateControllers.browse);
 routerCandidate.get("/candidates/:id", candidateControllers.read);
 routerCandidate.put("/candidates/:id", candidateControllers.edit);
-routerCandidate.delete("/candidates", candidateControllers.destroyByLastName);
+routerCandidate.delete(
+  "/candidates",
+  verifyToken,
+  candidateControllers.destroyByLastName
+);
 
 module.exports = routerCandidate;
