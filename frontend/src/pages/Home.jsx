@@ -124,14 +124,6 @@ export default function Home() {
               >
                 Voir les Offres
               </Button>
-              <Button
-                onClick={() => {
-                  navigate("/register-company");
-                }}
-                variant="contained"
-              >
-                M'inscrire en tant qu'entreprise
-              </Button>
             </Stack>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <CardMedia

@@ -43,8 +43,8 @@ export default function CreateOffer() {
   const day = date.getUTCDate();
   const newDate = `${year}-${month}-${day}`;
   const [formData, setFormData] = useState({
-    name: "",
-    website: "",
+    company_id: null,
+    user_id: null,
     job_category_id: null,
     job_type_id: null,
     job_location_id: null,
@@ -66,8 +66,8 @@ export default function CreateOffer() {
       .post(`${BACKEND_URL}/jobs`, { ...formData }, { withCredentials: true })
       .then(() => {
         setFormData({
-          name: "",
-          website: "",
+          company_id: null,
+          user_id: null,
           job_category_id: null,
           job_type_id: null,
           job_location_id: null,
