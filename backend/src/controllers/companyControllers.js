@@ -30,16 +30,9 @@ const read = (req, res) => {
 
 const edit = async (req, res) => {
   try {
-    const {
-      email,
-      phone,
-      city,
-      password,
-      name,
-      contact,
-      description,
-      website,
-    } = req.body;
+    const { email, phone, city, name, contact, description, website } =
+      req.body;
+
     const userId = req.body.user_id;
     const companyId = parseInt(req.params.id, 10);
 
@@ -51,7 +44,6 @@ const edit = async (req, res) => {
       email,
       phone,
       city,
-      password,
     });
 
     // Update company information

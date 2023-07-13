@@ -10,15 +10,25 @@ import Backdrop from "@mui/material/Backdrop";
 import Typography from "@mui/material/Typography";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import PhotoUpload from "../Candidate/PhotoUpload";
+import UpdateCompany from "./UpdateCompany";
 
 export default function CompanyCard({ company }) {
   const [openPhoto, setOpenPhoto] = React.useState(false);
+  const [openUpdate, setOpenUpdate] = React.useState(false);
 
   const handlePhotoClose = () => {
     setOpenPhoto(false);
   };
   const handlePhotoOpen = () => {
     setOpenPhoto(true);
+  };
+
+  const handleUpdateOpen = () => {
+    setOpenUpdate(true);
+  };
+
+  const handleUpdateClose = () => {
+    setOpenUpdate(false);
   };
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -87,8 +97,15 @@ export default function CompanyCard({ company }) {
           <Typography gutterBottom variant="h4" component="div">
             {company.name.charAt(0).toUpperCase() + company.name.slice(1)}{" "}
           </Typography>
-          <Typography gutterBottom variant="h4" component="div">
-            {company.contact.charAt(0).toUpperCase() + company.contact.slice(1)}{" "}
+          <Typography gutterBottom variant="h6" component="div">
+            "
+            {company.description.charAt(0).toUpperCase() +
+              company.description.slice(1)}
+            "
+          </Typography>
+          <Typography gutterBottom variant="h5" component="div">
+            Contact:
+            {company.contact.charAt(0).toUpperCase() + company.contact.slice(1)}
           </Typography>
           <Typography variant="body1" color="text.secondary" gutterBottom>
             {company.city}
@@ -102,10 +119,36 @@ export default function CompanyCard({ company }) {
         </CardContent>
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-          <Button size="small">
+          <Button size="small" onClick={handleUpdateOpen}>
             <DriveFileRenameOutlineIcon />
             Modifier mes Informations
           </Button>
+          <Backdrop
+            sx={{
+              color: "#fff",
+              zIndex: (theme) => theme.zIndex.drawer + 10,
+            }}
+            open={openUpdate}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <UpdateCompany />
+              <Button
+                size="small"
+                variant="contained"
+                onClick={handleUpdateClose}
+                sx={{ m: 2 }}
+              >
+                Fermer
+              </Button>
+            </Box>
+          </Backdrop>
         </CardActions>
       </Box>
     </Card>
@@ -115,6 +158,7 @@ export default function CompanyCard({ company }) {
 CompanyCard.propTypes = {
   company: PropTypes.shape({
     name: PropTypes.string,
+    description: PropTypes.string,
     contact: PropTypes.string,
     phone: PropTypes.string,
     email: PropTypes.string,

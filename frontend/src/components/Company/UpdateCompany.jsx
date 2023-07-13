@@ -1,50 +1,33 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { LockOutlinedIcon } from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import logo from "../assets/externatic-logo.png";
-import accueil from "../assets/accueil.jpg";
+import Container from "@mui/material/Container";
+import CompanyContext from "../../Contexts/CompanyContext";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Externatic / Team PAF
-      </Link>{" "}
-      {new Date().getFullYear()}
-    </Typography>
-  );
-}
-
-export default function Register() {
+function UpdateCompany() {
   const navigate = useNavigate();
-  const notifyCreation = () => toast.success("Votre compte a bien été créé !");
+  const notifyCreation = () => toast("Votre compte a bien été modifié !");
+
+  const { company } = useContext(CompanyContext);
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const [formData, setFormData] = useState({
-    name: "",
-    contact: "",
-    description: "",
-    website: "",
-    email: "",
-    password: "",
-    phone: "",
-    city: "",
-    admin: false,
-    terms: false,
+    id: `${company.id}`,
+    email: `${company.email}`,
+    phone: `${company.phone}`,
+    city: `${company.city}`,
+    user_id: `${company.user_id}`,
+    name: `${company.name}`,
+    contact: `${company.contact}`,
+    description: `${company.description}`,
+    website: `${company.website}`,
   });
 
   const validateForm = () => {
@@ -61,12 +44,12 @@ export default function Register() {
 
     if (validateForm) {
       axios
-        .post(`${BACKEND_URL}/register-company`, { ...formData })
+        .put(`${BACKEND_URL}/companies/${company.id}`, { ...formData })
         .then(() => {
           notifyCreation();
         })
         .then(() => {
-          navigate("/");
+          navigate("/espace-pro");
         })
         .catch((err) => {
           console.error(err);
@@ -74,54 +57,16 @@ export default function Register() {
     }
   };
 
-  const handleLinkLogin = () => {
-    navigate("/login-company");
-  };
-
   return (
-    <Grid container component="main" sx={{ height: "100vh" }}>
-      <Grid
-        item
-        xs={false}
-        sm={false}
-        md={7}
-        sx={{
-          backgroundImage: `url(${accueil})`,
-          backgroundRepeat: "no-repeat",
-          backgroundColor: (t) =>
-            t.palette.mode === "light"
-              ? t.palette.grey[50]
-              : t.palette.grey[900],
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
-      <Grid item xs={12} sm={12} md={5} component={Paper} elevation={6} square>
+    <Container maxWidth="md">
+      <Paper elevation={4} sx={{ p: 2 }}>
         <Box
-          sx={{
-            my: 6,
-            mx: 5,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
+          component="form"
+          noValidate
+          onSubmit={handleSubmit}
+          sx={{ ml: 2, mt: 3, mb: 2 }}
         >
-          <Box>
-            <img src={logo} alt="logo" width="200px" />
-          </Box>
-          <Avatar
-            src={LockOutlinedIcon}
-            sx={{ m: 1, bgcolor: "secondary.main" }}
-          />
-          <Typography component="h1" variant="h5">
-            Créer mon Profil Pro
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3, mb: 2 }}
-          >
+          <Grid container spacing={2}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -155,7 +100,7 @@ export default function Register() {
                   required
                   fullWidth
                   id="description"
-                  label="description"
+                  label="Description"
                   autoFocus
                   onChange={handleInputChange}
                   value={formData.description}
@@ -211,40 +156,21 @@ export default function Register() {
                   value={formData.email}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  onChange={handleInputChange}
-                  value={formData.password}
-                />
-              </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              color="success"
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Enregistrer
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Button onClick={handleLinkLogin} variant="text">
-                  Vous avez déja un compte? Accéder au Login
-                </Button>
-              </Grid>
-            </Grid>
-          </Box>
-          <Copyright sx={{ mt: 5 }} />
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            color="success"
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Enregistrer
+          </Button>
         </Box>
-      </Grid>
-    </Grid>
+      </Paper>
+    </Container>
   );
 }
+
+export default UpdateCompany;
