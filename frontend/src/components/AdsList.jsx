@@ -94,6 +94,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
         axios
           .post(`${BACKEND_URL}/applications`, {
             candidate_id: candidate.id,
+            company_id: jobOffer.company_id,
             job_posting_id: jobOffer.id,
             date: newDate,
             status: "en cours",
