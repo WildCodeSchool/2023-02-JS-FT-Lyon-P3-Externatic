@@ -46,7 +46,7 @@ export default function CompanyApplications() {
           borderRadius: 2,
         }}
       >
-        Mes Candidatures :
+        Candidatures sur les offres de {company.name}
       </Typography>
       {companyApplications.map((companyApplication) => (
         <ApplicationCard
