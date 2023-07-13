@@ -36,6 +36,17 @@ export const api = {
 
     return undefined;
   },
+
+  sendEmail: async (info) => {
+    try {
+      const res = await instance.post("/sendemail", info);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+
+    return undefined;
+  },
 };
 
 export default { api };

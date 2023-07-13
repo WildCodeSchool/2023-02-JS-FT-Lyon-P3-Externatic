@@ -19,6 +19,7 @@ import { PropTypes } from "prop-types";
 import { toast } from "react-toastify";
 import CandidateContext from "../Contexts/CandidateContext";
 import "react-toastify/dist/ReactToastify.css";
+import { api } from "./api";
 
 export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -97,7 +98,20 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
             date: newDate,
             status: "en cours",
           })
+
           .then(toast.success("Votre Candidature a été prise en compte."))
+          // Sending Email to the company saying which candidate applied to which offer.
+          .then(
+            api.sendEmail({
+              from: candidate.email,
+              to: jobOffer.email,
+              subject: `${candidate.firstname} a postulé  à l'une de vos offres.`,
+              text: `  
+              ${candidate.firstname} a postulé à votre offre de ${jobOffer.title} à ${jobOffer.name} - Email: ${candidate.email}`,
+              html: ` 
+              ${candidate.firstname} a postulé à votre offre de ${jobOffer.title} à ${jobOffer.name} -  (Email: ${candidate.email}, Phone:${candidate.phone})`,
+            })
+          )
           .catch((error) => {
             console.error(error);
           });
@@ -164,7 +178,6 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                 </Grid>
               ))}
           </Grid>
-
           {/* Subscribe modal annoncement */}
           {openSubscribeModal && (
             <Backdrop
