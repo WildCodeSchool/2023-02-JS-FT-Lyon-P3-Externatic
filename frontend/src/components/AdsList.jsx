@@ -372,7 +372,9 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       <Typography
                         sx={{ marginLeft: "1rem", marginRight: "1rem" }}
                       >
-                        {selectedJob.posting_date}
+                        {new Date(
+                          selectedJob.posting_date
+                        ).toLocaleDateString()}
                       </Typography>
                     </Paper>
                     <Link
@@ -454,7 +456,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
             color="primary"
             onChange={handlePaginationChange} // Handle page change events
             page={page} // Pass the current page number
-            sx={{ display: "flex", justifyContent: "center", mt: "1rem" }}
+            sx={{ display: "flex", justifyContent: "center", mt: "2rem" }}
           />
           <Backdrop
             sx={{
@@ -611,7 +613,9 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       <Typography
                         sx={{ marginLeft: "1rem", marginRight: "1rem" }}
                       >
-                        {selectedJob.posting_date}
+                        {new Date(
+                          selectedJob.posting_date
+                        ).toLocaleDateString()}
                       </Typography>
                     </Paper>
                     <Link

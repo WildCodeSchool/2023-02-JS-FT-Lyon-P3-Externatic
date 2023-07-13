@@ -1,8 +1,8 @@
-SET foreign_key_checks = 0;
+SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS user, candidate, company, job_posting, application, job_category, job_type, job_location;
 
 
-CREATE TABLE user (
+CREATE TABLE `user` (
   id INT NOT NULL AUTO_INCREMENT,
   email VARCHAR(100) UNIQUE NOT NULL,
   phone VARCHAR(50),
@@ -50,7 +50,7 @@ CREATE TABLE job_posting (
   remote ENUM ('Télétravail', 'Hybride', 'Presentiel'),
   salary VARCHAR(50),
   posting_date DATE NOT NULL,
-  archived BOOL,
+  archived BOOL DEFAULT false,
   PRIMARY KEY (id),
   FOREIGN KEY (company_id) REFERENCES company(id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
@@ -129,15 +129,15 @@ VALUES
   ('user17@example.com', '888888888', 'City11', "https://xsgames.co/randomusers/avatar.php?g=pixel", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('user18@example.com', '888845668', 'City12', "https://xsgames.co/randomusers/avatar.php?g=pixel", '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('johnny.dodoe@example.com', '1234567890', 'San Francisco', 'https://xsgames.co/randomusers/avatar.php?g=male', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
-  ('jeanne.richard@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
-  ('david.caplan@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
+  ('david.caplan@example.com', '2345678901', 'New York', 'http s://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('eliane.robert@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('marcel.renfor@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('jacky.klein@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('sebastien.clarck@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('william.peel@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
   ('philip.morris@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
-  ('brad.pitttt@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0);
+  ('brad.pitttt@example.com', '2345678901', 'New York', 'https://xsgames.co/randomusers/avatar.php?g=female', '$argon2id$v=19$m=19456,t=2,p=1$vvakCosUkyOkLzeryb3Ahg$8mfwLBB4Wqv7sDLSoRDSuKqADfnC/cSVo8wHvOnLdLI', 0),
+  ("andiscours@lapost.net", "0624845957", "Lyon", null, '$argon2id$v=19$m=19456,t=2,p=1$Hl86kw2HIebonSnpmIP7pA$CuvGRSkQhJIXbkLJgpND9YKDYHW+t2YE/oRmjXo96vw', 0);
 
 INSERT INTO candidate (user_id, firstname, lastname, cv)
 VALUES
@@ -156,7 +156,6 @@ VALUES
 
 INSERT INTO company (user_id, name, contact, description, website)
 VALUES
-  (13, 'ABC Corporation', 'John Anderson', 'A multinational corporation specializing in technology solutions', 'www.abccorp.com'),
   (14, 'XYZ Inc.', 'Sarah Johnson', 'An innovative startup focusing on artificial intelligence', 'www.xyzinc.com'),
   (15, 'Global Logistics', 'Robert Smith', 'A leading logistics company providing supply chain solutions', 'www.globallogistics.com'),
   (16, 'Sunshine Hotels', 'Emily Davis', 'A chain of luxury hotels and resorts worldwide', 'www.sunshinehotels.com'),
@@ -182,7 +181,8 @@ VALUES
 (36, 'IoT Innovations', 'Mia Johnson', 'An Internet of Things company driving smart and connected solutions', 'www.iotinnovations.com'),
 (37, 'TechSupport', 'Liam Anderson', 'A technology support company providing reliable technical assistance', 'www.techsupport.com'),
 (38, 'DataTech', 'John Smith', 'A data analytics company offering advanced insights and solutions', 'www.datatech.com'),
-(39, 'Cloud Innovators', 'Sarah Johnson', 'A cloud computing company revolutionizing the way businesses operate', 'www.cloudinnovators.com');
+(39, 'Cloud Innovators', 'Sarah Johnson', 'A cloud computing company revolutionizing the way businesses operate', 'www.cloudinnovators.com'),
+(40, 'Wild Code School', 'Gwen Stacy', 'this is me', 'test.com');
 
 INSERT INTO job_posting (
   company_id,

@@ -110,19 +110,19 @@ export default function Home() {
               </Button>
               <Button
                 onClick={() => {
-                  navigate("/annonces");
-                }}
-                variant="outlined"
-              >
-                Voir les Offres
-              </Button>
-              <Button
-                onClick={() => {
                   navigate("/register-company");
                 }}
                 variant="contained"
               >
                 M'inscrire en tant qu'entreprise
+              </Button>
+              <Button
+                onClick={() => {
+                  navigate("/annonces");
+                }}
+                variant="outlined"
+              >
+                Voir les Offres
               </Button>
             </Stack>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
