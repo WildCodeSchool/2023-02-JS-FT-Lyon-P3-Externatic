@@ -55,6 +55,7 @@ export default function Register() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // console.log({ ...formData });
 
     if (validateForm) {
       axios
