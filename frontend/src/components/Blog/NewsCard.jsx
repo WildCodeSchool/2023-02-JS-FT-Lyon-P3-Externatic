@@ -7,7 +7,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Link from "@mui/material/Link";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import "react-toastify/dist/ReactToastify.css";
@@ -43,85 +43,69 @@ function NewsCard() {
 
   if (news) {
     return (
-      <>
-        <Card sx={{ maxWidth: "60%", mb: { xs: 3, md: 3 }, pt: 5 }}>
-          {news[newsIndex].image !== null ? (
-            <CardMedia
-              component="div"
-              sx={{
-                // 16:9
-                pt: "56.25%",
-              }}
-              image={news[newsIndex].image}
-            />
-          ) : (
-            handleNext()
-          )}
-
-          <CardContent className="bottom-container">
-            <Typography variant="h6" color="initial">
-              {news[newsIndex].title}
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              {news[newsIndex].description}
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              {news[newsIndex].content}
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              Source: {news[newsIndex].source.name}
-            </Typography>
-          </CardContent>
-
-          <Stack
-            spacing={2}
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            sx={{ p: 4 }}
-          >
-            <Button
-              type="button"
-              onClick={handlePrevious}
-              disabled={newsIndex === 0}
-              className="news-arrow news-arrow-prev"
-            >
-              <ArrowLeftIcon /> Prev
-            </Button>
-            <Link
-              href={news[newsIndex].url}
-              className="news-link"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Lire Plus
-            </Link>
-            <Button
-              type="button"
-              onClick={handleNext}
-              disabled={newsIndex === news.length - 1}
-              className="news-arrow news-arrow-next"
-            >
-              Next
-              <ArrowRightIcon />
-            </Button>
-          </Stack>
-        </Card>
-        <div>
-          <ToastContainer
-            position="bottom-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
+      <Card sx={{ maxWidth: "60%", mb: { xs: 3, md: 3 }, pt: 5 }}>
+        {news[newsIndex].image !== null ? (
+          <CardMedia
+            component="div"
+            sx={{
+              // 16:9
+              pt: "56.25%",
+            }}
+            image={news[newsIndex].image}
           />
-        </div>
-      </>
+        ) : (
+          handleNext()
+        )}
+
+        <CardContent className="bottom-container">
+          <Typography variant="h6" color="initial">
+            {news[newsIndex].title}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {news[newsIndex].description}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {news[newsIndex].content}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Source: {news[newsIndex].source.name}
+          </Typography>
+        </CardContent>
+
+        <Stack
+          spacing={2}
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{ p: 4 }}
+        >
+          <Button
+            type="button"
+            onClick={handlePrevious}
+            disabled={newsIndex === 0}
+            className="news-arrow news-arrow-prev"
+          >
+            <ArrowLeftIcon /> Prev
+          </Button>
+          <Link
+            href={news[newsIndex].url}
+            className="news-link"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Lire Plus
+          </Link>
+          <Button
+            type="button"
+            onClick={handleNext}
+            disabled={newsIndex === news.length - 1}
+            className="news-arrow news-arrow-next"
+          >
+            Next
+            <ArrowRightIcon />
+          </Button>
+        </Stack>
+      </Card>
     );
   }
 }
