@@ -117,7 +117,7 @@ const companyUpdateSchema = Joi.object({
   email: Joi.string().email().required(),
 });
 
-// Validate the user input registering as a company
+// Validate the user input updating as a company
 const validateUpdateCompany = async (req, res, next) => {
   const { email, phone, city, name, contact, website, description } = req.body;
 
