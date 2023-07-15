@@ -6,6 +6,10 @@ const candidateSchema = Joi.object({
   phone: Joi.string()
     .pattern(/^[0-9]+$/)
     .min(9)
+    .messages({
+      "string.min": "Phone must be a valid phone",
+      "any.required": "phone is required",
+    })
     .required(),
   city: Joi.string().min(1).required(),
   email: Joi.string().email().required(),
@@ -16,7 +20,7 @@ const candidateSchema = Joi.object({
     .required(),
 });
 
-// Validate the user input who is registering as a candidate
+// Validate the user input registering as a candidate
 const validateCandidate = async (req, res, next) => {
   const { firstname, lastname, phone, city, email, password } = req.body;
 
@@ -49,7 +53,7 @@ const companySchema = Joi.object({
     .required(),
 });
 
-// Validate the user input who is registering as a company
+// Validate the user input registering as a company
 const validateCompany = async (req, res, next) => {
   const { email, phone, city, password, name, contact, website, description } =
     req.body;
@@ -85,7 +89,7 @@ const candidateUpdateSchema = Joi.object({
   email: Joi.string().email().required(),
 });
 
-// Validate the candidate input who is updating they informaiton
+// Validate the candidate input  updating they informaiton
 const validateCandidateUpdate = async (req, res, next) => {
   const { firstname, lastname, phone, city, email } = req.body;
 
@@ -113,7 +117,7 @@ const companyUpdateSchema = Joi.object({
   email: Joi.string().email().required(),
 });
 
-// Validate the user input who is registering as a company
+// Validate the user input registering as a company
 const validateUpdateCompany = async (req, res, next) => {
   const { email, phone, city, name, contact, website, description } = req.body;
 

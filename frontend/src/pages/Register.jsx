@@ -15,8 +15,10 @@ import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ValidateForm } from "../components/ValidateForm";
 import logo from "../assets/externatic-logo.png";
 import accueil from "../assets/accueil.jpg";
+// import { validate } from "uuid";
 
 function Copyright() {
   return (
@@ -35,43 +37,65 @@ export default function Register() {
   const notifyCreation = () => toast.success("Votre compte a bien été créé !");
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const [validateInput, setValidateInput] = useState({});
 
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
     email: "",
     password: "",
+    city: "",
+    phone: "",
     terms: false,
   });
-
-  const validateForm = () => {
-    // add email Validation
-    return true;
-  };
 
   const handleInputChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
+  const validateForm = () => {
+    // add email Validation
+    const { error } = ValidateForm.validate(
+      { ...formData, terms: undefined },
+      {
+        abortEarly: false,
+        allowUnknown: true,
+      }
+    );
+    if (error) {
+      const validationErrors = {};
+      error.details.forEach((err) => {
+        validationErrors[err.context.key] = err.message;
+      });
+      return validationErrors;
+    }
+    return {};
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // console.log({ ...formData });
-
-    if (validateForm) {
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length === 0) {
+      // The form is valid, proceed with form submission
       axios
         .post(`${BACKEND_URL}/register-candidate`, { ...formData })
         .then(() => {
           notifyCreation();
-        })
-        .then(() => {
           navigate("/");
         })
         .catch((err) => {
           console.error(err);
         });
+    } else {
+      // The form is invalid, handle validation errors
+      setValidateInput({ ...validationErrors });
+      console.error("Validation Errors:", validationErrors);
     }
   };
 
+  React.useEffect(() => {
+    validateForm();
+  }, [handleSubmit, handleInputChange]);
   const handleLinkLogin = () => {
     navigate("/login-candidate");
   };
@@ -133,6 +157,9 @@ export default function Register() {
                   onChange={handleInputChange}
                   value={formData.firstname}
                 />
+                <Box color="#CA2061">
+                  {formData.firstname ? undefined : validateInput.firstname}
+                </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -145,6 +172,9 @@ export default function Register() {
                   onChange={handleInputChange}
                   value={formData.lastname}
                 />
+                <Box color="#CA2061">
+                  {formData.lastname ? undefined : validateInput.lastname}
+                </Box>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -157,6 +187,9 @@ export default function Register() {
                   onChange={handleInputChange}
                   value={formData.city}
                 />
+                <Box color="#CA2061">
+                  {formData.city ? undefined : validateInput.city}
+                </Box>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -169,6 +202,7 @@ export default function Register() {
                   onChange={handleInputChange}
                   value={formData.phone}
                 />
+                <Box color="#CA2061">{validateInput.phone}</Box>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -181,6 +215,7 @@ export default function Register() {
                   onChange={handleInputChange}
                   value={formData.email}
                 />
+                <Box color="#CA2061">{validateInput.email}</Box>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -194,6 +229,7 @@ export default function Register() {
                   onChange={handleInputChange}
                   value={formData.password}
                 />
+                <Box color="#CA2061">{validateInput.password}</Box>
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
