@@ -242,7 +242,7 @@ export default function Register() {
                   required
                   fullWidth
                   id="email"
-                  label="Addresse Mail "
+                  label="Addresse e-mail"
                   name="email"
                   autoComplete="email"
                   onChange={handleInputChange}

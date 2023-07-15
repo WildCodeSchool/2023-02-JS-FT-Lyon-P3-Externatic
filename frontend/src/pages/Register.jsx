@@ -208,7 +208,7 @@ export default function Register() {
                   required
                   fullWidth
                   id="email"
-                  label="Adresse Mail"
+                  label="Adresse e-mail"
                   name="email"
                   autoComplete="email"
                   onChange={handleInputChange}
