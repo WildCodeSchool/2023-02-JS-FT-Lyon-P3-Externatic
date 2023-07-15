@@ -15,10 +15,9 @@ import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ValidateForm } from "../components/ValidateForm";
+import { ValidateFormCandidate } from "../components/ValidateForm";
 import logo from "../assets/externatic-logo.png";
 import accueil from "../assets/accueil.jpg";
-// import { validate } from "uuid";
 
 function Copyright() {
   return (
@@ -55,7 +54,7 @@ export default function Register() {
 
   const validateForm = () => {
     // add email Validation
-    const { error } = ValidateForm.validate(
+    const { error } = ValidateFormCandidate.validate(
       { ...formData, terms: undefined },
       {
         abortEarly: false,
@@ -157,7 +156,7 @@ export default function Register() {
                   onChange={handleInputChange}
                   value={formData.firstname}
                 />
-                <Box color="#CA2061">
+                <Box color="primary.main">
                   {formData.firstname ? undefined : validateInput.firstname}
                 </Box>
               </Grid>
@@ -172,7 +171,7 @@ export default function Register() {
                   onChange={handleInputChange}
                   value={formData.lastname}
                 />
-                <Box color="#CA2061">
+                <Box color="primary.main">
                   {formData.lastname ? undefined : validateInput.lastname}
                 </Box>
               </Grid>
@@ -187,7 +186,7 @@ export default function Register() {
                   onChange={handleInputChange}
                   value={formData.city}
                 />
-                <Box color="#CA2061">
+                <Box color="primary.main">
                   {formData.city ? undefined : validateInput.city}
                 </Box>
               </Grid>
@@ -202,7 +201,7 @@ export default function Register() {
                   onChange={handleInputChange}
                   value={formData.phone}
                 />
-                <Box color="#CA2061">{validateInput.phone}</Box>
+                <Box color="primary.main">{validateInput.phone}</Box>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -215,7 +214,7 @@ export default function Register() {
                   onChange={handleInputChange}
                   value={formData.email}
                 />
-                <Box color="#CA2061">{validateInput.email}</Box>
+                <Box color="primary.main">{validateInput.email}</Box>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -229,7 +228,7 @@ export default function Register() {
                   onChange={handleInputChange}
                   value={formData.password}
                 />
-                <Box color="#CA2061">{validateInput.password}</Box>
+                <Box color="primary.main">{validateInput.password}</Box>
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel

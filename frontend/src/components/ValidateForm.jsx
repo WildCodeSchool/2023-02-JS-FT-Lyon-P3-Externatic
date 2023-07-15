@@ -1,57 +1,130 @@
 import Joi from "joi";
 
-export const ValidateForm = Joi.object({
+const ValidateFormCandidate = Joi.object({
   firstname: Joi.string()
     .min(1)
     .messages({
-      "string.empty": "Name is required",
-      "string.min": "Name must be at least 1 charcter",
-      "any.required": "Name is required",
+      "string.empty": "Le prénom est requis",
+      "string.min": "Le prénom doit contenir au moins 1 caractère",
+      "any.required": "Le prénom est requis",
     })
     .required(),
   lastname: Joi.string()
     .min(1)
     .messages({
-      "string.empty": "Last name is required",
-      "string.min": "Last name must be at least 1 charcter",
-      "any.required": "Last name is required",
+      "string.empty": "Le nom est requis",
+      "string.min": "Le nom doit contenir au moins 1 caractère",
+      "any.required": "Le nom est requis",
     })
     .required(),
   phone: Joi.string()
     .pattern(/^[0-9]+$/)
     .min(9)
     .messages({
-      "string.empty": "Phone must be a valid phone number",
-      "string.min": "Phone must be a valid phone number",
-      "any.required": "Phone is required",
+      "string.empty": "Le numéro de téléphone est requis",
+      "string.pattern.base": "Le téléphone doit être un numéro valide",
+      "string.min": "Le téléphone doit être un numéro valide",
+      "any.required": "Le téléphone doit être un numéro valide",
     })
     .required(),
   city: Joi.string()
     .min(1)
     .messages({
-      "string.empty": "City name is required",
-      "string.min": "City name must be at least 1 charcter",
-      "any.required": "City name is required",
+      "string.empty": "Le nom de la ville est requis",
+      "string.min": "Le nome de la ville doit contenir au moins 1 caractére",
+      "any.required": "Le nom de la ville est requis",
     })
     .required(),
   email: Joi.string()
     .email({ tlds: { allow: false } })
     .messages({
-      "string.empty": "Email is required",
-      "string.email": "Email Must be a valid email",
-      "any.required": "Email Must be a valid email",
+      "string.empty": "Email est requis",
+      "string.email": "Email doit être valid",
+      "any.required": "Email doit être valid",
     })
     .required(),
   password: Joi.string()
     .min(6)
     .max(20)
     .messages({
-      "string.empty": "Password is required",
-      "string.min": "Password must be at least 6 characters",
-      "string.max": "Password must not exceed 20 characters",
-      "any.required": "Password is required",
+      "string.empty": "Le mot de passe est requis",
+      "string.min": "Le mot de passe doit contenir au moins 6 caractères",
+      "string.max": "Le mot de passe ne peut pas dépasser 20 caractères",
+      "any.required": "Le mot de passe est requis",
     })
     .required(),
 });
 
-export default { ValidateForm };
+//* Form to validate the company
+const ValidateFormCompany = Joi.object({
+  name: Joi.string()
+    .min(1)
+    .messages({
+      "string.empty": "Le nom est requis",
+      "string.min": "Le nom doit contenir au moins 1 caractère",
+      "any.required": "Le nom est requis",
+    })
+    .required(),
+  contact: Joi.string()
+    .min(1)
+    .messages({
+      "string.empty": "Le nom du contact est requis",
+      "string.min": "Le nom doit contenir au moins 1 caractère",
+      "any.required": "Le nom est requis",
+    })
+    .required(),
+  description: Joi.string()
+    .min(1)
+    .messages({
+      "string.empty": "Decription est requis",
+      "string.min": "Decription doit contenir au moins 1 caractère",
+      "any.required": "Decription est requis",
+    })
+    .required(),
+  website: Joi.string()
+    .min(1)
+    .messages({
+      "string.empty": "Site Web est requis",
+      "string.min": "Decription doit contenir au moins 1 caractère",
+      "any.required": "Site Web est requis",
+    })
+    .required(),
+  phone: Joi.string()
+    .pattern(/^[0-9]+$/)
+    .min(9)
+    .messages({
+      "string.empty": "Le numéro de téléphone est requis",
+      "string.pattern.base": "Le téléphone doit être un numéro valide",
+      "string.min": "Le téléphone doit être un numéro valide",
+      "any.required": "Le téléphone doit être un numéro valide",
+    })
+    .required(),
+  city: Joi.string()
+    .min(1)
+    .messages({
+      "string.empty": "Le nom de la ville est requis",
+      "string.min": "Le nome de la ville doit contenir au moins 1 caractére",
+      "any.required": "Le nom de la ville est requis",
+    })
+    .required(),
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .messages({
+      "string.empty": "Email est requis",
+      "string.email": "Email doit être valid",
+      "any.required": "Email doit être valid",
+    })
+    .required(),
+  password: Joi.string()
+    .min(6)
+    .max(20)
+    .messages({
+      "string.empty": "Le mot de passe est requis",
+      "string.min": "Le mot de passe doit contenir au moins 6 caractères",
+      "string.max": "Le mot de passe ne peut pas dépasser 20 caractères",
+      "any.required": "Le mot de passe est requis",
+    })
+    .required(),
+});
+
+export { ValidateFormCandidate, ValidateFormCompany };
