@@ -13,6 +13,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Switch from "@mui/material/Switch";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ValidateFormCandidate, ValidateFormCompany } from "../ValidateForm";
@@ -21,6 +22,7 @@ export default function AdminCreate() {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [validateInputCanidate, setValidateInputCandiate] = useState({});
   const [validateInputCompany, setValidateInputCompany] = useState({});
+  const [confirmation, setConfirmation] = useState(true);
   const notifyCreation = () => toast.success("Nouvel Utilisateur Enregistré!");
   const notifyCreationError = () => toast.error("Problème d'Enregistrement");
   const [formData, setFormData] = useState({
@@ -73,6 +75,10 @@ export default function AdminCreate() {
     return {};
   };
 
+  const toggleConfirmation = () => {
+    setConfirmation((prevState) => !prevState);
+  };
+
   const handleSubmitCandidate = (event) => {
     event.preventDefault();
     const validationErrors = ValidateFormCreateCandidate();
@@ -90,6 +96,7 @@ export default function AdminCreate() {
           //   admin: false,
           //   terms: false,
           // });
+          setConfirmation(true);
           notifyCreation();
         })
         .catch((error) => {
@@ -140,6 +147,7 @@ export default function AdminCreate() {
           //   admin: false,
           //   terms: false,
           // });
+          setConfirmation(true);
           notifyCreation();
         })
         .catch((error) => {
@@ -339,14 +347,36 @@ export default function AdminCreate() {
                   </Box>
                 </Grid>
               </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Enregistrer
-              </Button>
+              {confirmation ? (
+                <Button
+                  variant="outlined"
+                  sx={{ mt: 3, mb: 2 }}
+                  color="error"
+                  onClick={toggleConfirmation}
+                >
+                  Annuler
+                </Button>
+              ) : (
+                <Button
+                  variant="outlined"
+                  sx={{ mt: 3, mb: 2 }}
+                  color="error"
+                  onClick={toggleConfirmation}
+                >
+                  Enregistré
+                </Button>
+              )}
+              {confirmation && (
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{ m: 3 }}
+                  color="error"
+                  startIcon={<AddCircleIcon />}
+                >
+                  Confirmer la création
+                </Button>
+              )}
             </Box>
           </Box>
         </AccordionDetails>
@@ -569,14 +599,36 @@ export default function AdminCreate() {
                   </Box>
                 </Grid>
               </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Enregistrer
-              </Button>
+              {confirmation ? (
+                <Button
+                  variant="outlined"
+                  sx={{ mt: 3, mb: 2 }}
+                  color="error"
+                  onClick={toggleConfirmation}
+                >
+                  Annuler
+                </Button>
+              ) : (
+                <Button
+                  variant="outlined"
+                  sx={{ mt: 3, mb: 2 }}
+                  color="error"
+                  onClick={toggleConfirmation}
+                >
+                  Enregistré
+                </Button>
+              )}
+              {confirmation && (
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{ m: 3 }}
+                  color="error"
+                  startIcon={<AddCircleIcon />}
+                >
+                  Confirmer la création
+                </Button>
+              )}
             </Box>
           </Box>
         </AccordionDetails>
