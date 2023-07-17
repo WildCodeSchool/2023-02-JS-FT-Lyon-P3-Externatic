@@ -139,6 +139,7 @@ export default function SearchBar() {
                 name="jobTitle"
                 value={inputFilter.jobTitle}
                 onChange={handleChange}
+                label="Type de poste"
                 MenuProps={MenuProps}
               >
                 {filterOptions.jobsTitle.map((title) => (
@@ -158,6 +159,7 @@ export default function SearchBar() {
                 name="jobType"
                 value={inputFilter.jobType}
                 onChange={handleChange}
+                label="Type de contrat"
                 MenuProps={MenuProps}
               >
                 {filterOptions.jobsType.map((job) => (
@@ -177,6 +179,7 @@ export default function SearchBar() {
                 name="jobLocation"
                 value={inputFilter.jobLocation}
                 onChange={handleChange}
+                label="Localisation"
                 MenuProps={MenuProps}
               >
                 {filterOptions.citiesAvailable.map((city) => (
