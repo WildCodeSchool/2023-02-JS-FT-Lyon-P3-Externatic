@@ -2,6 +2,8 @@ const express = require("express");
 
 const routerApplication = express.Router();
 
+const { verifyToken } = require("../services/auth");
+
 const applicationControllers = require("../controllers/applicationControllers ");
 
 routerApplication.get("/applications", applicationControllers.browse);
@@ -16,6 +18,10 @@ routerApplication.get(
 );
 routerApplication.put("/applications/:id", applicationControllers.edit);
 routerApplication.post("/applications", applicationControllers.add);
-routerApplication.delete("/applications/:id", applicationControllers.destroy);
+routerApplication.delete(
+  "/applications/:id",
+  verifyToken,
+  applicationControllers.destroy
+);
 
 module.exports = routerApplication;

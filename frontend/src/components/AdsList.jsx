@@ -102,7 +102,11 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
             status: "en cours",
           })
 
-          .then(toast.success("Votre Candidature a été prise en compte."))
+          .then(
+            toast.success(
+              `Votre candidature chez ${jobOffer.name} a bien été prise en compte.`
+            )
+          )
           // Sending Email to the company saying which candidate applied to which offer.
           .then(
             api.sendEmail({
