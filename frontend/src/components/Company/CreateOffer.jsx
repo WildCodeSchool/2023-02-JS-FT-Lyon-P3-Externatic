@@ -187,7 +187,7 @@ export default function CreateOffer() {
   return (
     <Container
       component="main"
-      maxWidth="lg"
+      maxWidth="xxl"
       sx={{
         pb: "3rem",
       }}

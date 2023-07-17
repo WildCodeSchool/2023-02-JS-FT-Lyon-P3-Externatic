@@ -21,7 +21,7 @@ export default function AdminDelete() {
 
   const [lastname, setLastname] = useState("");
   const [companyId, setCompanyId] = useState("");
-  const [confirmation, setConfirmation] = useState(false); // Added confirmation state
+  const [confirmation, setConfirmation] = useState(false);
 
   const handleCandidateInputChange = (event) => {
     setLastname(event.target.value);
@@ -36,7 +36,9 @@ export default function AdminDelete() {
 
     if (lastname && confirmation) {
       axios
-        .delete(`${BACKEND_URL}/candidates?lastname=${lastname}`)
+        .delete(`${BACKEND_URL}/candidates?lastname=${lastname}`, {
+          withCredentials: true,
+        })
         .then(() => {
           setLastname("");
           setConfirmation(false);
@@ -51,7 +53,9 @@ export default function AdminDelete() {
 
     if (companyId && confirmation) {
       axios
-        .delete(`${BACKEND_URL}/companies/${companyId}`)
+        .delete(`${BACKEND_URL}/companies/${companyId}`, {
+          withCredentials: true,
+        })
         .then(() => {
           setCompanyId("");
           setConfirmation(false);

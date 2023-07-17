@@ -21,7 +21,7 @@ function ArticleCard() {
   const getNews = () => {
     axios
       .get(
-        `http://api.mediastack.com/v1/news?access_key=${MEDIASTACK_API_KEY}&categories=technology,business&languages=fr&limit=20`
+        `http://api.mediastack.com/v1/news?access_key=${MEDIASTACK_API_KEY}&categories=business&languages=fr&limit=20`
       )
       .then((response) => {
         setNews(response.data.data);
