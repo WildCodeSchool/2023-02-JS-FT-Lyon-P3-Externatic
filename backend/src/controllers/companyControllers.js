@@ -76,8 +76,6 @@ const add = async (req, res) => {
       website,
     } = req.body;
 
-    // TODO: Add validations for email, phone, city, password, name, contact, description, website
-
     // Create a new user entry
     const [userResult] = await models.user.insert({
       email,
