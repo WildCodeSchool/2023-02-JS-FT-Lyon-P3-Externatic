@@ -17,6 +17,7 @@
   },
   "plugins": ["react", "import"],
   "rules": {
+    "react/function-component-definition": ["error", { "namedComponents": "function-declaration" }],
     "no-console": "off",
     "no-restricted-syntax": [
       "error",
