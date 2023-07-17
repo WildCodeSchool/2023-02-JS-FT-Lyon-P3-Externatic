@@ -208,7 +208,7 @@ export default function Home() {
           {jobsTypes.map((offer) => (
             <ReactLink to="/annonces">
               <JobByTypeCard key={offer.id} jobTypes={offer} />
-              {console.log(offer)}
+              {/* {console.log(offer)} */}
             </ReactLink>
           ))}
         </Box>
