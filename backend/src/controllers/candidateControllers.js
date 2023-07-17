@@ -1,9 +1,6 @@
 const fs = require("fs");
-const multer = require("multer");
 
 const { v4: uuidv4 } = require("uuid");
-
-const upload = multer({ dest: "./public/uploads/" });
 
 const models = require("../models");
 
@@ -54,7 +51,7 @@ const read = (req, res) => {
 
 const add = async (req, res) => {
   try {
-    const { email, phone, city, hashedPassword, firstname, lastname } =
+    const { email, phone, city, hashedPassword, firstname, lastname, admin } =
       req.body;
 
     // Créer une nouvelle insertion dans User
@@ -63,6 +60,7 @@ const add = async (req, res) => {
       phone,
       city,
       hashedPassword,
+      admin,
     });
     const userId = userResult.insertId;
 
@@ -82,7 +80,7 @@ const add = async (req, res) => {
 
 const edit = async (req, res) => {
   try {
-    const { email, phone, city, password, firstname, lastname, cv } = req.body;
+    const { email, phone, city, firstname, lastname } = req.body;
     const userId = req.body.user_id;
     const candidateId = parseInt(req.params.id, 10);
 
@@ -92,7 +90,6 @@ const edit = async (req, res) => {
       email,
       phone,
       city,
-      password,
     });
 
     // Update candidate information
@@ -101,19 +98,25 @@ const edit = async (req, res) => {
       user_id: userId,
       firstname,
       lastname,
-      cv,
     });
 
-    res.sendStatus(200);
+    res.send({ email, phone, city, firstname, lastname });
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
   }
 };
 
-const destroy = (req, res) => {
+const destroyByLastName = (req, res) => {
+  const { lastname } = req.query;
+
+  if (!lastname) {
+    res.sendStatus(400);
+    return;
+  }
+
   models.candidate
-    .delete(req.params.id)
+    .deleteByLastName(lastname)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404);
@@ -127,30 +130,28 @@ const destroy = (req, res) => {
     });
 };
 
-const uploadCV = (req, res, next) => {
-  upload.single("monCV")(req, res, (err) => {
-    if (err) {
-      console.error(err);
-      return res.sendStatus(500);
-    }
+const uploadCV = async (req, res) => {
+  const { originalname, filename } = req.file;
+  const cvPath = `${uuidv4()}-${originalname}`;
 
-    const { originalname, filename } = req.file;
-
-    fs.rename(
-      `./public/uploads/${filename}`,
-      `./public/uploads/${uuidv4()}-${originalname}`,
-      (error) => {
-        if (error) {
-          console.error(error);
-          return res.sendStatus(500);
-        }
-
-        console.warn(`./public/uploads/${uuidv4()}-${originalname}`);
-        return next();
-      }
+  try {
+    await fs.promises.rename(
+      `./public/cv/${filename}`,
+      `./public/cv/${cvPath}`
     );
-    return next();
-  });
+
+    const candidateId = req.payloads.sub;
+
+    await models.candidate.updateCV({
+      id: candidateId,
+      cv: cvPath,
+    });
+
+    res.send({ cvPath });
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
 };
 
 module.exports = {
@@ -158,7 +159,7 @@ module.exports = {
   read,
   edit,
   add,
-  destroy,
+  destroyByLastName,
   profile,
   uploadCV,
 };

@@ -16,13 +16,15 @@ import "react-toastify/dist/ReactToastify.css";
 export default function AdminDelete() {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const notifyDeletion = () => toast.success("Suppression Effectuée");
-  const notifyErrorDeletion = () => toast.error("problème à la suppression");
+  const notifyErrorDeletion = () =>
+    toast.error("Problème lors de la suppression");
 
-  const [candidateId, setCandidateId] = useState("");
+  const [lastname, setLastname] = useState("");
   const [companyId, setCompanyId] = useState("");
+  const [confirmation, setConfirmation] = useState(false); // Added confirmation state
 
   const handleCandidateInputChange = (event) => {
-    setCandidateId(parseInt(event.target.value, 10));
+    setLastname(event.target.value);
   };
 
   const handleCompanyInputChange = (event) => {
@@ -32,11 +34,12 @@ export default function AdminDelete() {
   const handleDeleteCandidate = (event) => {
     event.preventDefault();
 
-    if (candidateId) {
+    if (lastname && confirmation) {
       axios
-        .delete(`${BACKEND_URL}/candidates/${candidateId}`)
+        .delete(`${BACKEND_URL}/candidates?lastname=${lastname}`)
         .then(() => {
-          setCandidateId("");
+          setLastname("");
+          setConfirmation(false);
           notifyDeletion();
         })
         .catch(() => notifyErrorDeletion());
@@ -46,20 +49,25 @@ export default function AdminDelete() {
   const handleDeleteCompany = (event) => {
     event.preventDefault();
 
-    if (companyId) {
+    if (companyId && confirmation) {
       axios
         .delete(`${BACKEND_URL}/companies/${companyId}`)
         .then(() => {
           setCompanyId("");
+          setConfirmation(false);
           notifyDeletion();
         })
-        .catch(() => notifyErrorDeletion("problème à la suppression"));
+        .catch(() => notifyErrorDeletion());
     }
   };
 
+  const toggleConfirmation = () => {
+    setConfirmation((prevState) => !prevState);
+  };
+
   return (
-    <Container maxWidth="xl" sx={{ mb: 3 }}>
-      <Typography variant="h4" color="initial" sx={{ m: 2 }}>
+    <Container maxWidth="xl" sx={{ pb: "3rem" }}>
+      <Typography variant="h4" color="initial" sx={{ py: 4 }}>
         Suppression
       </Typography>
       <Accordion>
@@ -94,21 +102,42 @@ export default function AdminDelete() {
             >
               <TextField
                 id="delete-candidate"
-                label="Entrer l'ID du Candidat à supprimer"
-                name="id"
+                label="Entrer le Nom du Candidat à supprimer"
+                name="lastname"
                 sx={{ width: "30%" }}
-                value={candidateId}
+                value={lastname}
                 onChange={handleCandidateInputChange}
               />
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{ m: 3 }}
-                color="error"
-                startIcon={<DeleteIcon />}
-              >
-                Supprimer
-              </Button>
+              {confirmation ? (
+                <Button
+                  variant="outlined"
+                  sx={{ m: 3 }}
+                  color="error"
+                  onClick={toggleConfirmation}
+                >
+                  Annuler
+                </Button>
+              ) : (
+                <Button
+                  variant="outlined"
+                  sx={{ m: 3 }}
+                  color="error"
+                  onClick={toggleConfirmation}
+                >
+                  Effacer
+                </Button>
+              )}
+              {confirmation && (
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{ m: 3 }}
+                  color="error"
+                  startIcon={<DeleteIcon />}
+                >
+                  Confirmer la Suppression
+                </Button>
+              )}
             </Box>
           </Box>
         </AccordionDetails>
@@ -151,15 +180,36 @@ export default function AdminDelete() {
                 value={companyId}
                 onChange={handleCompanyInputChange}
               />
-              <Button
-                type="submit"
-                variant="contained"
-                color="error"
-                sx={{ m: 3 }}
-                startIcon={<DeleteIcon />}
-              >
-                Supprimer
-              </Button>
+              {confirmation ? (
+                <Button
+                  variant="outlined"
+                  sx={{ m: 3 }}
+                  color="error"
+                  onClick={toggleConfirmation}
+                >
+                  Annuler
+                </Button>
+              ) : (
+                <Button
+                  variant="outlined"
+                  sx={{ m: 3 }}
+                  color="error"
+                  onClick={toggleConfirmation}
+                >
+                  Effacer
+                </Button>
+              )}
+              {confirmation && (
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="error"
+                  sx={{ m: 3 }}
+                  startIcon={<DeleteIcon />}
+                >
+                  Confirmer la Suppression
+                </Button>
+              )}
             </Box>
           </Box>
         </AccordionDetails>
@@ -170,7 +220,7 @@ export default function AdminDelete() {
           aria-controls="deleteCompany-content"
           id="deleteCompany-header"
         >
-          <Typography>Supprimer un Admin</Typography>
+          <Typography>Supprimer une Annonce</Typography>
         </AccordionSummary>
       </Accordion>
     </Container>

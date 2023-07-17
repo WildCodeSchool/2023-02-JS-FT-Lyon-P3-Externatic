@@ -7,11 +7,11 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import CardMedia from "@mui/material/CardMedia";
-import Navbar from "../components/Navbar";
 import TopAnnoncesCard from "../components/Home/TopAnnoncesCard";
 import JobByTypeCard from "../components/Home/JobByTypeCard";
 import backgroundImage from "../assets/tim-mossholder-GOMhuCj-O9w-unsplash-1024x683.jpg";
 import externaticLogo from "../assets/EXTERNATIC-LOGO-VERTICAL-RVB-removebg-preview.png";
+import Navbar from "../components/Navbar";
 import { api } from "../components/api";
 
 function Copyright() {
@@ -19,7 +19,7 @@ function Copyright() {
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Externatic / Team PAF
       </Link>{" "}
       {new Date().getFullYear()}
     </Typography>

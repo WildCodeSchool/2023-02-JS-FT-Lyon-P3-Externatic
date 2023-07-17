@@ -87,9 +87,9 @@ export default function SearchBar() {
       const res = await axios.get(`${BACKEND_URL}/jobs`);
       const filteredData = res.data.filter((job) => {
         const titleMatch =
-          !inputFilter.jobTitle || job.title === inputFilter.jobTitle;
+          !inputFilter.jobTitle || job.category === inputFilter.jobTitle;
         const typeMatch =
-          !inputFilter.jobType || job.contract_type === inputFilter.jobType;
+          !inputFilter.jobType || job.type === inputFilter.jobType;
         const locationMatch =
           !inputFilter.jobLocation || job.location === inputFilter.jobLocation;
         return titleMatch && typeMatch && locationMatch;
@@ -128,7 +128,11 @@ export default function SearchBar() {
           >
             Annonces
           </Typography>
-          <Box>
+          <Box
+            sx={{
+              textAlign: "center",
+            }}
+          >
             <FormControl sx={{ m: 1, width: 250 }}>
               <InputLabel id="demo-multiple-checkbox-label">
                 Type de poste
@@ -139,6 +143,7 @@ export default function SearchBar() {
                 name="jobTitle"
                 value={inputFilter.jobTitle}
                 onChange={handleChange}
+                label="Type de poste"
                 MenuProps={MenuProps}
               >
                 {filterOptions.jobsTitle.map((title) => (
@@ -158,6 +163,7 @@ export default function SearchBar() {
                 name="jobType"
                 value={inputFilter.jobType}
                 onChange={handleChange}
+                label="Type de contrat"
                 MenuProps={MenuProps}
               >
                 {filterOptions.jobsType.map((job) => (
@@ -177,6 +183,7 @@ export default function SearchBar() {
                 name="jobLocation"
                 value={inputFilter.jobLocation}
                 onChange={handleChange}
+                label="Localisation"
                 MenuProps={MenuProps}
               >
                 {filterOptions.citiesAvailable.map((city) => (

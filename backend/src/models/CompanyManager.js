@@ -8,7 +8,7 @@ class CompanyManager extends AbstractManager {
   find(companyId) {
     return this.database.query(
       `
-      SELECT company.id, company.user_id, company.name, company.contact, company.description, user.email, user.phone, user.city, user.picture
+      SELECT company.id, company.user_id, company.name, company.contact, company.website, company.description, user.email, user.hashedPassword, user.phone, user.city, user.picture
       FROM company
       INNER JOIN user ON company.user_id = user.id
       WHERE company.id = ?
@@ -19,10 +19,18 @@ class CompanyManager extends AbstractManager {
 
   findAll() {
     return this.database
-      .query(`SELECT company.id, company.user_id, company.name, company.contact, company.description, user.email, user.phone, user.city, user.picture
-
+      .query(`SELECT company.id, company.user_id, company.name, company.contact, company.website, company.description, user.email, user.hashedPassword, user.phone, user.city, user.picture, user.admin
     FROM ${this.table}
     INNER JOIN user ON company.user_id = user.id`);
+  }
+
+  findCompanyByEmailWithPassword(email) {
+    return this.database.query(
+      `SELECT ${this.table}.*, user.hashedPassword, user.email, user.phone, user.city, user.picture, user.admin FROM ${this.table} 
+      INNER JOIN user ON company.user_id = user.id
+      WHERE email = ?`,
+      [email]
+    );
   }
 
   insert(company) {
@@ -43,14 +51,8 @@ class CompanyManager extends AbstractManager {
 
   update(company) {
     return this.database.query(
-      `update ${this.table} set user_id = ${company.user_id}, name = ?, contact = ?, description = ?, website = ? where id = ${company.id}`,
-      [
-        company.user_id,
-        company.name,
-        company.contact,
-        company.description,
-        company.website,
-      ]
+      `update ${this.table} set name = ?, contact = ?, description = ?, website = ? where user_id = ${company.id}`,
+      [company.name, company.contact, company.description, company.website]
     );
   }
 
