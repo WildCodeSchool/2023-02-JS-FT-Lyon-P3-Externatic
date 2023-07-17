@@ -57,6 +57,7 @@ routerCandidate.get("/candidates/:id", candidateControllers.read);
 routerCandidate.put(
   "/candidates/:id",
   validateCandidateUpdate,
+  verifyToken,
   candidateControllers.edit
 );
 routerCandidate.delete(
