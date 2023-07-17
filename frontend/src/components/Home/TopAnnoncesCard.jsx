@@ -14,9 +14,12 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { Navigation, Pagination, Scrollbar } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import cardJobPosting from "../../assets/cardJobPosting.jpg";
+
 // Import Swiper styles
 
 // eslint-disable-next-line import/no-unresolved
@@ -67,15 +70,6 @@ export default function TopAnnoncesCard() {
     setJobPosting(res.data);
   };
 
-  const formatText = (text) => {
-    return text.split("\n").map((line) => (
-      <React.Fragment key={selectedJob.id}>
-        {line}
-        <br />
-      </React.Fragment>
-    ));
-  };
-
   useEffect(() => {
     jobsApplication();
   }, []);
@@ -124,9 +118,11 @@ export default function TopAnnoncesCard() {
                     <Typography gutterBottom variant="h5" component="div">
                       {jobs.title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {`${jobs.description.slice(0, 150)}...`} <br />
-                    </Typography>
+                    <ReactQuill
+                      theme="bubble"
+                      value={`${jobs.description.slice(0, 150)}...`}
+                      readOnly
+                    />
                   </CardContent>
                   <CardActions>
                     <Button size="small" onClick={() => handleOpen(jobs)}>
@@ -213,12 +209,16 @@ export default function TopAnnoncesCard() {
                 <Typography gutterBottom variant="h5" component="h3">
                   {selectedJob.title}
                 </Typography>
-                <Typography sx={{ marginBottom: "1rem" }}>
-                  {formatText(selectedJob.description)}
-                </Typography>
-                <Typography sx={{ marginBottom: "1rem" }}>
-                  {formatText(selectedJob.requirements)}
-                </Typography>
+                <ReactQuill
+                  theme="bubble"
+                  value={selectedJob.description}
+                  readOnly
+                />
+                <ReactQuill
+                  theme="bubble"
+                  value={selectedJob.requirements}
+                  readOnly
+                />
                 <Button
                   variant="contained"
                   size="large"
