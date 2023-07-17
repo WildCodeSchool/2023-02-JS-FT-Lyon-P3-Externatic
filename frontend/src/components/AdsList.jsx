@@ -17,6 +17,8 @@ import Pagination from "@mui/material/Pagination";
 import Avatar from "@mui/material/Avatar";
 import { PropTypes } from "prop-types";
 import { toast } from "react-toastify";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import CandidateContext from "../Contexts/CandidateContext";
 import "react-toastify/dist/ReactToastify.css";
 import { api } from "./api";
@@ -123,15 +125,6 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
     return undefined;
   };
 
-  const formatText = (text) => {
-    return text.split("\n").map((line) => (
-      <Fragment key={line}>
-        {line}
-        <br />
-      </Fragment>
-    ));
-  };
-
   return (
     <>
       {!infoDataFiltered && infoDataNoFiltered && (
@@ -160,10 +153,11 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       <Typography gutterBottom variant="h5" component="h2">
                         {jobOffer.name}
                       </Typography>
-                      <Typography>{`${jobOffer.description.slice(
-                        0,
-                        150
-                      )}...`}</Typography>
+                      <ReactQuill
+                        theme="bubble"
+                        value={`${jobOffer.description.slice(0, 150)}...`}
+                        readOnly
+                      />
                     </CardContent>
                     <CardActions>
                       <Button size="small" onClick={() => handleOpen(jobOffer)}>
@@ -201,7 +195,8 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                 }}
               >
                 <Typography gutterBottom variant="h5" component="h2">
-                  Veuillez vous connecter pour postuler à une offre.
+                  Vous devez être connecté comme Candidat pour postuler à une
+                  offre.
                 </Typography>
               </Box>
             </Backdrop>
@@ -284,12 +279,16 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                     <Typography gutterBottom variant="h5" component="h3">
                       {selectedJob.title}
                     </Typography>
-                    <Typography sx={{ marginBottom: "1rem" }}>
-                      {formatText(selectedJob.description)}
-                    </Typography>
-                    <Typography sx={{ marginBottom: "1rem" }}>
-                      {formatText(selectedJob.requirements)}
-                    </Typography>
+                    <ReactQuill
+                      theme="bubble"
+                      value={selectedJob.description}
+                      readOnly
+                    />
+                    <ReactQuill
+                      theme="bubble"
+                      value={selectedJob.requirements}
+                      readOnly
+                    />
                     <Button
                       variant="contained"
                       size="large"
@@ -301,7 +300,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       Postuler
                     </Button>
                   </CardContent>
-                  <CardContent>
+                  <CardContent sx={{ mr: "1rem" }}>
                     <Paper
                       sx={{
                         borderRadius: "0.8rem",
@@ -312,8 +311,6 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       <Typography
                         sx={{
                           marginBottom: "0.2rem",
-                          marginLeft: "0.5rem",
-                          marginRight: "0.5rem",
                         }}
                       >
                         {selectedJob.category}
@@ -433,10 +430,11 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       <Typography gutterBottom variant="h5" component="h2">
                         {jobOffer.name}
                       </Typography>
-                      <Typography>{`${jobOffer.description.slice(
-                        0,
-                        150
-                      )}...`}</Typography>
+                      <ReactQuill
+                        theme="bubble"
+                        value={`${jobOffer.description.slice(0, 150)}...`}
+                        readOnly
+                      />
                     </CardContent>
                     <CardActions>
                       <Button size="small" onClick={() => handleOpen(jobOffer)}>
@@ -525,12 +523,17 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                     <Typography gutterBottom variant="h5" component="h3">
                       {selectedJob.title}
                     </Typography>
-                    <Typography sx={{ marginBottom: "1rem" }}>
-                      {formatText(selectedJob.description)}
-                    </Typography>
-                    <Typography sx={{ marginBottom: "1rem" }}>
-                      {formatText(selectedJob.requirements)}
-                    </Typography>
+                    <ReactQuill
+                      theme="bubble"
+                      value={selectedJob.description}
+                      readOnly
+                    />
+
+                    <ReactQuill
+                      theme="bubble"
+                      value={selectedJob.requirements}
+                      readOnly
+                    />
                     <Button
                       variant="contained"
                       size="large"

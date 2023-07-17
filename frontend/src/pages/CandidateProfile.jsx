@@ -13,6 +13,8 @@ import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import CandidateCard from "../components/Candidate/CandidateCard";
 import CandidateApplications from "../components/Candidate/CandidateApplications";
 import { useCandidateContext } from "../Contexts/CandidateContext";
@@ -59,14 +61,6 @@ export default function CandidateProfile() {
     }
   }, []);
 
-  const formatText = (text) => {
-    return text.split("\n").map((line) => (
-      <React.Fragment key={selectedJob.id}>
-        {line}
-        <br />
-      </React.Fragment>
-    ));
-  };
   return (
     <Container maxWidth="xxl" sx={{ mt: 4, textAlign: "center" }}>
       <Typography variant="h3" color="primary" sx={{ m: 3 }}>
@@ -131,10 +125,11 @@ export default function CandidateProfile() {
                           <Typography gutterBottom variant="h5" component="h2">
                             {favorite.name}
                           </Typography>
-                          <Typography>{`${favorite.description.slice(
-                            0,
-                            150
-                          )}...`}</Typography>
+                          <ReactQuill
+                            theme="bubble"
+                            value={`${favorite.description.slice(0, 150)}...`}
+                            readOnly
+                          />
                         </CardContent>
                         <CardActions>
                           <Button
@@ -219,12 +214,16 @@ export default function CandidateProfile() {
                         <Typography gutterBottom variant="h5" component="h3">
                           {selectedJob.title}
                         </Typography>
-                        <Typography sx={{ marginBottom: "1rem" }}>
-                          {formatText(selectedJob.description)}
-                        </Typography>
-                        <Typography sx={{ marginBottom: "1rem" }}>
-                          {formatText(selectedJob.requirements)}
-                        </Typography>
+                        <ReactQuill
+                          theme="bubble"
+                          value={selectedJob.description}
+                          readOnly
+                        />
+                        <ReactQuill
+                          theme="bubble"
+                          value={selectedJob.requirements}
+                          readOnly
+                        />
                         <Button
                           variant="contained"
                           size="large"

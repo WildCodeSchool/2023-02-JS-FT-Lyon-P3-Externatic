@@ -21,9 +21,29 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Switch from "@mui/material/Switch";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
+const isRemote = [
+  {
+    id: 1,
+    type: "Télétravail",
+  },
+  {
+    id: 2,
+    type: "Hybride",
+  },
+  {
+    id: 3,
+    type: "Presentiel",
+  },
+];
 
 export default function CreateOffer() {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const [description, setDescription] = useState("");
+  const [requirements, setRequirements] = useState("");
+
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -34,6 +54,35 @@ export default function CreateOffer() {
       },
     },
   };
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link", "image"],
+      ["clean"],
+    ],
+  };
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+  ];
+
   const notifyCreation = () => toast.success("Nouvelle offre d'emploi posté!");
   const notifyCreationError = () =>
     toast.error("Problème lors de la publication");
@@ -56,14 +105,29 @@ export default function CreateOffer() {
     posting_date: newDate,
   });
 
+  const handleChangeDescription = (value) => {
+    setDescription(value);
+  };
+
+  const handleChangeRequirements = (value) => {
+    setRequirements(value);
+  };
+
   const handleInputChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const handleSubmitJobOffer = (event) => {
     event.preventDefault();
     axios
-      .post(`${BACKEND_URL}/jobs`, { ...formData }, { withCredentials: true })
+      .post(
+        `${BACKEND_URL}/jobs`,
+        { ...formData, description, requirements },
+        { withCredentials: true }
+      )
       .then(() => {
         setFormData({
           company_id: null,
@@ -148,16 +212,22 @@ export default function CreateOffer() {
               alignItems: "center",
             }}
           >
-            <Typography component="h1" variant="h5">
-              Créer une nouvelle annonce
-            </Typography>
             <Box
               component="form"
               noValidate
               onSubmit={handleSubmitJobOffer}
-              sx={{ mt: 3 }}
+              sx={{
+                mt: 3,
+              }}
             >
-              <Grid container spacing={2}>
+              <Grid
+                container
+                spacing={2}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
                 <Grid item xs={12}>
                   <FormGroup>
                     <FormControlLabel
@@ -173,7 +243,7 @@ export default function CreateOffer() {
                           name="name"
                         />
                       }
-                      label="Name"
+                      label="Nom de l'entreprise"
                     />
                     <FormControlLabel
                       control={
@@ -188,47 +258,24 @@ export default function CreateOffer() {
                           name="website"
                         />
                       }
-                      label="website"
+                      label="Site Internet"
                     />
                   </FormGroup>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid>
                   <TextField
                     name="title"
                     required
                     fullWidth
                     id="title"
-                    label="Titre du poste"
+                    label="Titre de l'annonce"
                     autoFocus
                     onChange={handleInputChange}
                     value={formData.title}
+                    sx={{ m: 1, width: 250 }}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    name="description"
-                    required
-                    fullWidth
-                    id="description"
-                    label="description"
-                    autoFocus
-                    onChange={handleInputChange}
-                    value={formData.description}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    name="requirements"
-                    required
-                    fullWidth
-                    id="requirements"
-                    label="Prérequis"
-                    autoFocus
-                    onChange={handleInputChange}
-                    value={formData.requirements}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid>
                   <TextField
                     name="salary"
                     required
@@ -238,20 +285,29 @@ export default function CreateOffer() {
                     autoFocus
                     onChange={handleInputChange}
                     value={formData.salary}
+                    sx={{ m: 1, width: 250 }}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
+                <FormControl sx={{ m: 1, width: 250 }}>
+                  <InputLabel id="demo-multiple-checkbox-label">
+                    Lieu de travail
+                  </InputLabel>
+                  <Select
+                    labelId="demo-multiple-checkbox-label"
+                    id="demo-multiple-checkbox"
                     name="remote"
-                    required
-                    fullWidth
-                    id="remote"
-                    label="Remote"
-                    autoFocus
-                    onChange={handleInputChange}
                     value={formData.remote}
-                  />
-                </Grid>
+                    label="Lieu du poste"
+                    onChange={handleInputChange}
+                    MenuProps={MenuProps}
+                  >
+                    {isRemote.map((job) => (
+                      <MenuItem key={job.id} value={job.id}>
+                        <ListItemText primary={job.type} />
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
                 <FormControl sx={{ m: 1, width: 250 }}>
                   <InputLabel id="demo-multiple-checkbox-label">
                     Type de poste
@@ -262,6 +318,7 @@ export default function CreateOffer() {
                     name="job_category_id"
                     value={formData.job_category_id}
                     onChange={handleInputChange}
+                    label="Type de poste"
                     MenuProps={MenuProps}
                   >
                     {jobTitles.map((job) => (
@@ -281,6 +338,7 @@ export default function CreateOffer() {
                     name="job_type_id"
                     value={formData.job_type_id}
                     onChange={handleInputChange}
+                    label="Type de contrat"
                     MenuProps={MenuProps}
                   >
                     {jobTypes.map((type) => (
@@ -290,7 +348,6 @@ export default function CreateOffer() {
                     ))}
                   </Select>
                 </FormControl>
-
                 <FormControl sx={{ m: 1, width: 250 }}>
                   <InputLabel id="demo-multiple-checkbox-label">
                     Localisation
@@ -301,6 +358,7 @@ export default function CreateOffer() {
                     name="job_location_id"
                     value={formData.job_location_id}
                     onChange={handleInputChange}
+                    label="Localisation"
                     MenuProps={MenuProps}
                   >
                     {jobLocations.map((location) => (
@@ -311,6 +369,38 @@ export default function CreateOffer() {
                   </Select>
                 </FormControl>
               </Grid>
+              <Box>
+                <Typography
+                  component="h3"
+                  variant="body"
+                  sx={{ mt: "1rem", mb: "1rem" }}
+                >
+                  Écrivez votre description du poste.
+                </Typography>
+                <ReactQuill
+                  defaultValue="text"
+                  modules={modules}
+                  formats={formats}
+                  value={description}
+                  onChange={handleChangeDescription}
+                />
+              </Box>
+              <Box>
+                <Typography
+                  component="h3"
+                  variant="body"
+                  sx={{ mt: "1rem", mb: "1rem" }}
+                >
+                  Écrivez vos prérequis pour le poste.
+                </Typography>
+                <ReactQuill
+                  defaultValue="text"
+                  modules={modules}
+                  formats={formats}
+                  value={requirements}
+                  onChange={handleChangeRequirements}
+                />
+              </Box>
               <Button
                 type="submit"
                 fullWidth
