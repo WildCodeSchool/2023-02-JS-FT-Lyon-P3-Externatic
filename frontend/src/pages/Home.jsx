@@ -206,9 +206,8 @@ export default function Home() {
           justifyContent="center"
         >
           {jobsTypes.map((offer) => (
-            <ReactLink to="/annonces">
-              <JobByTypeCard key={offer.id} jobTypes={offer} />
-              {/* {console.log(offer)} */}
+            <ReactLink key={offer} to="/annonces">
+              <JobByTypeCard jobTypes={offer} />
             </ReactLink>
           ))}
         </Box>
