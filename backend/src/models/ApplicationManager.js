@@ -51,9 +51,10 @@ class ApplicationManager extends AbstractManager {
   }
 
   delete(applicationId) {
-    return this.database.query(`DELETE FROM ${this.table} WHERE id = ?`, [
-      applicationId,
-    ]);
+    return this.database.query(
+      `DELETE FROM ${this.table} WHERE candidate_id = ?`,
+      [applicationId]
+    );
   }
 }
 

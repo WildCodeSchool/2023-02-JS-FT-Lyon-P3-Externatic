@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
@@ -13,7 +13,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function ApplicationCard({ candidateApplication }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-  const notifyDeletion = () => toast.success("Suppression Effectuée");
+  const notifyDeletion = () =>
+    toast.success(
+      `Suppression de votre candidature chez ${candidateApplication.name} Effectuée.`
+    );
   const notifyErrorDeletion = () =>
     toast.error("Problème lors de la suppression");
 
@@ -40,6 +43,8 @@ export default function ApplicationCard({ candidateApplication }) {
         .catch(() => notifyErrorDeletion());
     }
   };
+
+  useEffect(() => {}, [candidateApplication]);
 
   return (
     <>
