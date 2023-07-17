@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,13 +18,20 @@ import CompaniesTable from "./components/Admin/CompaniesTable";
 import LoginChoice from "./pages/LoginChoice";
 import LoginCompany from "./pages/LoginCompany";
 import LoginCandidate from "./pages/LoginCandidate";
+import Navbar from "./components/Navbar";
 
 import "./App.css";
 
 function App() {
+  const [mode, setMode] = useState("light");
+
+  const toggleColorMode = () => {
+    setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+  };
+
   const theme = createTheme({
     palette: {
-      type: "light",
+      mode,
       primary: {
         main: "#CA2061",
       },
@@ -41,6 +49,7 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <Navbar toggleColorMode={toggleColorMode} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginChoice />} />

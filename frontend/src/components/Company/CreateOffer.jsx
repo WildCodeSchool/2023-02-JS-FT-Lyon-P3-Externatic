@@ -128,7 +128,7 @@ export default function CreateOffer() {
         pb: "3rem",
       }}
     >
-      <Typography variant="h4" color="initial" sx={{ py: 4 }}>
+      <Typography variant="h4" color="primary" sx={{ py: 4 }}>
         Création d'une nouvelle annonce
       </Typography>
       <Accordion>
