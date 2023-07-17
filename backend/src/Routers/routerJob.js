@@ -8,6 +8,7 @@ const JobControllers = require("../controllers/jobControllers");
 
 routerJob.get("/jobs", JobControllers.browse);
 routerJob.get("/jobs/:id", JobControllers.read);
+routerJob.get("/company-jobs/:id", JobControllers.browseByCompanyId);
 routerJob.put("/jobs/:id", verifyToken, JobControllers.edit);
 routerJob.post("/jobs", verifyToken, JobControllers.add);
 routerJob.delete("/jobs/:id", verifyToken, JobControllers.destroy);
