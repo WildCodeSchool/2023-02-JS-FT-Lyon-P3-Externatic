@@ -27,6 +27,7 @@ const MenuProps = {
 
 export default function SearchBar() {
   //
+  const [filtersActive, setFiltersActive] = useState(false);
   const [filterOptions, setFilterOptions] = useState({
     jobsTitle: [],
     jobsType: [],
@@ -96,9 +97,19 @@ export default function SearchBar() {
       });
       setInfoDataFiltered(filteredData);
       setInfoDataNoFiltered(res.data);
+      setFiltersActive(true);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleClearFilters = () => {
+    setInputFilter({
+      jobType: "",
+      jobTitle: "",
+      jobLocation: "",
+    });
+    setFiltersActive(false); // Set filters as inactive
   };
 
   return (
@@ -194,14 +205,26 @@ export default function SearchBar() {
               </Select>
             </FormControl>
           </Box>
-          <Button onClick={handleFilterData} variant="contained" sx={{ mt: 2 }}>
-            Rechercher
-          </Button>
+          <Box>
+            <Button
+              onClick={handleFilterData}
+              variant="contained"
+              sx={{ mt: 2 }}
+            >
+              Rechercher
+            </Button>
+            <Button
+              onClick={handleClearFilters}
+              variant="contained"
+              sx={{ mt: 2, ml: 2 }}
+            >
+              Effacer les filtres
+            </Button>
+          </Box>
         </Container>
       </Box>
-      {infoDataFiltered && <AdsList infoDataFiltered={infoDataFiltered} />}
-      {infoDataFiltered ? (
-        ""
+      {filtersActive ? (
+        <AdsList infoDataFiltered={infoDataFiltered} />
       ) : (
         <AdsList infoDataNoFiltered={infoDataNoFiltered} />
       )}
