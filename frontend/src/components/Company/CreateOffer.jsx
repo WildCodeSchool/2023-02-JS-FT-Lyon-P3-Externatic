@@ -290,7 +290,7 @@ export default function CreateOffer() {
                 </Grid>
                 <FormControl sx={{ m: 1, width: 250 }}>
                   <InputLabel id="demo-multiple-checkbox-label">
-                    Lieu du poste
+                    Lieu de travail
                   </InputLabel>
                   <Select
                     labelId="demo-multiple-checkbox-label"
