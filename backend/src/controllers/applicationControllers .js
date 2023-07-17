@@ -12,9 +12,21 @@ const browse = (req, res) => {
     });
 };
 
-const browseById = (req, res) => {
+const browseByCandidateId = (req, res) => {
   models.application
     .findApplicationsByUserId(req.params.id)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const browseByCompanyId = (req, res) => {
+  models.application
+    .findApplicationsByCompanyId(req.params.id)
     .then(([rows]) => {
       res.send(rows);
     })
@@ -96,7 +108,8 @@ const destroy = (req, res) => {
 
 module.exports = {
   browse,
-  browseById,
+  browseByCandidateId,
+  browseByCompanyId,
   read,
   edit,
   add,

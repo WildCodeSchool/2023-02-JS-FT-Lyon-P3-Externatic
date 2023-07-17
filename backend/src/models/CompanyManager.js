@@ -8,7 +8,7 @@ class CompanyManager extends AbstractManager {
   find(companyId) {
     return this.database.query(
       `
-      SELECT company.id, company.user_id, company.name, company.contact, company.description, company.website, user.email, user.phone, user.city, user.picture, user.admin
+      SELECT company.id, company.user_id, company.name, company.contact, company.website, company.description, user.email, user.hashedPassword, user.phone, user.city, user.picture
       FROM company
       INNER JOIN user ON company.user_id = user.id
       WHERE company.id = ?
@@ -19,14 +19,14 @@ class CompanyManager extends AbstractManager {
 
   findAll() {
     return this.database
-      .query(`SELECT company.id, company.user_id, company.name, company.contact,company.website, company.description, user.email, user.phone, user.city, user.picture, user.admin
+      .query(`SELECT company.id, company.user_id, company.name, company.contact, company.website, company.description, user.email, user.hashedPassword, user.phone, user.city, user.picture, user.admin
     FROM ${this.table}
     INNER JOIN user ON company.user_id = user.id`);
   }
 
   findCompanyByEmailWithPassword(email) {
     return this.database.query(
-      `SELECT * FROM ${this.table} 
+      `SELECT ${this.table}.*, user.hashedPassword, user.email, user.phone, user.city, user.picture, user.admin FROM ${this.table} 
       INNER JOIN user ON company.user_id = user.id
       WHERE email = ?`,
       [email]

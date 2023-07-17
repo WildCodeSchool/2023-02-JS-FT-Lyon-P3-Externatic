@@ -31,7 +31,16 @@ const verifyCandidatePassword = (req, res) => {
       if (isVerified) {
         // on créé un token, encodé avec le mot de passe contenu dans le fichier d'environnement
         const token = jwt.sign(
-          { sub: req.candidate.id, role: req.candidate.role || "CANDIDATE" },
+          {
+            sub: req.candidate.id,
+            userId: req.candidate.user_id,
+            email: req.candidate.email,
+            phone: req.candidate.phone,
+            city: req.candidate.city,
+            picture: req.candidate.picture,
+            admin: req.candidate.admin,
+            role: "CANDIDATE",
+          },
           JWT_SECRET,
           {
             algorithm: "HS512",
@@ -67,7 +76,16 @@ const verifyCompanyPassword = (req, res) => {
       if (isVerified) {
         // on créé un token, encodé avec le mot de passe contenu dans le fichier d'environnement
         const token = jwt.sign(
-          { sub: req.company.id, role: req.company.role || "COMPANY" },
+          {
+            sub: req.company.id,
+            userId: req.company.user_id,
+            email: req.company.email,
+            phone: req.company.phone,
+            city: req.company.city,
+            picture: req.company.picture,
+            admin: req.company.admin,
+            role: "COMPANY",
+          },
           JWT_SECRET,
           {
             algorithm: "HS512",

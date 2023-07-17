@@ -15,9 +15,12 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Switch from "@mui/material/Switch";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ValidateFormCandidate, ValidateFormCompany } from "../ValidateForm";
 
 export default function AdminCreate() {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const [validateInputCanidate, setValidateInputCandiate] = useState({});
+  const [validateInputCompany, setValidateInputCompany] = useState({});
   const notifyCreation = () => toast.success("Nouvel Utilisateur Enregistré!");
   const notifyCreationError = () => toast.error("Problème d'Enregistrement");
   const [formData, setFormData] = useState({
@@ -31,69 +34,129 @@ export default function AdminCreate() {
     terms: false,
   });
 
-  const validateForm = () => {
-    // add email Validation
-    return true;
-  };
+  const [formDataCompany, setFormDataCompany] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    phone: "",
+    city: "",
+    admin: false,
+    terms: false,
+  });
 
   const handleInputChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
+  const handleInputChangeCompany = (event) => {
+    setFormDataCompany({
+      ...formDataCompany,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const ValidateFormCreateCandidate = () => {
+    const { error } = ValidateFormCandidate.validate(
+      { ...formData, terms: undefined },
+      {
+        abortEarly: false,
+        allowUnknown: true,
+      }
+    );
+    if (error) {
+      const validationErrors = {};
+      error.details.forEach((err) => {
+        validationErrors[err.context.key] = err.message;
+      });
+      return validationErrors;
+    }
+    return {};
+  };
 
   const handleSubmitCandidate = (event) => {
     event.preventDefault();
-
-    if (validateForm()) {
+    const validationErrors = ValidateFormCreateCandidate();
+    if (Object.keys(validationErrors).length === 0) {
       axios
         .post(`${BACKEND_URL}/register-candidate`, { ...formData })
         .then(() => {
-          setFormData({
-            firstname: "",
-            lastname: "",
-            email: "",
-            password: "",
-            phone: "",
-            city: "",
-            admin: false,
-            terms: false,
-          });
+          // setFormDataCompany({
+          //   firstname: "",
+          //   lastname: "",
+          //   email: "",
+          //   password: "",
+          //   phone: "",
+          //   city: "",
+          //   admin: false,
+          //   terms: false,
+          // });
           notifyCreation();
         })
         .catch((error) => {
           console.error(error);
           notifyCreationError();
         });
+    } else {
+      // The form is invalid, handle validation errors
+      setValidateInputCandiate({ ...validationErrors });
+      console.error("Validation Errors:", validationErrors);
     }
+  };
+
+  const ValidateFormCreateCompany = () => {
+    const { error } = ValidateFormCompany.validate(
+      { ...formDataCompany, terms: undefined },
+      {
+        abortEarly: false,
+        allowUnknown: true,
+      }
+    );
+    if (error) {
+      const validationErrors = {};
+      error.details.forEach((err) => {
+        validationErrors[err.context.key] = err.message;
+      });
+      return validationErrors;
+    }
+    return {};
   };
 
   const handleSubmitCompany = (event) => {
     event.preventDefault();
-
-    if (validateForm()) {
+    const validationErrors = ValidateFormCreateCompany();
+    if (Object.keys(validationErrors).length === 0) {
       axios
-        .post(`${BACKEND_URL}/register-company`, { ...formData })
+        .post(`${BACKEND_URL}/register-company`, { ...formDataCompany })
         .then(() => {
-          setFormData({
-            name: "",
-            contact: "",
-            description: "",
-            website: "",
-            email: "",
-            password: "",
-            phone: "",
-            city: "",
-            admin: false,
-            terms: false,
-          });
+          // setFormData({
+          //   name: "",
+          //   contact: "",
+          //   description: "",
+          //   website: "",
+          //   email: "",
+          //   password: "",
+          //   phone: "",
+          //   city: "",
+          //   admin: false,
+          //   terms: false,
+          // });
           notifyCreation();
         })
         .catch((error) => {
           console.error(error);
           notifyCreationError();
         });
+    } else {
+      // The form is invalid, handle validation errors
+      setValidateInputCompany({ ...validationErrors });
+      console.error("Validation Errors:", validationErrors);
     }
   };
 
+  React.useEffect(() => {
+    ValidateFormCreateCandidate();
+    ValidateFormCreateCompany();
+  }, [handleSubmitCandidate, handleSubmitCompany, handleInputChange]);
   return (
     <Container
       component="main"
@@ -155,23 +218,43 @@ export default function AdminCreate() {
                     required
                     fullWidth
                     id="firstName"
-                    label="First Name"
+                    label="Prénom"
                     autoFocus
                     onChange={handleInputChange}
                     value={formData.firstname}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                    }}
+                  >
+                    {formData.firstname
+                      ? undefined
+                      : validateInputCanidate.firstname}
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
                     fullWidth
                     id="lastname"
-                    label="Last Name"
+                    label="Nom"
                     name="lastname"
                     autoComplete="family-name"
                     onChange={handleInputChange}
                     value={formData.lastname}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                    }}
+                  >
+                    {formData.lastname
+                      ? undefined
+                      : validateInputCanidate.lastname}
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -180,48 +263,80 @@ export default function AdminCreate() {
                     required
                     fullWidth
                     id="candidate-city"
-                    label="City"
+                    label="Votre Ville"
                     autoFocus
                     onChange={handleInputChange}
                     value={formData.city}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                    }}
+                  >
+                    {formData.city ? undefined : validateInputCanidate.city}
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
                     fullWidth
                     id="candidate-phone"
-                    label="Phone Number"
+                    label="Votre Numéro de Téléphone"
                     name="phone"
                     autoComplete="phone"
                     onChange={handleInputChange}
                     value={formData.phone}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                    }}
+                  >
+                    {validateInputCanidate.phone}
+                  </Box>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
                     id="candidate-email"
-                    label="Email Address"
+                    label="Adresse e-mail"
                     name="email"
                     autoComplete="email"
                     onChange={handleInputChange}
                     value={formData.email}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                    }}
+                  >
+                    {validateInputCanidate.email}
+                  </Box>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
                     name="password"
-                    label="Password"
+                    label="Mot De Passe"
                     type="password"
                     id="candidate-password"
                     autoComplete="password"
                     onChange={handleInputChange}
                     value={formData.password}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                    }}
+                  >
+                    {validateInputCanidate.password}
+                  </Box>
                 </Grid>
               </Grid>
               <Button
@@ -267,10 +382,10 @@ export default function AdminCreate() {
                   <FormControlLabel
                     control={
                       <Switch
-                        checked={formData.admin === 1}
+                        checked={formDataCompany.admin === 1}
                         onChange={(event) =>
-                          setFormData({
-                            ...formData,
+                          setFormDataCompany({
+                            ...formDataCompany,
                             admin: event.target.checked ? 1 : 0,
                           })
                         }
@@ -287,23 +402,41 @@ export default function AdminCreate() {
                     required
                     fullWidth
                     id="name"
-                    label="Company Name"
+                    label="Nom de l'entreprise"
                     autoFocus
-                    onChange={handleInputChange}
-                    value={formData.name}
+                    onChange={handleInputChangeCompany}
+                    value={formDataCompany.name}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                    }}
+                  >
+                    {formData.name ? undefined : validateInputCompany.name}
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
                     fullWidth
                     id="contact"
-                    label="Contact Name"
+                    label="Nom du contact"
                     name="contact"
                     autoComplete="contact-name"
-                    onChange={handleInputChange}
-                    value={formData.contact}
+                    onChange={handleInputChangeCompany}
+                    value={formDataCompany.contact}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                    }}
+                  >
+                    {formDataCompany.contact
+                      ? undefined
+                      : validateInputCompany.contact}
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -314,9 +447,19 @@ export default function AdminCreate() {
                     id="description"
                     label="description"
                     autoFocus
-                    onChange={handleInputChange}
-                    value={formData.description}
+                    onChange={handleInputChangeCompany}
+                    value={formDataCompany.description}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                    }}
+                  >
+                    {formData.description
+                      ? undefined
+                      : validateInputCompany.description}
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -325,11 +468,21 @@ export default function AdminCreate() {
                     required
                     fullWidth
                     id="website"
-                    label="website"
+                    label="Site Web"
                     autoFocus
-                    onChange={handleInputChange}
-                    value={formData.website}
+                    onChange={handleInputChangeCompany}
+                    value={formDataCompany.website}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                    }}
+                  >
+                    {formData.website
+                      ? undefined
+                      : validateInputCompany.website}
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -338,48 +491,82 @@ export default function AdminCreate() {
                     required
                     fullWidth
                     id="city"
-                    label="City"
+                    label="Votre Ville"
                     autoFocus
-                    onChange={handleInputChange}
-                    value={formData.city}
+                    onChange={handleInputChangeCompany}
+                    value={formDataCompany.city}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                    }}
+                  >
+                    {formDataCompany.city
+                      ? undefined
+                      : validateInputCompany.city}
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
                     fullWidth
                     id="phone"
-                    label="Phone Number"
+                    label="Votre Numéro de Téléphone"
                     name="phone"
                     autoComplete="phone"
-                    onChange={handleInputChange}
-                    value={formData.phone}
+                    onChange={handleInputChangeCompany}
+                    value={formDataCompany.phone}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                    }}
+                  >
+                    {validateInputCompany.phone}
+                  </Box>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
                     id="email"
-                    label="Email Address"
+                    label="Addresse e-mail"
                     name="email"
                     autoComplete="email"
-                    onChange={handleInputChange}
-                    value={formData.email}
+                    onChange={handleInputChangeCompany}
+                    value={formDataCompany.email}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                    }}
+                  >
+                    {validateInputCompany.email}
+                  </Box>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
                     name="password"
-                    label="Password"
+                    label="Mot de Passe"
                     type="password"
                     id="password"
                     autoComplete="new-password"
-                    onChange={handleInputChange}
-                    value={formData.password}
+                    onChange={handleInputChangeCompany}
+                    value={formDataCompany.password}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                    }}
+                  >
+                    {validateInputCompany.password}
+                  </Box>
                 </Grid>
               </Grid>
               <Button
