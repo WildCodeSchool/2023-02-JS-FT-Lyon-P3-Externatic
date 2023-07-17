@@ -10,6 +10,7 @@ import { useCompanyContext } from "../Contexts/CompanyContext";
 
 export default function CompanyProfile() {
   const { company } = useCompanyContext();
+
   return (
     <Container maxWidth="xl" sx={{ mt: 4, textAlign: "center" }}>
       <Typography variant="h3" color="initial" gutterBottom>
