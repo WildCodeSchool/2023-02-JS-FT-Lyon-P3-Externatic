@@ -59,7 +59,13 @@ function UpdateCompany() {
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
       axios
-        .put(`${BACKEND_URL}/companies/${company.id}`, { ...formData })
+        .put(
+          `${BACKEND_URL}/companies/${company.id}`,
+          { ...formData },
+          {
+            withCredentials: true,
+          }
+        )
         .then(() => {
           notifyCreation();
         })
