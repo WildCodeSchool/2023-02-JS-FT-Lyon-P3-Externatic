@@ -49,6 +49,12 @@ class ApplicationManager extends AbstractManager {
       ]
     );
   }
+
+  delete(applicationId) {
+    return this.database.query(`DELETE FROM ${this.table} WHERE id = ?`, [
+      applicationId,
+    ]);
+  }
 }
 
 module.exports = ApplicationManager;

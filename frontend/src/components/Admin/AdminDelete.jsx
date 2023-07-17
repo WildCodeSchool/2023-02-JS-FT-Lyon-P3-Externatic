@@ -21,7 +21,7 @@ export default function AdminDelete() {
 
   const [lastname, setLastname] = useState("");
   const [companyId, setCompanyId] = useState("");
-  const [confirmation, setConfirmation] = useState(false); // Added confirmation state
+  const [confirmation, setConfirmation] = useState(false);
 
   const handleCandidateInputChange = (event) => {
     setLastname(event.target.value);
