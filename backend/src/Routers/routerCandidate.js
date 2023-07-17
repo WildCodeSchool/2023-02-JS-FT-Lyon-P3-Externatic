@@ -17,12 +17,22 @@ const {
   register,
 } = require("../controllers/authControllers");
 
+const {
+  validateCandidate,
+  validateCandidateUpdate,
+} = require("../services/validator");
+
 const routerCandidate = express.Router();
 
 const candidateControllers = require("../controllers/candidateControllers");
 
 // Routes Privées
-routerCandidate.post("/register-candidate", hashPassword, register);
+routerCandidate.post(
+  "/register-candidate",
+  validateCandidate,
+  hashPassword,
+  register
+);
 routerCandidate.post(
   "/login-candidate",
   getCandidateByEmailMiddleWare,
@@ -44,7 +54,11 @@ routerCandidate.post(
 // Routes Publiques
 routerCandidate.get("/candidates", candidateControllers.browse);
 routerCandidate.get("/candidates/:id", candidateControllers.read);
-routerCandidate.put("/candidates/:id", candidateControllers.edit);
+routerCandidate.put(
+  "/candidates/:id",
+  validateCandidateUpdate,
+  candidateControllers.edit
+);
 routerCandidate.delete(
   "/candidates",
   verifyToken,
