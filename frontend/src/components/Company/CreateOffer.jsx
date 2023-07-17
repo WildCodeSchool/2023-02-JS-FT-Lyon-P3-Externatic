@@ -268,7 +268,7 @@ export default function CreateOffer() {
                     required
                     fullWidth
                     id="title"
-                    label="Titre du poste"
+                    label="Titre de l'annonce"
                     autoFocus
                     onChange={handleInputChange}
                     value={formData.title}
