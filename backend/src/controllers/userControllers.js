@@ -96,10 +96,8 @@ const uploadPhoto = async (req, res) => {
       `./public/picture/${photoPath}`
     );
 
-    const userId = req.payloads.sub;
-
     await models.user.updatePicture({
-      id: userId,
+      id: req.payloads.userId,
       picture: photoPath,
     });
     res.send({ photoPath });

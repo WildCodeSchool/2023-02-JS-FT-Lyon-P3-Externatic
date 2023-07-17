@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Container from "@mui/material/Container";
 import CompanyContext from "../../Contexts/CompanyContext";
+import { ValidateFormUpdateCompany } from "../ValidateForm";
 
 function UpdateCompany() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ function UpdateCompany() {
   const { company } = useContext(CompanyContext);
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const [validateInput, setValidateInput] = useState({});
 
   const [formData, setFormData] = useState({
     id: `${company.id}`,
@@ -30,19 +32,32 @@ function UpdateCompany() {
     website: `${company.website}`,
   });
 
-  const validateForm = () => {
-    // add email Validation
-    return true;
-  };
-
   const handleInputChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
+  const validateForm = () => {
+    const { error } = ValidateFormUpdateCompany.validate(
+      { ...formData, terms: undefined },
+      {
+        abortEarly: false,
+        allowUnknown: true,
+      }
+    );
+    if (error) {
+      const validationErrors = {};
+      error.details.forEach((err) => {
+        validationErrors[err.context.key] = err.message;
+      });
+      return validationErrors;
+    }
+    return {};
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    if (validateForm) {
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length === 0) {
       axios
         .put(`${BACKEND_URL}/companies/${company.id}`, { ...formData })
         .then(() => {
@@ -54,8 +69,16 @@ function UpdateCompany() {
         .catch((err) => {
           console.error(err);
         });
+    } else {
+      // The form is invalid, handle validation errors
+      setValidateInput({ ...validationErrors });
+      console.error("Validation Errors:", validationErrors);
     }
   };
+
+  React.useEffect(() => {
+    validateForm();
+  }, [handleSubmit, handleInputChange]);
 
   return (
     <Container maxWidth="md">
@@ -75,23 +98,39 @@ function UpdateCompany() {
                   required
                   fullWidth
                   id="name"
-                  label="Company Name"
+                  label="Nom de l'entreprise"
                   autoFocus
                   onChange={handleInputChange}
                   value={formData.name}
                 />
+                <Box
+                  color="primary.main"
+                  sx={{
+                    textAlign: "left",
+                  }}
+                >
+                  {formData.name ? undefined : validateInput.name}
+                </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
                   id="contact"
-                  label="Contact Name"
+                  label="Nom du contact"
                   name="contact"
                   autoComplete="contact-name"
                   onChange={handleInputChange}
                   value={formData.contact}
                 />
+                <Box
+                  color="primary.main"
+                  sx={{
+                    textAlign: "left",
+                  }}
+                >
+                  {formData.contact ? undefined : validateInput.contact}
+                </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -105,6 +144,14 @@ function UpdateCompany() {
                   onChange={handleInputChange}
                   value={formData.description}
                 />
+                <Box
+                  color="primary.main"
+                  sx={{
+                    textAlign: "left",
+                  }}
+                >
+                  {formData.description ? undefined : validateInput.description}
+                </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -113,11 +160,19 @@ function UpdateCompany() {
                   required
                   fullWidth
                   id="website"
-                  label="website"
+                  label="Site Web"
                   autoFocus
                   onChange={handleInputChange}
                   value={formData.website}
                 />
+                <Box
+                  color="primary.main"
+                  sx={{
+                    textAlign: "left",
+                  }}
+                >
+                  {formData.website ? undefined : validateInput.website}
+                </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -126,35 +181,59 @@ function UpdateCompany() {
                   required
                   fullWidth
                   id="city"
-                  label="City"
+                  label="Votre Ville"
                   autoFocus
                   onChange={handleInputChange}
                   value={formData.city}
                 />
+                <Box
+                  color="primary.main"
+                  sx={{
+                    textAlign: "left",
+                  }}
+                >
+                  {formData.city ? undefined : validateInput.city}
+                </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
                   id="phone"
-                  label="Phone Number"
+                  label="Votre Numéro de Téléphone"
                   name="phone"
                   autoComplete="phone"
                   onChange={handleInputChange}
                   value={formData.phone}
                 />
+                <Box
+                  color="primary.main"
+                  sx={{
+                    textAlign: "left",
+                  }}
+                >
+                  {validateInput.phone}
+                </Box>
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Addresse e-mail"
                   name="email"
                   autoComplete="email"
                   onChange={handleInputChange}
                   value={formData.email}
                 />
+                <Box
+                  color="primary.main"
+                  sx={{
+                    textAlign: "left",
+                  }}
+                >
+                  {validateInput.email}
+                </Box>
               </Grid>
             </Grid>
           </Grid>

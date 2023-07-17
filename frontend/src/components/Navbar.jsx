@@ -1,4 +1,6 @@
 import * as React from "react";
+import PropTypes from "prop-types";
+import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,15 +17,17 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/externatic-logo-long.png";
 import { useCandidateContext } from "../Contexts/CandidateContext";
 import { useCompanyContext } from "../Contexts/CompanyContext";
 
-export default function Navbar() {
+export default function Navbar({ toggleColorMode }) {
   const { candidate, logoutCandidate } = useCandidateContext();
   const { company, logoutCompany } = useCompanyContext();
-
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -47,27 +51,43 @@ export default function Navbar() {
 
   const handleLinkHome = () => {
     navigate("/");
+    setAnchorElNavMenu(null);
   };
   const handleLinkAdds = () => {
     navigate("/annonces");
+    setAnchorElNavMenu(null);
   };
   const handleLinkBlog = () => {
     navigate("/blog");
+    setAnchorElNavMenu(null);
   };
   const handleLinkLogin = () => {
+    setAnchorElUser(null);
     navigate("/login");
+  };
+  const handleLogoutCandidate = () => {
+    logoutCandidate();
+    setAnchorElUser(null);
+  };
+  const handleLogoutCompany = () => {
+    logoutCompany();
+    setAnchorElUser(null);
   };
 
   const handleLinkUser = () => {
     navigate("/espace-candidat");
+    setAnchorElUser(null);
   };
 
   const handleLinkCompany = () => {
     navigate("/espace-pro");
+    setAnchorElUser(null);
   };
 
   const handleLinkAdmin = () => {
     navigate("/admin");
+    setAnchorElUser(null);
+    setAnchorElNavMenu(null);
   };
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -166,7 +186,6 @@ export default function Navbar() {
                 <Typography sx={{ ml: 1 }}>Accueil</Typography>
               </Box>
             </Button>
-
             <Button
               onClick={handleLinkAdds}
               sx={{ my: 2, color: "white", display: "block" }}
@@ -215,6 +234,18 @@ export default function Navbar() {
               </Button>
             ) : null}
           </Box>
+          <IconButton
+            size="large"
+            aria-label="colorMode"
+            onClick={toggleColorMode}
+            color="primary"
+          >
+            {theme.palette.mode === "dark" ? (
+              <Brightness7Icon />
+            ) : (
+              <Brightness4Icon sx={{ color: "white" }} />
+            )}
+          </IconButton>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Espace Utilisateur">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -263,14 +294,14 @@ export default function Navbar() {
                 </MenuItem>
               ) : null}
               {candidate.id ? (
-                <MenuItem onClick={logoutCandidate}>
+                <MenuItem onClick={handleLogoutCandidate}>
                   <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
                     Logout
                   </Typography>
                 </MenuItem>
               ) : null}
               {company.id ? (
-                <MenuItem onClick={logoutCompany}>
+                <MenuItem onClick={handleLogoutCompany}>
                   <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
                     Logout
                   </Typography>
@@ -290,3 +321,7 @@ export default function Navbar() {
     </AppBar>
   );
 }
+
+Navbar.propTypes = {
+  toggleColorMode: PropTypes.func.isRequired,
+};
