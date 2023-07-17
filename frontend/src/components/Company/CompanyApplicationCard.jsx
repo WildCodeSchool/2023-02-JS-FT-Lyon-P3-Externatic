@@ -18,24 +18,34 @@ export default function CompanyApplicationCard({ companyApplication }) {
     setOpen(true);
   };
 
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const dateString = `${companyApplication.date}`;
+  const dateObject = new Date(dateString);
+  const formattedDate = dateObject.toLocaleDateString("fr-FR", options);
+
   return (
     <>
       <Card sx={{ maxWidth: "100%" }}>
         <CardContent sx={{ m: 2 }}>
           <Typography variant="body1" color="text.secondary" gutterBottom>
-            {companyApplication.title}
+            Candidature du : {formattedDate}
           </Typography>
           <Typography variant="body1" color="text.secondary" gutterBottom>
-            {companyApplication.name}
+            Titre de l'Annonce : {companyApplication.title}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            {companyApplication.contract_type}
+            Contrat : {companyApplication.contract_type}
           </Typography>
           <Typography variant="body1" color="text.secondary" gutterBottom>
             Statut : {companyApplication.status}
           </Typography>
           <Button variant="text" onClick={handleOpen}>
-            plus d'infos sur le Candidat
+            Infos sur le Candidat
           </Button>
         </CardContent>
       </Card>
@@ -61,6 +71,7 @@ CompanyApplicationCard.propTypes = {
     status: PropTypes.string,
     contract_type: PropTypes.string,
     candidate_id: PropTypes.number,
+    date: PropTypes.string,
   }),
 };
 

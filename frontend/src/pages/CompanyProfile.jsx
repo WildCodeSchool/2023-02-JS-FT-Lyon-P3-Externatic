@@ -12,8 +12,8 @@ export default function CompanyProfile() {
   const { company } = useCompanyContext();
 
   return (
-    <Container maxWidth="xl" sx={{ mt: 4, textAlign: "center" }}>
-      <Typography variant="h3" color="initial" gutterBottom>
+    <Container maxWidth="xxl" sx={{ mt: 4, textAlign: "center" }}>
+      <Typography variant="h3" color="primary" gutterBottom>
         Espace Pro
       </Typography>
       <Box
@@ -30,7 +30,7 @@ export default function CompanyProfile() {
         <Grid
           item
           xs={12}
-          lg={5}
+          lg={7}
           elevation={3}
           sx={{
             position: { lg: "fixed" },
