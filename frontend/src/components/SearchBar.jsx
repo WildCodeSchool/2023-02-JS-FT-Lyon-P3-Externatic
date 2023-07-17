@@ -128,7 +128,11 @@ export default function SearchBar() {
           >
             Annonces
           </Typography>
-          <Box>
+          <Box
+            sx={{
+              textAlign: "center",
+            }}
+          >
             <FormControl sx={{ m: 1, width: 250 }}>
               <InputLabel id="demo-multiple-checkbox-label">
                 Type de poste

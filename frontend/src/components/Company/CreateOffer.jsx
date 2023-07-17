@@ -216,9 +216,18 @@ export default function CreateOffer() {
               component="form"
               noValidate
               onSubmit={handleSubmitJobOffer}
-              sx={{ mt: 3 }}
+              sx={{
+                mt: 3,
+              }}
             >
-              <Grid container spacing={2} sx={{ display: "flex" }}>
+              <Grid
+                container
+                spacing={2}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
                 <Grid item xs={12}>
                   <FormGroup>
                     <FormControlLabel
@@ -263,7 +272,7 @@ export default function CreateOffer() {
                     autoFocus
                     onChange={handleInputChange}
                     value={formData.title}
-                    sx={{ m: 1, width: 300 }}
+                    sx={{ m: 1, width: 250 }}
                   />
                 </Grid>
                 <Grid>
@@ -276,10 +285,10 @@ export default function CreateOffer() {
                     autoFocus
                     onChange={handleInputChange}
                     value={formData.salary}
-                    sx={{ m: 1, width: 300 }}
+                    sx={{ m: 1, width: 250 }}
                   />
                 </Grid>
-                <FormControl sx={{ m: 1, width: 300 }}>
+                <FormControl sx={{ m: 1, width: 250 }}>
                   <InputLabel id="demo-multiple-checkbox-label">
                     Lieu du poste
                   </InputLabel>
@@ -299,7 +308,7 @@ export default function CreateOffer() {
                     ))}
                   </Select>
                 </FormControl>
-                <FormControl sx={{ m: 1, width: 300 }}>
+                <FormControl sx={{ m: 1, width: 250 }}>
                   <InputLabel id="demo-multiple-checkbox-label">
                     Type de poste
                   </InputLabel>
@@ -319,7 +328,7 @@ export default function CreateOffer() {
                     ))}
                   </Select>
                 </FormControl>
-                <FormControl sx={{ m: 1, width: 300 }}>
+                <FormControl sx={{ m: 1, width: 250 }}>
                   <InputLabel id="demo-multiple-checkbox-label">
                     Type de contrat
                   </InputLabel>
@@ -339,7 +348,7 @@ export default function CreateOffer() {
                     ))}
                   </Select>
                 </FormControl>
-                <FormControl sx={{ m: 1, width: 300 }}>
+                <FormControl sx={{ m: 1, width: 250 }}>
                   <InputLabel id="demo-multiple-checkbox-label">
                     Localisation
                   </InputLabel>

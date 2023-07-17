@@ -300,7 +300,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       Postuler
                     </Button>
                   </CardContent>
-                  <CardContent>
+                  <CardContent sx={{ mr: "1rem" }}>
                     <Paper
                       sx={{
                         borderRadius: "0.8rem",
@@ -311,8 +311,6 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                       <Typography
                         sx={{
                           marginBottom: "0.2rem",
-                          marginLeft: "0.5rem",
-                          marginRight: "0.5rem",
                         }}
                       >
                         {selectedJob.category}
