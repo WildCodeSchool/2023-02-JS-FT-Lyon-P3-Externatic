@@ -69,7 +69,7 @@ export default function CandidateProfile() {
   };
   return (
     <Container maxWidth="xxl" sx={{ mt: 4, textAlign: "center" }}>
-      <Typography variant="h3" color="initial" sx={{ m: 3 }}>
+      <Typography variant="h3" color="primary" sx={{ m: 3 }}>
         Espace Candidat
       </Typography>
       <Box

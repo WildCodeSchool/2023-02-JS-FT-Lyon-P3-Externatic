@@ -65,6 +65,14 @@ export default function Navbar({ toggleColorMode }) {
     setAnchorElUser(null);
     navigate("/login");
   };
+  const handleLogoutCandidate = () => {
+    logoutCandidate();
+    setAnchorElUser(null);
+  };
+  const handleLogoutCompany = () => {
+    logoutCompany();
+    setAnchorElUser(null);
+  };
 
   const handleLinkUser = () => {
     navigate("/espace-candidat");
@@ -286,14 +294,14 @@ export default function Navbar({ toggleColorMode }) {
                 </MenuItem>
               ) : null}
               {candidate.id ? (
-                <MenuItem onClick={logoutCandidate}>
+                <MenuItem onClick={handleLogoutCandidate}>
                   <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
                     Logout
                   </Typography>
                 </MenuItem>
               ) : null}
               {company.id ? (
-                <MenuItem onClick={logoutCompany}>
+                <MenuItem onClick={handleLogoutCompany}>
                   <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
                     Logout
                   </Typography>
