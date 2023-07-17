@@ -75,21 +75,38 @@ export default function Home() {
           </Box>
           <Typography
             component="h1"
-            variant={{ xs: "h5", md: "h3" }}
+            sx={{
+              xs: {
+                variant: "h5",
+                margin: "20px",
+              },
+              md: {
+                variant: "h3",
+                margin: "20px",
+              },
+            }}
             align="center"
             color="text.primary"
             gutterBottom
-            margin="20px"
           >
             Vos Opportunités d'emploi, <br />
             uniquement chez les client finaux
           </Typography>
           <Typography
-            variant={{ xs: "h6", md: "h4" }}
+            sx={{
+              xs: {
+                variant: "h6",
+                margin: "auto",
+                maxWidth: "lg",
+              },
+              md: {
+                variant: "h4",
+                margin: "auto",
+                maxWidth: "lg",
+              },
+            }}
             color="text.secondary"
             paragraph
-            maxWidth="lg"
-            margin="auto"
           >
             Si vous recherchez des opportunités d'emploi dans le domaine
             informatique, le cabinet de recrutement Externatic peut mettre à
@@ -146,27 +163,42 @@ export default function Home() {
           <Box sx={{ m: 5 }}>
             <Typography
               component="h2"
-              variant="h3"
+              sx={{
+                variant: {
+                  xs: "h3",
+                  md: "h2",
+                },
+                margin: 5,
+              }}
               align="center"
               color="text.primary"
               gutterBottom
-              margin={5}
             >
               Qui sommes-nous
             </Typography>
             <Typography
               component="h3"
-              variant="h4"
+              sx={{
+                variant: {
+                  xs: "h4",
+                  md: "h3",
+                },
+                margin: 3,
+              }}
               align="center"
               color="text.primary"
               gutterBottom
-              margin={3}
             >
               Nos valeurs humaines et professionnelles:
             </Typography>
             <Typography
-              variant="h5"
-              align="center"
+              sx={{
+                variant: {
+                  xs: "h6",
+                  md: "h5",
+                },
+                textAlign: "center",
+              }}
               color="text.secondary"
               paragraph
             >
