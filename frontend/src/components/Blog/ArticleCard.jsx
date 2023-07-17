@@ -13,18 +13,18 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import "react-toastify/dist/ReactToastify.css";
 import Typography from "@mui/material/Typography";
 
-const GNEWS_API_KEY = import.meta.env.VITE_GNEWS_API_KEY;
+const MEDIASTACK_API_KEY = import.meta.env.VITE_MEDIASTACK_API_KEY;
 
-function NewsCard() {
+function ArticleCard() {
   const notify = () => toast.error("Désolé! Aucune Info pour le moment");
   const [news, setNews] = useState(null);
   const getNews = () => {
     axios
       .get(
-        `https://gnews.io/api/v4/top-headlines?category=technology&lang=fr&country=fr&max=10&apikey=${GNEWS_API_KEY}`
+        `http://api.mediastack.com/v1/news?access_key=${MEDIASTACK_API_KEY}&categories=technology,business&languages=fr&limit=20`
       )
       .then((response) => {
-        setNews(response.data.articles);
+        setNews(response.data.data);
       })
       .catch((error) => {
         notify(error.message);
@@ -56,7 +56,6 @@ function NewsCard() {
         ) : (
           handleNext()
         )}
-
         <CardContent className="bottom-container">
           <Typography variant="h6" color="initial">
             {news[newsIndex].title}
@@ -110,7 +109,7 @@ function NewsCard() {
   }
 }
 
-NewsCard.propTypes = {
+ArticleCard.propTypes = {
   news: PropTypes.shape({
     title: PropTypes.string,
     source: PropTypes.shape({ name: PropTypes.string }),
@@ -120,8 +119,8 @@ NewsCard.propTypes = {
   }),
 };
 
-NewsCard.defaultProps = {
+ArticleCard.defaultProps = {
   news: null,
 };
 
-export default NewsCard;
+export default ArticleCard;

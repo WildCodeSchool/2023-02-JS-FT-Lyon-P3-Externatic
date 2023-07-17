@@ -8,7 +8,11 @@ routerApplication.get("/applications", applicationControllers.browse);
 routerApplication.get("/applications/:id", applicationControllers.read);
 routerApplication.get(
   "/candidate-applications/:id",
-  applicationControllers.browseById
+  applicationControllers.browseByCandidateId
+);
+routerApplication.get(
+  "/company-applications/:id",
+  applicationControllers.browseByCompanyId
 );
 routerApplication.put("/applications/:id", applicationControllers.edit);
 routerApplication.post("/applications", applicationControllers.add);

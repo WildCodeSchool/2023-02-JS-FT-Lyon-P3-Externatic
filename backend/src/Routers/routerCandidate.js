@@ -59,6 +59,10 @@ routerCandidate.put(
   validateCandidateUpdate,
   candidateControllers.edit
 );
-routerCandidate.delete("/candidates", candidateControllers.destroyByLastName);
+routerCandidate.delete(
+  "/candidates",
+  verifyToken,
+  candidateControllers.destroyByLastName
+);
 
 module.exports = routerCandidate;

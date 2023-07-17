@@ -38,8 +38,9 @@ routerCompany.get("/companies/:id", companyControllers.read);
 routerCompany.put(
   "/companies/:id",
   validateUpdateCompany,
+  verifyToken,
   companyControllers.edit
 );
-routerCompany.delete("/companies/:id", companyControllers.destroy);
+routerCompany.delete("/companies/:id", verifyToken, companyControllers.destroy);
 
 module.exports = routerCompany;

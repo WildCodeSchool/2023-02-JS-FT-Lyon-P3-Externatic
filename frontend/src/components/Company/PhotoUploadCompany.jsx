@@ -7,13 +7,15 @@ import Paper from "@mui/material/Paper";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Typography from "@mui/material/Typography";
-import { useCandidateContext } from "../../Contexts/CandidateContext";
+import { useCompanyContext } from "../../Contexts/CompanyContext";
 
-export default function CVupload() {
+export default function PhotoUploadCompany() {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-  const notifyUpload = () => toast.success("Votre CV a bien été enregistré !");
+  const notifyUpload = () =>
+    toast.success("Votre Photo a bien été enregistrée !");
   const notifyUploadError = () => toast.error("Problème à l'enregistrement !");
-  const { candidate, loginCandidate } = useCandidateContext();
+
+  const { company, loginCompany } = useCompanyContext();
 
   const inputRef = useRef();
 
@@ -21,13 +23,13 @@ export default function CVupload() {
     evt.preventDefault();
 
     const formData = new FormData();
-    formData.append("monCV", inputRef.current.files[0]);
+    formData.append("maPhoto", inputRef.current.files[0]);
 
     axios
-      .post(`${BACKEND_URL}/monCV`, formData, { withCredentials: true })
+      .post(`${BACKEND_URL}/maPhoto`, formData, { withCredentials: true })
       .then((response) => {
         notifyUpload();
-        loginCandidate({ ...candidate, cv: response.data.cvPath });
+        loginCompany({ ...company, picture: response.data.photoPath });
       })
       .catch((error) => {
         console.error(error);
@@ -49,19 +51,11 @@ export default function CVupload() {
           border: "4px solid #CB1F61",
         }}
       >
-        <Typography variant="body1" color="initial" sx={{ p: 1 }}>
-          Vous pouvez charger votre CV pour le rendre disponible pour les
-          recruteurs.
+        <Typography variant="body1" color="initial">
+          Choisissez un fichier pour votre photo de profil
         </Typography>
-        {candidate.cv ? (
-          <Typography variant="body1">Votre CV: {candidate.cv}</Typography>
-        ) : (
-          <Typography variant="body1">
-            Aucun CV chargé pour le moment
-          </Typography>
-        )}
         <form encType="multipart/form-data" onSubmit={handleSubmit}>
-          <Input type="file" name="monCV" inputRef={inputRef} sx={{ m: 2 }} />
+          <Input type="file" name="monCV" inputRef={inputRef} sx={{ mr: 2 }} />
           <Button type="submit" variant="outlined">
             Envoyer
           </Button>

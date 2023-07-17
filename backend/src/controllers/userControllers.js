@@ -88,22 +88,19 @@ const destroy = (req, res) => {
 
 const uploadPhoto = async (req, res) => {
   const { originalname, filename } = req.file;
-  const photoPath = `/picture/${uuidv4()}-${originalname}`;
+  const photoPath = `${uuidv4()}-${originalname}`;
 
   try {
     await fs.promises.rename(
       `./public/picture/${filename}`,
-      `./public/${photoPath}`
+      `./public/picture/${photoPath}`
     );
 
-    const userId = req.payloads.sub;
-
     await models.user.updatePicture({
-      id: userId,
+      id: req.payloads.userId,
       picture: photoPath,
     });
-
-    res.sendStatus(200);
+    res.send({ photoPath });
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
