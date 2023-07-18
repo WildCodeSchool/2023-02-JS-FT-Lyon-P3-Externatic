@@ -12,6 +12,30 @@ const browse = (req, res) => {
     });
 };
 
+const browseByUserId = (req, res) => {
+  models.job
+    .findJobsByUserId(req.params.id)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const browseByCompanyId = (req, res) => {
+  models.job
+    .findJobsByCompanyId(req.params.id)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 const read = (req, res) => {
   models.job
     .find(req.params.id)
@@ -85,6 +109,8 @@ const destroy = (req, res) => {
 
 module.exports = {
   browse,
+  browseByUserId,
+  browseByCompanyId,
   read,
   edit,
   add,

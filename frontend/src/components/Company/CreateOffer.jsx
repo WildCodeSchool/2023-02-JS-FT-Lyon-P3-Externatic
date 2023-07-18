@@ -187,7 +187,7 @@ export default function CreateOffer() {
   return (
     <Container
       component="main"
-      maxWidth="lg"
+      maxWidth="xxl"
       sx={{
         pb: "3rem",
       }}
@@ -243,7 +243,7 @@ export default function CreateOffer() {
                           name="name"
                         />
                       }
-                      label="Nom de l'entreprise"
+                      label="Cochez pour afficher le nom de l'entreprise sur l'offre"
                     />
                     <FormControlLabel
                       control={
@@ -258,7 +258,7 @@ export default function CreateOffer() {
                           name="website"
                         />
                       }
-                      label="Site Internet"
+                      label="Cochez pour afficher le site internet sur l'offre"
                     />
                   </FormGroup>
                 </Grid>

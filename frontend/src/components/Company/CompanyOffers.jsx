@@ -1,85 +1,83 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Container from "@mui/material/Container";
+import React, { useEffect, useState, useContext } from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Backdrop from "@mui/material/Backdrop";
 import Link from "@mui/material/Link";
-import Card from "@mui/material/Card";
 import Avatar from "@mui/material/Avatar";
 import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import Box from "@mui/material/Box";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import CandidateCard from "../components/Candidate/CandidateCard";
-import CandidateApplications from "../components/Candidate/CandidateApplications";
-import { useCandidateContext } from "../Contexts/CandidateContext";
 
-export default function CandidateProfile() {
-  const { candidate } = useCandidateContext();
-  const navigate = useNavigate();
+import CompanyContext from "../../Contexts/CompanyContext";
+
+export default function CompanyOffers() {
+  const { company } = useContext(CompanyContext);
   const [open, setOpen] = useState(false);
+  const [companyOffers, setCompanyOffers] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
-  const [favorites, setFavorites] = useState(
-    JSON.parse(localStorage.getItem("favoriteJobs") || "[]")
-  );
-
-  useEffect(() => {
-    localStorage.setItem("favoriteJobs", JSON.stringify(favorites));
-  }, [favorites]);
-
-  const checkIsFavorite = (job) => {
-    return favorites.some((favoriteJob) => favoriteJob.id === job.id);
-  };
-  const handleToggleFavorite = (job) => {
-    if (checkIsFavorite(job)) {
-      const updatedFavorites = favorites.filter(
-        (favoriteJob) => favoriteJob.id !== job.id
-      );
-      setFavorites(updatedFavorites);
-    } else {
-      const updatedFavorites = [...favorites, job];
-      setFavorites(updatedFavorites);
-    }
-  };
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const handleClose = () => {
     setOpen(false);
   };
-  const handleOpen = (job) => {
-    setSelectedJob(job);
+  const handleOpen = (offer) => {
+    setSelectedJob(offer);
     setOpen(true);
   };
 
+  const onDelete = (id) => {
+    setCompanyOffers((prevOffers) =>
+      prevOffers.filter((offer) => offer.id !== id)
+    );
+  };
+
+  const handleDelete = (id) => {
+    // Delete the offer from the backend
+    axios
+      .delete(`${BACKEND_URL}/jobs/${id}`, { withCredentials: true })
+      .then(() => {
+        // Call the onDelete function to update the frontend
+        onDelete(id);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const config = {
+    method: "get",
+    maxBodyLength: Infinity,
+    url: `${BACKEND_URL}/company-jobs/${company.id}`,
+    headers: {},
+  };
+
+  const getCompanyOffers = () => {
+    axios
+      .request(config)
+      .then((response) => {
+        setCompanyOffers(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   useEffect(() => {
-    if (!candidate?.id) {
-      navigate("/login");
-    }
+    getCompanyOffers();
   }, []);
 
   return (
-    <Container maxWidth="xxl" sx={{ mt: 4, textAlign: "center" }}>
-      <Typography variant="h3" color="primary" sx={{ m: 3 }}>
-        Espace Candidat
-      </Typography>
-      <Grid container spacing={2} justifyContent="flex-end">
-        <Grid
-          item
-          xs={12}
-          lg={4}
-          elevation={3}
-          sx={{
-            position: { lg: "fixed" },
-            left: 0,
-          }}
-        >
-          <CandidateCard candidate={candidate} />
-        </Grid>
-        <Grid item xs={12} lg={8} elevation={3}>
+    <Box sx={{ borderRadius: "1rem" }}>
+      <Grid container spacing={4} justifyContent="flex-end">
+        <Grid item xl={16} lg={12} elevation={3}>
           <Paper sx={{ height: "100%" }}>
             <Typography
               variant="h6"
@@ -91,16 +89,16 @@ export default function CandidateProfile() {
                 borderRadius: 2,
               }}
             >
-              Mes Annonces Préférées
+              Mes offres d'emplois
             </Typography>
-            {favorites.length === 0 ? (
+            {companyOffers.length === 0 ? (
               <Typography variant="body1" sx={{ p: 2 }}>
-                Aucune annonce préférée disponible.
+                Aucune offre publiée.
               </Typography>
             ) : (
               <Grid container spacing={2} sx={{ p: 2 }}>
-                {favorites.map((favorite) => (
-                  <Grid item key={favorite.id} xs={12} sm={6} md={4}>
+                {companyOffers.map((offer) => (
+                  <Grid item key={offer.id} xs={12} sm={6} md={4}>
                     <Card
                       sx={{
                         height: "100%",
@@ -118,20 +116,20 @@ export default function CandidateProfile() {
                       />
                       <CardContent sx={{ flexGrow: 1 }}>
                         <Typography gutterBottom variant="h5" component="h2">
-                          {favorite.name}
+                          {offer.name}
                         </Typography>
                         <ReactQuill
                           theme="bubble"
-                          value={`${favorite.description.slice(0, 150)}...`}
+                          value={`${offer.description.slice(0, 150)}...`}
                           readOnly
                         />
                       </CardContent>
                       <CardActions>
-                        <Button
-                          size="small"
-                          onClick={() => handleOpen(favorite)}
-                        >
+                        <Button size="small" onClick={() => handleOpen(offer)}>
                           View
+                        </Button>
+                        <Button onClick={() => handleDelete(offer.id)}>
+                          Supprimer l'offre
                         </Button>
                       </CardActions>
                     </Card>
@@ -195,14 +193,6 @@ export default function CandidateProfile() {
                           right: 0,
                         }}
                       />
-                      <Button
-                        onClick={() => handleToggleFavorite(selectedJob)}
-                        sx={{ display: "flex", justifyContent: "start" }}
-                      >
-                        {checkIsFavorite(selectedJob)
-                          ? "Retirer des favoris"
-                          : "Ajouter aux favoris"}
-                      </Button>
                       <Typography gutterBottom variant="h5" component="h2">
                         {selectedJob.name}
                       </Typography>
@@ -219,12 +209,8 @@ export default function CandidateProfile() {
                         value={selectedJob.requirements}
                         readOnly
                       />
-                      <Button
-                        variant="contained"
-                        size="large"
-                        sx={{ marginTop: "1rem" }}
-                      >
-                        Postuler
+                      <Button onClick={() => handleDelete(selectedJob.id)}>
+                        Supprimer l'offre
                       </Button>
                     </CardContent>
                     <CardContent>
@@ -332,13 +318,10 @@ export default function CandidateProfile() {
           </Paper>
         </Grid>
       </Grid>
-      <Grid container spacing={4} justifyContent="flex-end" sx={{ my: 2 }}>
-        <Grid item xs={12} lg={8} elevation={3}>
-          <Paper sx={{ height: "100%", borderRadius: 2 }}>
-            <CandidateApplications />
-          </Paper>
-        </Grid>
-      </Grid>
-    </Container>
+    </Box>
   );
 }
+
+CompanyOffers.propTypes = {
+  id: PropTypes.number,
+}.isRequired;

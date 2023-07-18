@@ -11,6 +11,7 @@ import TopAnnoncesCard from "../components/Home/TopAnnoncesCard";
 import JobByTypeCard from "../components/Home/JobByTypeCard";
 import backgroundImage from "../assets/tim-mossholder-GOMhuCj-O9w-unsplash-1024x683.jpg";
 import externaticLogo from "../assets/EXTERNATIC-LOGO-VERTICAL-RVB-removebg-preview.png";
+import { api } from "../components/api";
 
 function Copyright() {
   return (
@@ -26,16 +27,25 @@ function Copyright() {
 
 export default function Home() {
   const navigate = useNavigate();
-  const jobTypes = {
-    devBack: { text: "Développeur Back-end", img: "" },
-    devFront: { text: "Dévelopeur Front-End", img: "" },
-    devWeb: { text: "Développeur Web", img: "" },
-    devData: { text: "Data Scientist", img: "" },
-    prodcuctOwner: { text: "Product Owner", img: "" },
-    chefProject: { text: "Chef de projet IT", img: "" },
-    devOps: { text: "DevOps", img: "" },
-  };
+  const [jobsTypes, setJobsTypes] = React.useState([]);
 
+  React.useEffect(() => {
+    try {
+      const getAlljobOffers = async () => {
+        const jobs = [];
+        const res = await api.getAlljobOffers();
+        for (let i = 0; i < res.length; i += 1) {
+          if (!jobs.includes(res[i].category)) {
+            jobs.push(res[i].category);
+            setJobsTypes(jobs);
+          }
+        }
+      };
+      getAlljobOffers();
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
   return (
     <Container maxWidth="xxl">
       <Box
@@ -65,21 +75,38 @@ export default function Home() {
           </Box>
           <Typography
             component="h1"
-            variant={{ xs: "h5", md: "h3" }}
+            sx={{
+              xs: {
+                variant: "h5",
+                margin: "20px",
+              },
+              md: {
+                variant: "h3",
+                margin: "20px",
+              },
+            }}
             align="center"
             color="text.primary"
             gutterBottom
-            margin="20px"
           >
             Vos Opportunités d'emploi, <br />
             uniquement chez les client finaux
           </Typography>
           <Typography
-            variant={{ xs: "h6", md: "h4" }}
+            sx={{
+              xs: {
+                variant: "h6",
+                margin: "auto",
+                maxWidth: "lg",
+              },
+              md: {
+                variant: "h4",
+                margin: "auto",
+                maxWidth: "lg",
+              },
+            }}
             color="text.secondary"
             paragraph
-            maxWidth="lg"
-            margin="auto"
           >
             Si vous recherchez des opportunités d'emploi dans le domaine
             informatique, le cabinet de recrutement Externatic peut mettre à
@@ -136,27 +163,42 @@ export default function Home() {
           <Box sx={{ m: 5 }}>
             <Typography
               component="h2"
-              variant="h3"
+              sx={{
+                variant: {
+                  xs: "h3",
+                  md: "h2",
+                },
+                margin: 5,
+              }}
               align="center"
               color="text.primary"
               gutterBottom
-              margin={5}
             >
               Qui sommes-nous
             </Typography>
             <Typography
               component="h3"
-              variant="h4"
+              sx={{
+                variant: {
+                  xs: "h4",
+                  md: "h3",
+                },
+                margin: 3,
+              }}
               align="center"
               color="text.primary"
               gutterBottom
-              margin={3}
             >
               Nos valeurs humaines et professionnelles:
             </Typography>
             <Typography
-              variant="h5"
-              align="center"
+              sx={{
+                variant: {
+                  xs: "h6",
+                  md: "h5",
+                },
+                textAlign: "center",
+              }}
               color="text.secondary"
               paragraph
             >
@@ -195,24 +237,11 @@ export default function Home() {
           flexWrap="wrap"
           justifyContent="center"
         >
-          <ReactLink to="/annonces">
-            <JobByTypeCard jobTypes={jobTypes.devFront} />
-          </ReactLink>
-          <ReactLink to="/annonces">
-            <JobByTypeCard jobTypes={jobTypes.devBack} />
-          </ReactLink>
-          <ReactLink to="/annonces">
-            <JobByTypeCard jobTypes={jobTypes.prodcuctOwner} />
-          </ReactLink>
-          <ReactLink to="/annonces">
-            <JobByTypeCard jobTypes={jobTypes.devData} />
-          </ReactLink>
-          <ReactLink to="/annonces">
-            <JobByTypeCard jobTypes={jobTypes.chefProject} />
-          </ReactLink>
-          <ReactLink to="/annonces">
-            <JobByTypeCard jobTypes={jobTypes.devOps} />
-          </ReactLink>
+          {jobsTypes.map((offer) => (
+            <ReactLink key={offer} to="/annonces">
+              <JobByTypeCard jobTypes={offer} />
+            </ReactLink>
+          ))}
         </Box>
       </Container>
       {/* Footer */}

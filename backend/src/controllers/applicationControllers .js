@@ -55,8 +55,6 @@ const read = (req, res) => {
 const edit = (req, res) => {
   const application = req.body;
 
-  // TODO validations (length, format...)
-
   application.id = parseInt(req.params.id, 10);
 
   models.application
@@ -76,8 +74,6 @@ const edit = (req, res) => {
 
 const add = (req, res) => {
   const application = req.body;
-
-  // TODO validations (length, format...)
 
   models.application
     .insert(application)

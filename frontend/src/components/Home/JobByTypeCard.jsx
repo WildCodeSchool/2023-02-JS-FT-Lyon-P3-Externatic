@@ -1,14 +1,36 @@
-import React from "react";
-import { PropTypes } from "prop-types";
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import styles from "./JobByTypeCard.module.css";
 import cardJobPosting from "../../assets/cardJobPosting.jpg";
+import { api } from "../api";
 
 export default function JobByTypeCard({ jobTypes }) {
+  const [jobTypeCount, setJobTypeCount] = useState(0);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const jobOffers = await api.getAlljobOffers();
+        const count = jobOffers.reduce((acc, job) => {
+          if (job.category === jobTypes) {
+            return acc + 1;
+          }
+          return acc;
+        }, 0);
+        setJobTypeCount(count);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchJobs();
+  }, [jobTypes]);
+
   return (
     <main className={styles.JobByTypeCardContainer}>
       <section className={styles.JobByTypeCardText}>
-        <div>{jobTypes.text}</div>
-        <div>00 Jobs</div>
+        <div>{jobTypes}</div>
+        <div>{jobTypeCount}</div>
       </section>
       <img
         className={styles.backgroundCardImg}
@@ -20,7 +42,5 @@ export default function JobByTypeCard({ jobTypes }) {
 }
 
 JobByTypeCard.propTypes = {
-  jobTypes: PropTypes.shape({
-    text: PropTypes.string.isRequired,
-  }).isRequired,
+  jobTypes: PropTypes.string.isRequired,
 };
