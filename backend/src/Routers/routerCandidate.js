@@ -57,9 +57,9 @@ routerCandidate.put(
   candidateControllers.edit
 );
 routerCandidate.delete(
-  "/candidates",
+  "/candidates/:id",
   verifyToken,
-  candidateControllers.destroyByLastName
+  candidateControllers.destroy
 );
 
 // Routes Publiques

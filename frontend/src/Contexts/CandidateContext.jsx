@@ -34,10 +34,10 @@ export function CandidateContextProvider({ children }) {
       setCandidate({});
       localStorage.removeItem("candidate");
       navigate("/");
-      toast.success("You have been logged out.");
+      toast.success("Vous avez été déconnecté.");
     } catch (error) {
       console.error(error);
-      toast.error("An error occurred during logout.");
+      toast.error("Erreur pendant la déconnexion.");
     }
   };
 
