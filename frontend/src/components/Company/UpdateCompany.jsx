@@ -1,21 +1,19 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Container from "@mui/material/Container";
-import CompanyContext from "../../Contexts/CompanyContext";
+import { useCompanyContext } from "../../Contexts/CompanyContext";
 import { ValidateFormUpdateCompany } from "../ValidateForm";
 
 function UpdateCompany() {
-  const navigate = useNavigate();
   const notifyCreation = () => toast("Votre compte a bien été modifié !");
 
-  const { company } = useContext(CompanyContext);
+  const { company, loginCompany } = useCompanyContext;
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [validateInput, setValidateInput] = useState({});
@@ -66,11 +64,17 @@ function UpdateCompany() {
             withCredentials: true,
           }
         )
-        .then(() => {
+        .then((response) => {
           notifyCreation();
-        })
-        .then(() => {
-          navigate("/espace-pro");
+          loginCompany({
+            ...company,
+            name: response.data.name,
+            contact: response.data.contact,
+            description: response.data.description,
+            city: response.data.city,
+            phone: response.data.phone,
+            email: response.data.email,
+          });
         })
         .catch((err) => {
           console.error(err);

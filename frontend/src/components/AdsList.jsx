@@ -21,7 +21,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CandidateContext from "../Contexts/CandidateContext";
 import "react-toastify/dist/ReactToastify.css";
-import { api } from "./api";
+import { api } from "../services/api";
 
 export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;

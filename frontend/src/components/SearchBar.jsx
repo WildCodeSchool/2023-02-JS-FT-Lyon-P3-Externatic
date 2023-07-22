@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import AdsList from "./AdsList";
-import { api } from "./api";
+import { api } from "../services/api";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
