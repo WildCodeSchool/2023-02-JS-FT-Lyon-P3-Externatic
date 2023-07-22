@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -10,7 +11,7 @@ import Container from "@mui/material/Container";
 import { useCompanyContext } from "../../Contexts/CompanyContext";
 import { ValidateFormUpdateCompany } from "../ValidateForm";
 
-function UpdateCompany() {
+function UpdateCompany({ handleUpdateClose }) {
   const notifyCreation = () => toast("Votre compte a bien été modifié !");
 
   const { company, loginCompany } = useCompanyContext;
@@ -75,6 +76,7 @@ function UpdateCompany() {
             phone: response.data.phone,
             email: response.data.email,
           });
+          handleUpdateClose();
         })
         .catch((err) => {
           console.error(err);
@@ -261,5 +263,9 @@ function UpdateCompany() {
     </Container>
   );
 }
+
+UpdateCompany.propTypes = {
+  handleUpdateClose: PropTypes.func.isRequired,
+};
 
 export default UpdateCompany;

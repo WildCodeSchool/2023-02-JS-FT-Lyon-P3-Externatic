@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
@@ -9,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Typography from "@mui/material/Typography";
 import { useCandidateContext } from "../../Contexts/CandidateContext";
 
-export default function CVupload() {
+export default function CVupload({ handleCvClose }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const notifyUpload = () => toast.success("Votre CV a bien été enregistré !");
   const notifyUploadError = () => toast.error("Problème à l'enregistrement !");
@@ -28,6 +29,7 @@ export default function CVupload() {
       .then((response) => {
         notifyUpload();
         loginCandidate({ ...candidate, cv: response.data.cvPath });
+        handleCvClose();
       })
       .catch((error) => {
         console.error(error);
@@ -73,3 +75,7 @@ export default function CVupload() {
     </Box>
   );
 }
+
+CVupload.propTypes = {
+  handleCvClose: PropTypes.func.isRequired,
+};

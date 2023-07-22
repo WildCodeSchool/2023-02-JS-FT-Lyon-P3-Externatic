@@ -81,7 +81,7 @@ export default function CompanyCard({ company }) {
                 justifyContent: "center",
               }}
             >
-              <PhotoUploadCompany />
+              <PhotoUploadCompany handlePhotoClose={handlePhotoClose} />
               <Button
                 size="small"
                 variant="contained"
@@ -138,7 +138,7 @@ export default function CompanyCard({ company }) {
                 justifyContent: "center",
               }}
             >
-              <UpdateCompany />
+              <UpdateCompany handleUpdateClose={handleUpdateClose} />
               <Button
                 size="small"
                 variant="contained"
