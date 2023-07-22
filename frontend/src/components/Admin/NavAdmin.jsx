@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import "animate.css";
 
 function AdminNav() {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ function AdminNav() {
         sx={{ p: 3 }}
       >
         <Button
+          className="animate__animated animate__lightSpeedInLeft"
           size="large"
           variant="text"
           sx={{
@@ -48,6 +50,7 @@ function AdminNav() {
           Candidats
         </Button>
         <Button
+          className="animate__animated animate__fadeInDown"
           size="large"
           variant="text"
           sx={{
@@ -61,6 +64,7 @@ function AdminNav() {
           Entreprises
         </Button>
         <Button
+          className="animate__animated animate__lightSpeedInRight"
           size="large"
           variant="text"
           sx={{
