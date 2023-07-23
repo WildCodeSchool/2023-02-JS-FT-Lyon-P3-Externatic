@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -10,7 +11,7 @@ import Container from "@mui/material/Container";
 import { useCandidateContext } from "../../Contexts/CandidateContext";
 import { ValidateFormUpdateCandidate } from "../ValidateForm";
 
-function UpdateCandidate() {
+function UpdateCandidate({ handleUpdateClose }) {
   const notifyCreation = () => toast("Votre compte a bien été modifié !");
 
   const { candidate, loginCandidate } = useCandidateContext();
@@ -69,6 +70,7 @@ function UpdateCandidate() {
             phone: response.data.phone,
             email: response.data.email,
           });
+          handleUpdateClose();
         })
         .catch((err) => {
           console.error(err);
@@ -213,5 +215,9 @@ function UpdateCandidate() {
     </Container>
   );
 }
+
+UpdateCandidate.propTypes = {
+  handleUpdateClose: PropTypes.func.isRequired,
+};
 
 export default UpdateCandidate;

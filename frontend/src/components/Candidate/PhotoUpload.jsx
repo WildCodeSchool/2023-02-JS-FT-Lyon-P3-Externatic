@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
@@ -9,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Typography from "@mui/material/Typography";
 import { useCandidateContext } from "../../Contexts/CandidateContext";
 
-export default function PhotoUpload() {
+export default function PhotoUpload({ handlePhotoClose }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const notifyUpload = () =>
     toast.success("Votre Photo a bien été enregistrée !");
@@ -30,6 +31,7 @@ export default function PhotoUpload() {
       .then((response) => {
         notifyUpload();
         loginCandidate({ ...candidate, picture: response.data.photoPath });
+        handlePhotoClose();
       })
       .catch((error) => {
         console.error(error);
@@ -67,3 +69,7 @@ export default function PhotoUpload() {
     </Box>
   );
 }
+
+PhotoUpload.propTypes = {
+  handlePhotoClose: PropTypes.func.isRequired,
+};

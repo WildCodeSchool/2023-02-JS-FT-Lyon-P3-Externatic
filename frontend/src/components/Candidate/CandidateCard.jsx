@@ -92,7 +92,7 @@ export default function CandidateCard({ candidate }) {
                 justifyContent: "center",
               }}
             >
-              <PhotoUpload />
+              <PhotoUpload handlePhotoClose={handlePhotoClose} />
               <Button
                 size="small"
                 variant="contained"
@@ -152,7 +152,7 @@ export default function CandidateCard({ candidate }) {
               justifyContent: "center",
             }}
           >
-            <CVupload />
+            <CVupload handleCvClose={handleCvClose} />
             <Button
               size="small"
               variant="contained"
@@ -184,7 +184,7 @@ export default function CandidateCard({ candidate }) {
                 justifyContent: "center",
               }}
             >
-              <UpdateCandidate />
+              <UpdateCandidate handleUpdateClose={handleUpdateClose} />
               <Button
                 size="small"
                 variant="contained"
