@@ -100,7 +100,7 @@ const edit = async (req, res) => {
       lastname,
     });
 
-    res.send({ email, phone, city, firstname, lastname });
+    res.sendStatus(204);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);

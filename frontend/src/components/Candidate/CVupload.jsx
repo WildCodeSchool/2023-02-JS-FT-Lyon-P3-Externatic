@@ -1,20 +1,18 @@
 import React, { useRef } from "react";
-import axios from "axios";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import { toast } from "react-toastify";
+import { instance } from "../../services/api";
 import "react-toastify/dist/ReactToastify.css";
-import Typography from "@mui/material/Typography";
-import { useCandidateContext } from "../../Contexts/CandidateContext";
 
-export default function CVupload({ handleCvClose }) {
+export default function CVupload({ candidate, handleCvClose }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const notifyUpload = () => toast.success("Votre CV a bien été enregistré !");
   const notifyUploadError = () => toast.error("Problème à l'enregistrement !");
-  const { candidate, loginCandidate } = useCandidateContext();
 
   const inputRef = useRef();
 
@@ -24,11 +22,10 @@ export default function CVupload({ handleCvClose }) {
     const formData = new FormData();
     formData.append("monCV", inputRef.current.files[0]);
 
-    axios
+    instance
       .post(`${BACKEND_URL}/monCV`, formData, { withCredentials: true })
-      .then((response) => {
+      .then(() => {
         notifyUpload();
-        loginCandidate({ ...candidate, cv: response.data.cvPath });
         handleCvClose();
       })
       .catch((error) => {
@@ -78,4 +75,8 @@ export default function CVupload({ handleCvClose }) {
 
 CVupload.propTypes = {
   handleCvClose: PropTypes.func.isRequired,
+  candidate: PropTypes.shape({
+    id: PropTypes.number,
+    cv: PropTypes.string,
+  }).isRequired,
 };
