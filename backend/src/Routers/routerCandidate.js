@@ -19,7 +19,7 @@ const {
 
 const {
   validateCandidate,
-  validateCandidateUpdate,
+  // validateCandidateUpdate,
 } = require("../services/validator");
 
 const routerCandidate = express.Router();
@@ -50,12 +50,7 @@ routerCandidate.post(
   uploadCV.single("monCV"),
   candidateControllers.uploadCV
 );
-routerCandidate.put(
-  "/candidates/:id",
-  validateCandidateUpdate,
-  verifyToken,
-  candidateControllers.edit
-);
+routerCandidate.put("/candidates/:id", verifyToken, candidateControllers.edit);
 routerCandidate.delete(
   "/candidates/:id",
   verifyToken,

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link as ReactLink, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -28,6 +29,7 @@ function Copyright() {
 export default function Home() {
   const navigate = useNavigate();
   const [jobsTypes, setJobsTypes] = React.useState([]);
+  const notifyError = toast.error("Problème de récupération des Annonces");
 
   React.useEffect(() => {
     try {
@@ -43,9 +45,11 @@ export default function Home() {
       };
       getAlljobOffers();
     } catch (error) {
+      notifyError();
       console.error(error);
     }
   }, []);
+
   return (
     <Container maxWidth="xxl">
       <Box
@@ -203,14 +207,14 @@ export default function Home() {
               paragraph
             >
               Externatic, c'est avant tout une équipe d'experts IT, tous animés
-              par al même passion des relations humaines. L'intelligence
-              émotionnelle et l'éducation cognitive en peuvent être remplacées
+              par la même passion des relations humaines. L'intelligence
+              émotionnelle et l'éducation cognitive ne peuvent être remplacées
               par des algorithmes. Notre cabinet de recrutement s'appuie sur des
               méthodes authentiques, où l'humain est tout simplement
               indispensable. Depuis 12 ans, externatic a développé un
               savoir-faire sur le recrutement de profils pénuriques. Ces
               compétences nous permettent d'intervenir sur d'autres secteurs que
-              l'IT. Notamment l'industrie avec Induseo et al cybersécurité avec
+              l'IT. Notamment l'industrie avec Induseo et la cybersécurité avec
               Underguard.
             </Typography>
           </Box>

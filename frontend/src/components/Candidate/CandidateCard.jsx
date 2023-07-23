@@ -64,11 +64,13 @@ export default function CandidateCard({ candidate }) {
             alignItems: "center",
           }}
         >
-          <Avatar
-            alt="Candidate Picture"
-            src={imagePath}
-            sx={{ width: 150, height: 150 }}
-          />
+          {imagePath && (
+            <Avatar
+              alt="candidate Picture"
+              src={imagePath}
+              sx={{ width: 150, height: 150 }}
+            />
+          )}
           <Button
             variant="text"
             color="primary"
@@ -92,7 +94,10 @@ export default function CandidateCard({ candidate }) {
                 justifyContent: "center",
               }}
             >
-              <PhotoUpload handlePhotoClose={handlePhotoClose} />
+              <PhotoUpload
+                handlePhotoClose={handlePhotoClose}
+                candidate={candidate}
+              />
               <Button
                 size="small"
                 variant="contained"
@@ -152,7 +157,7 @@ export default function CandidateCard({ candidate }) {
               justifyContent: "center",
             }}
           >
-            <CVupload handleCvClose={handleCvClose} />
+            <CVupload candidate={candidate} handleCvClose={handleCvClose} />
             <Button
               size="small"
               variant="contained"
@@ -184,7 +189,10 @@ export default function CandidateCard({ candidate }) {
                 justifyContent: "center",
               }}
             >
-              <UpdateCandidate handleUpdateClose={handleUpdateClose} />
+              <UpdateCandidate
+                candidate={candidate}
+                handleUpdateClose={handleUpdateClose}
+              />
               <Button
                 size="small"
                 variant="contained"
@@ -210,15 +218,5 @@ CandidateCard.propTypes = {
     city: PropTypes.string,
     picture: PropTypes.string,
     cv: PropTypes.string,
-  }),
-};
-
-CandidateCard.defaultProps = {
-  candidate: {
-    firstname: "prénom candidat",
-    lastname: "nom candidat",
-    email: "candidat@mail.com",
-    city: "Paris",
-    picture: "https://xsgames.co/randomusers/avatar.php?g=female",
-  },
+  }).isRequired,
 };
