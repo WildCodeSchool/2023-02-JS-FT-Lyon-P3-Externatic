@@ -10,7 +10,8 @@ import { toast } from "react-toastify";
 import Container from "@mui/material/Container";
 
 function UpdateCompany({ company, handleUpdateClose }) {
-  const notifyCreation = () => toast("Votre compte a bien été modifié !");
+  const notifyUpdate = () => toast("Votre compte a bien été modifié !");
+  const notifyError = () => toast.error("Erreur lors de la modification !");
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -46,10 +47,11 @@ function UpdateCompany({ company, handleUpdateClose }) {
           { withCredentials: true }
         )
         .then(() => {
-          notifyCreation();
+          notifyUpdate();
           handleUpdateClose();
         })
         .catch((err) => {
+          notifyError();
           console.error(err);
         });
     }
