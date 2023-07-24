@@ -32,9 +32,9 @@ export default function CompanyProfile() {
           item
           xs={12}
           lg={7}
-          elevation={3}
           sx={{
             position: { lg: "fixed" },
+            zIndex: 2,
           }}
         >
           <CompanyCard company={company} />
