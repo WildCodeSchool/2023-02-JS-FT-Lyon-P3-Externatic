@@ -103,6 +103,7 @@ export default function CandidateProfile() {
               sx={{
                 position: { lg: "fixed" },
                 left: 0,
+                zIndex: 2,
               }}
             >
               <CandidateCard candidate={loggedCandidate} />
