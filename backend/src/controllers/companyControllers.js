@@ -63,44 +63,6 @@ const edit = async (req, res) => {
   }
 };
 
-const add = async (req, res) => {
-  try {
-    const {
-      email,
-      phone,
-      city,
-      hashedPassword,
-      name,
-      contact,
-      description,
-      website,
-    } = req.body;
-
-    // Create a new user entry
-    const [userResult] = await models.user.insert({
-      email,
-      phone,
-      city,
-      hashedPassword,
-    });
-    const userId = userResult.insertId;
-
-    // Create a new company entry
-    const [companyResult] = await models.company.insert({
-      user_id: userId,
-      name,
-      contact,
-      description,
-      website,
-    });
-
-    res.location(`/companies/${companyResult.insertId}`).sendStatus(201);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-};
-
 const destroy = (req, res) => {
   models.company
     .delete(req.params.id)
@@ -138,7 +100,6 @@ module.exports = {
   browse,
   read,
   edit,
-  add,
   destroy,
   profile,
 };
