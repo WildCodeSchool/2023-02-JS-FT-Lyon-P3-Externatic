@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import CardMedia from "@mui/material/CardMedia";
+import { toast } from "react-toastify";
 import TopAnnoncesCard from "../components/Home/TopAnnoncesCard";
 import JobByTypeCard from "../components/Home/JobByTypeCard";
 import backgroundImage from "../assets/tim-mossholder-GOMhuCj-O9w-unsplash-1024x683.jpg";
@@ -29,7 +30,8 @@ function Copyright() {
 export default function Home() {
   const navigate = useNavigate();
   const [jobsTypes, setJobsTypes] = React.useState([]);
-
+  const notifyError = () =>
+    toast.error("Problème de récupération des offres..");
   React.useEffect(() => {
     try {
       const getAlljobOffers = async () => {
@@ -45,6 +47,7 @@ export default function Home() {
       getAlljobOffers();
     } catch (error) {
       console.error(error);
+      notifyError();
     }
   }, []);
 

@@ -4,12 +4,15 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { toast } from "react-toastify";
 import ApplicationCard from "./CompanyApplicationCard";
 import CompanyContext from "../../Contexts/CompanyContext";
 
 export default function CompanyApplications() {
   const [companyApplications, setCompanyApplications] = useState([]);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const notifyError = () =>
+    toast.error("Problème de récupération des applications..");
 
   const { company } = useContext(CompanyContext);
 
@@ -28,6 +31,7 @@ export default function CompanyApplications() {
       })
       .catch((error) => {
         console.error(error);
+        notifyError();
       });
   };
 
