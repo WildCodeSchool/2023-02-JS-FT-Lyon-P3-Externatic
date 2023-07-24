@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { toast } from "react-toastify";
 import Typography from "@mui/material/Typography";
 import logo from "../assets/externatic-logo.png";
 import accueil from "../assets/accueil.jpg";
@@ -31,6 +32,8 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export default function Login() {
   const { loginCandidate } = useCandidateContext();
   const [msg, setMsg] = useState("");
+  const notifyCreation = () => toast.success("Vous êtes bien connecté!");
+  const notifyError = () => toast.error("La connexion a echoué..");
   const [userInfos, setUserInfos] = useState({
     email: "",
     password: "",
@@ -55,14 +58,17 @@ export default function Login() {
         })
         .then(({ data: candidate }) => {
           loginCandidate(candidate);
+          notifyCreation();
           navigate("/");
         })
         .catch((error) => {
           if (error.response?.status === 401) setMsg("Wrong credentials");
           else setMsg("Try again later.");
+          notifyError();
         });
     } else {
       setMsg("Unvalid form");
+      notifyError();
     }
   };
 
