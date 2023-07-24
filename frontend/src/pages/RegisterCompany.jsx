@@ -83,7 +83,7 @@ export default function Register() {
           notifyCreation();
         })
         .then(() => {
-          navigate("/");
+          navigate("/login-company");
         })
         .catch((err) => {
           console.error(err);

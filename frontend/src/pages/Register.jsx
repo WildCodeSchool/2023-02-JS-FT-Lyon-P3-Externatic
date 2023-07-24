@@ -79,7 +79,7 @@ export default function Register() {
         .post(`${BACKEND_URL}/register-candidate`, { ...formData })
         .then(() => {
           notifyCreation();
-          navigate("/");
+          navigate("/login-candidate");
         })
         .catch((err) => {
           console.error(err);
