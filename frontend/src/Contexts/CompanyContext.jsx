@@ -20,14 +20,6 @@ export function CompanyContextProvider({ children }) {
     if (!company.id) navigate("/");
   }, [company.id]);
 
-  // Helper function to check if the token is expired
-  const isTokenExpired = (token) => {
-    if (!token) return true;
-    const currentTime = Date.now() / 1000;
-    const tokenExpiration = token.exp;
-    return tokenExpiration < currentTime;
-  };
-
   const logoutCompany = async () => {
     try {
       await axios.get(`${BACKEND_URL}/logout-company`);
@@ -45,13 +37,6 @@ export function CompanyContextProvider({ children }) {
     setCompany(_company);
     localStorage.setItem("company", JSON.stringify(_company));
   };
-
-  useEffect(() => {
-    // Check if the token is expired on every render
-    if (isTokenExpired(company.token)) {
-      logoutCompany();
-    }
-  }, [company.token]);
 
   const memo = useMemo(() => {
     return {

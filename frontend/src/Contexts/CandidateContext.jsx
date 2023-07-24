@@ -20,14 +20,6 @@ export function CandidateContextProvider({ children }) {
     if (!candidate.id) navigate("/");
   }, [candidate.id]);
 
-  // Helper function to check if the token is expired
-  const isTokenExpired = (token) => {
-    if (!token) return true;
-    const currentTime = Date.now() / 1000;
-    const tokenExpiration = token.exp;
-    return tokenExpiration < currentTime;
-  };
-
   const logoutCandidate = async () => {
     try {
       await axios.get(`${BACKEND_URL}/logout-candidate`);
@@ -45,13 +37,6 @@ export function CandidateContextProvider({ children }) {
     setCandidate(_candidate);
     localStorage.setItem("candidate", JSON.stringify(_candidate));
   };
-
-  useEffect(() => {
-    // Check if the token is expired on every render
-    if (isTokenExpired(candidate.token)) {
-      logoutCandidate();
-    }
-  }, [candidate.token]);
 
   const memo = useMemo(() => {
     return {

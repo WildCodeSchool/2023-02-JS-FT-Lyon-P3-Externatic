@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link as ReactLink, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -29,7 +29,6 @@ function Copyright() {
 export default function Home() {
   const navigate = useNavigate();
   const [jobsTypes, setJobsTypes] = React.useState([]);
-  const notifyError = toast.error("Problème de récupération des Annonces");
 
   React.useEffect(() => {
     try {
@@ -45,7 +44,6 @@ export default function Home() {
       };
       getAlljobOffers();
     } catch (error) {
-      notifyError();
       console.error(error);
     }
   }, []);
