@@ -10,7 +10,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import AdsList from "./AdsList";
-import { api } from "./api";
+import { api } from "../services/api";
+import "animate.css";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -115,6 +116,7 @@ export default function SearchBar() {
   return (
     <>
       <Box
+        className="animate__animated animate__fadeInDown"
         component="form"
         sx={{
           "& .MuiTextField-root": { m: 1, width: "25ch" },
@@ -215,7 +217,7 @@ export default function SearchBar() {
             </Button>
             <Button
               onClick={handleClearFilters}
-              variant="contained"
+              variant="outlined"
               sx={{ mt: 2, ml: 2 }}
             >
               Effacer les filtres

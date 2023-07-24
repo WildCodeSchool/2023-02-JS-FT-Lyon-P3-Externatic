@@ -50,19 +50,20 @@ routerCandidate.post(
   uploadCV.single("monCV"),
   candidateControllers.uploadCV
 );
+routerCandidate.put(
+  "/candidates/:id",
+  validateCandidateUpdate,
+  verifyToken,
+  candidateControllers.edit
+);
+routerCandidate.delete(
+  "/candidates/:id",
+  verifyToken,
+  candidateControllers.destroy
+);
 
 // Routes Publiques
 routerCandidate.get("/candidates", candidateControllers.browse);
 routerCandidate.get("/candidates/:id", candidateControllers.read);
-routerCandidate.put(
-  "/candidates/:id",
-  validateCandidateUpdate,
-  candidateControllers.edit
-);
-routerCandidate.delete(
-  "/candidates",
-  verifyToken,
-  candidateControllers.destroyByLastName
-);
 
 module.exports = routerCandidate;

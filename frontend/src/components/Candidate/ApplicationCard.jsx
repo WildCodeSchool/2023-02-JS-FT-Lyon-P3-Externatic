@@ -46,18 +46,28 @@ export default function ApplicationCard({ candidateApplication }) {
 
   useEffect(() => {}, [candidateApplication]);
 
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const dateString = `${candidateApplication.date}`;
+  const dateObject = new Date(dateString);
+  const formattedDate = dateObject.toLocaleDateString("fr-FR", options);
+
   return (
     <>
       <Card sx={{ maxWidth: "100%" }}>
         <CardContent sx={{ m: 2 }}>
           <Typography variant="body1" color="text.secondary" gutterBottom>
-            Titre de l'annonce : {candidateApplication.title}
+            Nom de l'Entreprise : {candidateApplication.name}
           </Typography>
           <Typography variant="body1" color="text.secondary" gutterBottom>
-            Nome de l'Entreprise : {candidateApplication.name}
+            Titre de l'annonce : {candidateApplication.title}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Type de Contrat : {candidateApplication.contract_type}
+            Candidature du : {formattedDate}
           </Typography>
           <Typography variant="body1" color="text.secondary" gutterBottom>
             Statut : {candidateApplication.status}
@@ -107,6 +117,7 @@ ApplicationCard.propTypes = {
   candidateApplication: PropTypes.shape({
     candidate_id: PropTypes.number,
     title: PropTypes.string,
+    date: PropTypes.string,
     name: PropTypes.string,
     status: PropTypes.string,
     contract_type: PropTypes.string,

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link as ReactLink, useNavigate } from "react-router-dom";
+// import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -11,7 +12,7 @@ import TopAnnoncesCard from "../components/Home/TopAnnoncesCard";
 import JobByTypeCard from "../components/Home/JobByTypeCard";
 import backgroundImage from "../assets/tim-mossholder-GOMhuCj-O9w-unsplash-1024x683.jpg";
 import externaticLogo from "../assets/EXTERNATIC-LOGO-VERTICAL-RVB-removebg-preview.png";
-import { api } from "../components/api";
+import { api } from "../services/api";
 
 function Copyright() {
   return (
@@ -46,6 +47,7 @@ export default function Home() {
       console.error(error);
     }
   }, []);
+
   return (
     <Container maxWidth="xxl">
       <Box
@@ -203,14 +205,14 @@ export default function Home() {
               paragraph
             >
               Externatic, c'est avant tout une équipe d'experts IT, tous animés
-              par al même passion des relations humaines. L'intelligence
-              émotionnelle et l'éducation cognitive en peuvent être remplacées
+              par la même passion des relations humaines. L'intelligence
+              émotionnelle et l'éducation cognitive ne peuvent être remplacées
               par des algorithmes. Notre cabinet de recrutement s'appuie sur des
               méthodes authentiques, où l'humain est tout simplement
               indispensable. Depuis 12 ans, externatic a développé un
               savoir-faire sur le recrutement de profils pénuriques. Ces
               compétences nous permettent d'intervenir sur d'autres secteurs que
-              l'IT. Notamment l'industrie avec Induseo et al cybersécurité avec
+              l'IT. Notamment l'industrie avec Induseo et la cybersécurité avec
               Underguard.
             </Typography>
           </Box>

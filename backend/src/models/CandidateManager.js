@@ -46,7 +46,7 @@ class CandidateManager extends AbstractManager {
   update(candidate) {
     return this.database.query(
       `update ${this.table} set firstname = ?, lastname = ? where id = ${candidate.id}`,
-      [candidate.firstname, candidate.lastname]
+      [candidate.firstname, candidate.lastname, candidate.id]
     );
   }
 
@@ -57,15 +57,15 @@ class CandidateManager extends AbstractManager {
     );
   }
 
-  deleteByLastName(lastname) {
+  delete(candidateId) {
     return this.database.query(
       `
       DELETE candidate, user
       FROM candidate
       JOIN user ON candidate.user_id = user.id
-      WHERE candidate.lastname = ?
+      WHERE candidate.id = ?
       `,
-      [lastname]
+      [candidateId]
     );
   }
 }

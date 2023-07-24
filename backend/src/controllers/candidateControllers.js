@@ -100,23 +100,16 @@ const edit = async (req, res) => {
       lastname,
     });
 
-    res.send({ email, phone, city, firstname, lastname });
+    res.sendStatus(204);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
   }
 };
 
-const destroyByLastName = (req, res) => {
-  const { lastname } = req.query;
-
-  if (!lastname) {
-    res.sendStatus(400);
-    return;
-  }
-
+const destroy = (req, res) => {
   models.candidate
-    .deleteByLastName(lastname)
+    .delete(req.params.id)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404);
@@ -159,7 +152,7 @@ module.exports = {
   read,
   edit,
   add,
-  destroyByLastName,
+  destroy,
   profile,
   uploadCV,
 };

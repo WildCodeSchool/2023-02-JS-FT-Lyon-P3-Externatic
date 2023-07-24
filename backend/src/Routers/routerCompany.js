@@ -19,6 +19,7 @@ const {
 const routerCompany = express.Router();
 const companyControllers = require("../controllers/companyControllers");
 
+// Route privées
 routerCompany.post(
   "/register-company",
   validateCompany,
@@ -32,9 +33,6 @@ routerCompany.post(
 );
 routerCompany.get("/logout-company", logout);
 routerCompany.get("/company-profile", verifyToken, companyControllers.profile);
-
-routerCompany.get("/companies", companyControllers.browse);
-routerCompany.get("/companies/:id", companyControllers.read);
 routerCompany.put(
   "/companies/:id",
   validateUpdateCompany,
@@ -42,5 +40,9 @@ routerCompany.put(
   companyControllers.edit
 );
 routerCompany.delete("/companies/:id", verifyToken, companyControllers.destroy);
+
+// Routes Publiques
+routerCompany.get("/companies", companyControllers.browse);
+routerCompany.get("/companies/:id", companyControllers.read);
 
 module.exports = routerCompany;

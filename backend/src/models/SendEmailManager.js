@@ -17,8 +17,7 @@ const SendEmailManager = {
   sendMail: async (data) => {
     try {
       const info = await transporter.sendMail({
-        // from: "<no-reply>", // sender address
-        from: "<foo@example.com>",
+        from: data.from, // sender address
         to: data.to, // list of receivers
         subject: data.subject, // Subject line
         text: data.text, // plain text body

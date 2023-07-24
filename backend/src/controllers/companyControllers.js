@@ -56,7 +56,7 @@ const edit = async (req, res) => {
       website,
     });
 
-    res.sendStatus(200);
+    res.send({ email, phone, city, name, contact, description, website });
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
@@ -75,8 +75,6 @@ const add = async (req, res) => {
       description,
       website,
     } = req.body;
-
-    // TODO: Add validations for email, phone, city, password, name, contact, description, website
 
     // Create a new user entry
     const [userResult] = await models.user.insert({
