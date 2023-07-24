@@ -105,7 +105,7 @@ export default function TopAnnoncesCard() {
           }}
         >
           {jobPosting &&
-            jobPosting.map((jobs) => (
+            jobPosting.slice(0, 6).map((jobs) => (
               <SwiperSlide key={jobs.id} className="">
                 <Card
                   sx={{
