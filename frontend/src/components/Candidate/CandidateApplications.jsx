@@ -30,7 +30,7 @@ export default function CandidateApplications() {
 
   useEffect(() => {
     getCandidateApplications();
-  }, []);
+  }, [candidateApplications]);
 
   return (
     <Box sx={{ borderRadius: "1rem" }}>

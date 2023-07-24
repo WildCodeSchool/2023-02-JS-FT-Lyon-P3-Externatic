@@ -36,7 +36,7 @@ export default function CandidateProfile() {
 
   const getCandidate = () => {
     instance
-      .get(`${BACKEND_URL}/candidates/${candidate.id}`)
+      .get(`${BACKEND_URL}/candidate-profile`)
       .then((response) => {
         setLoggedCandidate(response.data);
         setLoading(false);

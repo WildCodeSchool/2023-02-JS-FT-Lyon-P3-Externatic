@@ -103,7 +103,7 @@ const verifyToken = (req, res, next) => {
   try {
     const token = req.cookies.access_token;
 
-    if (!token) return res.sendStatus(403);
+    if (!token) return res.sendStatus(401);
 
     // on place le contenu du token (payloads dans la propriété payloads de la requête)
     // afin de pouvoir retrouver les infos de l'utilisateurs connecté dans la prochaine fonction.
@@ -111,7 +111,7 @@ const verifyToken = (req, res, next) => {
     return next();
   } catch (err) {
     console.error(err);
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 };
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ToastContainer } from "react-toastify";
 import CssBaseline from "@mui/material/CssBaseline";
 import CompanyProfile from "./pages/CompanyProfile";
 import Home from "./pages/Home";
@@ -67,6 +68,18 @@ function App() {
             <Route path="admin-jobs" element={<AdminJobs />} />
           </Route>
         </Routes>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </ThemeProvider>
     </div>
   );

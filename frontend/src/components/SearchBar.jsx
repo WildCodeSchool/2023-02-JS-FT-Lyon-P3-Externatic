@@ -217,7 +217,7 @@ export default function SearchBar() {
             </Button>
             <Button
               onClick={handleClearFilters}
-              variant="contained"
+              variant="outlined"
               sx={{ mt: 2, ml: 2 }}
             >
               Effacer les filtres
