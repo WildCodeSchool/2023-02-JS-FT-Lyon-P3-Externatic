@@ -44,7 +44,8 @@ To run Externatic locally, follow these steps:
 4. Install the required dependencies by running: `npm install` or `yarn install`.
 5. If you are using `yarn` or `pnpm`, adapt the `config/cli` in `package.json`
 6. Run command `npm install`
-7. _NB: To launch the backend server, you'll need an environment file with database credentials. You'll find a template one in `backend/.env.sample`_
+7. Run command `npm run migrate`
+8. _NB: To launch the backend server, you'll need an environment file with database credentials. You'll find a template one in `backend/.env.sample`_
 
 
 ## Available Commands
@@ -70,6 +71,8 @@ To run Externatic locally, follow these steps:
 
 ## Usage
 Once the application is up and running, users can access it through their web browsers or mobile devices. Admins can log in to the admin panel to manage users and monitor the platform's activity. Companies can create accounts and post job listings, while candidates can browse available positions, apply, and upload their resumes.
+
+If you want to log as an admin, here is the informations : (email: admin@mail.com / password: adminpass)
 
 
 
