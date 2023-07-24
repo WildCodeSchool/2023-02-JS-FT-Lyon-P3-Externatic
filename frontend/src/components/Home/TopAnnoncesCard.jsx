@@ -17,10 +17,7 @@ import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Navigation, Pagination, Scrollbar } from "swiper";
-// import { useMediaQuery } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import cardJobPosting from "../../assets/cardJobPosting.jpg";
 // Import Swiper styles
 
@@ -32,25 +29,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 export default function TopAnnoncesCard() {
-  const breakpoints = {
-    0: 1, // for screens smaller than 600px, show 1 slide
-    800: 2, // for screens between 600px and 960px, show 2 slides
-    960: 3, // for screens larger than 960px, show 3 slides
-  };
-
-  // Determine the appropriate slidePerView value based on screen width
-  const prevTheme = useTheme();
-  const matches = useMediaQuery(prevTheme.breakpoints.up("md"));
-  const slidePerView = Object.entries(breakpoints).reduce(
-    (prev, [breakpoint, value]) => {
-      if (matches && prevTheme.breakpoints.up(breakpoint)) {
-        return value;
-      }
-      return prev;
-    },
-    1
-  );
-
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [jobPosting, setJobPosting] = useState();
   const [open, setOpen] = useState(false);
@@ -110,10 +88,21 @@ export default function TopAnnoncesCard() {
           // install Swiper modules
           modules={[Navigation, Pagination, Scrollbar]}
           spaceBetween={40}
-          slidesPerView={slidePerView}
+          slidesPerView={1}
           navigation
           pagination={{ clickable: true }}
           scrollbar={{ draggable: false }}
+          breakpoints={{
+            // When window width is >= 768px
+            768: {
+              slidesPerView: 2,
+            },
+            // When window width is >= 1024px
+            1024: {
+              slidesPerView: 3,
+            },
+            // More breakpoints...
+          }}
         >
           {jobPosting &&
             jobPosting.map((jobs) => (
