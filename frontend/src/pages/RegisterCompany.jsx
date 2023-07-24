@@ -32,7 +32,8 @@ function Copyright() {
 export default function Register() {
   const navigate = useNavigate();
   const notifyCreation = () => toast.success("Votre compte a bien été créé !");
-
+  const notifyError = () =>
+    toast.error("Problème d'enregistrement du compte..");
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [validateInput, setValidateInput] = useState({});
 
@@ -82,10 +83,11 @@ export default function Register() {
           notifyCreation();
         })
         .then(() => {
-          navigate("/");
+          navigate("/login-company");
         })
         .catch((err) => {
           console.error(err);
+          notifyError();
         });
     } else {
       // The form is invalid, handle validation errors

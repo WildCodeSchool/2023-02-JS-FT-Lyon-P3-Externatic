@@ -8,10 +8,13 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import CardMedia from "@mui/material/CardMedia";
+import { toast } from "react-toastify";
 import TopAnnoncesCard from "../components/Home/TopAnnoncesCard";
 import JobByTypeCard from "../components/Home/JobByTypeCard";
 import backgroundImage from "../assets/tim-mossholder-GOMhuCj-O9w-unsplash-1024x683.jpg";
 import externaticLogo from "../assets/EXTERNATIC-LOGO-VERTICAL-RVB-removebg-preview.png";
+import { useCandidateContext } from "../Contexts/CandidateContext";
+import { useCompanyContext } from "../Contexts/CompanyContext";
 import { api } from "../services/api";
 
 function Copyright() {
@@ -27,9 +30,12 @@ function Copyright() {
 }
 
 export default function Home() {
+  const { candidate } = useCandidateContext();
+  const { company } = useCompanyContext();
   const navigate = useNavigate();
   const [jobsTypes, setJobsTypes] = React.useState([]);
-
+  const notifyError = () =>
+    toast.error("Problème de récupération des offres..");
   React.useEffect(() => {
     try {
       const getAlljobOffers = async () => {
@@ -45,6 +51,7 @@ export default function Home() {
       getAlljobOffers();
     } catch (error) {
       console.error(error);
+      notifyError();
     }
   }, []);
 
@@ -125,22 +132,22 @@ export default function Home() {
             spacing={3}
             justifyContent="center"
           >
-            <Button
-              onClick={() => {
-                navigate("/register-candidate");
-              }}
-              variant="contained"
-            >
-              M'inscrire en tant que candidat
-            </Button>
-            <Button
-              onClick={() => {
-                navigate("/register-company");
-              }}
-              variant="contained"
-            >
-              M'inscrire en tant qu'entreprise
-            </Button>
+            {!candidate.id && !company.id && (
+              <>
+                <Button
+                  onClick={() => navigate("/register-candidate")}
+                  variant="contained"
+                >
+                  M'inscrire en tant que candidat
+                </Button>
+                <Button
+                  onClick={() => navigate("/register-company")}
+                  variant="contained"
+                >
+                  M'inscrire en tant qu'entreprise
+                </Button>
+              </>
+            )}
             <Button
               onClick={() => {
                 navigate("/annonces");

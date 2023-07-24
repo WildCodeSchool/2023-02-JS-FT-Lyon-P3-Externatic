@@ -13,6 +13,7 @@ import Link from "@mui/material/Link";
 import Avatar from "@mui/material/Avatar";
 import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
+import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -24,6 +25,9 @@ export default function CompanyOffers() {
   const [companyOffers, setCompanyOffers] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const notifyError = () => toast.error("Problème de suppression de l'offre.");
+  const getOffersError = () =>
+    toast.error("Problème de récupération de vos offres..");
 
   const handleClose = () => {
     setOpen(false);
@@ -49,6 +53,7 @@ export default function CompanyOffers() {
       })
       .catch((error) => {
         console.error(error);
+        notifyError();
       });
   };
 
@@ -67,6 +72,7 @@ export default function CompanyOffers() {
       })
       .catch((error) => {
         console.error(error);
+        getOffersError();
       });
   };
 

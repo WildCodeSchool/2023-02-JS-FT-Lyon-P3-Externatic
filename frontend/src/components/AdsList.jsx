@@ -26,6 +26,9 @@ import "animate.css";
 
 export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const notifyError = () => toast.error("Problème d'ouverture de l'offre..");
+  const notifyErrors = () =>
+    toast.error("Problème d'envoi de la candidature..");
   const { ids } = useParams();
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(1);
@@ -75,6 +78,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
         })
         .catch((error) => {
           console.error(error);
+          notifyError();
         });
     }
   }, [ids]);
@@ -122,10 +126,12 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
           )
           .catch((error) => {
             console.error(error);
+            notifyErrors();
           });
       }
     } catch (error) {
       console.error(error);
+      notifyErrors();
     }
     return undefined;
   };

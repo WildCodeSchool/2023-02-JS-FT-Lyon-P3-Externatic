@@ -7,11 +7,13 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Link from "@mui/material/Link";
+import { toast } from "react-toastify";
 
 export default function SelectedCandidateInfos({ companyApplication }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [candidate, setCandidate] = useState({});
-
+  const notifyError = () =>
+    toast.error("Problème de récupération des informations des candidats..");
   const selectedCandidateId = parseInt(companyApplication.candidate_id, 10);
 
   const config = {
@@ -29,6 +31,7 @@ export default function SelectedCandidateInfos({ companyApplication }) {
       })
       .catch((error) => {
         console.error(error);
+        notifyError();
       });
   };
 
