@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
+import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -49,10 +50,7 @@ export default function CompanyApplications() {
         Candidatures sur les offres de {company.name}
       </Typography>
       {companyApplications.map((companyApplication) => (
-        <ApplicationCard
-          key={companyApplication.id}
-          companyApplication={companyApplication}
-        />
+        <ApplicationCard key={uuidv4} companyApplication={companyApplication} />
       ))}
     </Box>
   );

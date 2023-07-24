@@ -19,20 +19,18 @@ export default function CandidateApplications() {
     headers: {},
   };
 
-  const getCandidateApplications = () => {
-    axios
-      .request(config)
-      .then((response) => {
-        setCandidateApplications(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  const getCandidateApplications = async () => {
+    try {
+      const response = await axios.request(config);
+      setCandidateApplications(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
     getCandidateApplications();
-  }, []);
+  }, [candidateApplications]);
 
   return (
     <Box sx={{ borderRadius: "1rem" }}>

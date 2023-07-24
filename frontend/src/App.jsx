@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ToastContainer } from "react-toastify";
 import CssBaseline from "@mui/material/CssBaseline";
 import CompanyProfile from "./pages/CompanyProfile";
 import Home from "./pages/Home";
-import Admin from "./pages/Admin";
 import CandidateProfile from "./pages/CandidateProfile";
+import Admin from "./pages/Admin";
+import AdminHome from "./components/Admin/AdminHome";
+import AdminUsers from "./components/Admin/Candidates/AdminCandidates";
+import AdminCompanies from "./components/Admin/Companies/AdminCompanies";
+import AdminJobs from "./components/Admin/Jobs/AdminJobs";
 import Ads from "./pages/Ads";
 import Blog from "./pages/Blog";
 import Register from "./pages/Register";
 import RegisterCompany from "./pages/RegisterCompany";
-import ChooseAction from "./components/Admin/ChooseAction";
-import AdminCreate from "./components/Admin/AdminCreate";
-import AdminDelete from "./components/Admin/AdminDelete";
-import CandidatesTable from "./components/Admin/CandidatesTable";
-import CompaniesTable from "./components/Admin/CompaniesTable";
 import LoginChoice from "./pages/LoginChoice";
 import LoginCompany from "./pages/LoginCompany";
 import LoginCandidate from "./pages/LoginCandidate";
@@ -62,13 +62,24 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/espace-candidat" element={<CandidateProfile />} />
           <Route path="/admin" element={<Admin />}>
-            <Route index element={<ChooseAction />} />
-            <Route path="admin-create" element={<AdminCreate />} />
-            <Route path="admin-delete" element={<AdminDelete />} />
-            <Route path="candidates-list" element={<CandidatesTable />} />
-            <Route path="companies-list" element={<CompaniesTable />} />
+            <Route index element={<AdminHome />} />
+            <Route path="admin-candidates" element={<AdminUsers />} />
+            <Route path="admin-companies" element={<AdminCompanies />} />
+            <Route path="admin-jobs" element={<AdminJobs />} />
           </Route>
         </Routes>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </ThemeProvider>
     </div>
   );

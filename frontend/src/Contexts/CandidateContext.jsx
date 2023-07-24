@@ -2,6 +2,8 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CandidateContext = createContext();
 
@@ -24,8 +26,10 @@ export function CandidateContextProvider({ children }) {
       setCandidate({});
       localStorage.removeItem("candidate");
       navigate("/");
+      toast.success("Vous avez été déconnecté.");
     } catch (error) {
       console.error(error);
+      toast.error("Erreur pendant la déconnexion.");
     }
   };
 

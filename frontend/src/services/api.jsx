@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: BACKEND_URL,
+  withCredentials: true,
 });
 
 export const api = {
@@ -48,13 +49,14 @@ export const api = {
     return undefined;
   },
 
-  getAlljobOffers: async () => {
+  getAlljobOffers: async (info) => {
     try {
-      const res = await instance.get("/jobs");
+      const res = await instance.get("/jobs", info);
       return res.data;
     } catch (error) {
       console.error(error);
     }
+
     return undefined;
   },
 };

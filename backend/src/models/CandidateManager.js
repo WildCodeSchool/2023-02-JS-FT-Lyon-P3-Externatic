@@ -45,27 +45,27 @@ class CandidateManager extends AbstractManager {
 
   update(candidate) {
     return this.database.query(
-      `update ${this.table} set firstname = ?, lastname = ? where user_id = ${candidate.id}`,
-      [candidate.firstname, candidate.lastname]
+      `update ${this.table} set firstname = ?, lastname = ? where id = ${candidate.id}`,
+      [candidate.firstname, candidate.lastname, candidate.id]
     );
   }
 
   updateCV(candidate) {
     return this.database.query(
-      `update ${this.table} set cv = ? where user_id = ${candidate.id}`,
+      `update ${this.table} set cv = ? where id = ${candidate.id}`,
       [candidate.cv]
     );
   }
 
-  deleteByLastName(lastname) {
+  delete(candidateId) {
     return this.database.query(
       `
       DELETE candidate, user
       FROM candidate
       JOIN user ON candidate.user_id = user.id
-      WHERE candidate.lastname = ?
+      WHERE candidate.id = ?
       `,
-      [lastname]
+      [candidateId]
     );
   }
 }

@@ -34,10 +34,6 @@ const verifyCandidatePassword = (req, res) => {
           {
             sub: req.candidate.id,
             userId: req.candidate.user_id,
-            email: req.candidate.email,
-            phone: req.candidate.phone,
-            city: req.candidate.city,
-            picture: req.candidate.picture,
             admin: req.candidate.admin,
             role: "CANDIDATE",
           },
@@ -58,7 +54,6 @@ const verifyCandidatePassword = (req, res) => {
       } else res.sendStatus(401);
     })
     .catch((err) => {
-      // do something with err
       console.error(err);
       res.sendStatus(400);
     });
@@ -79,10 +74,6 @@ const verifyCompanyPassword = (req, res) => {
           {
             sub: req.company.id,
             userId: req.company.user_id,
-            email: req.company.email,
-            phone: req.company.phone,
-            city: req.company.city,
-            picture: req.company.picture,
             admin: req.company.admin,
             role: "COMPANY",
           },
@@ -112,7 +103,7 @@ const verifyToken = (req, res, next) => {
   try {
     const token = req.cookies.access_token;
 
-    if (!token) return res.sendStatus(403);
+    if (!token) return res.sendStatus(401);
 
     // on place le contenu du token (payloads dans la propriété payloads de la requête)
     // afin de pouvoir retrouver les infos de l'utilisateurs connecté dans la prochaine fonction.
@@ -120,7 +111,7 @@ const verifyToken = (req, res, next) => {
     return next();
   } catch (err) {
     console.error(err);
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 };
 

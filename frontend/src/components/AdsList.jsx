@@ -21,7 +21,8 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CandidateContext from "../Contexts/CandidateContext";
 import "react-toastify/dist/ReactToastify.css";
-import { api } from "./api";
+import { api } from "../services/api";
+import "animate.css";
 
 export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -102,7 +103,11 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
             status: "en cours",
           })
 
-          .then(toast.success("Votre Candidature a été prise en compte."))
+          .then(
+            toast.success(
+              `Votre candidature chez ${jobOffer.name} a bien été prise en compte.`
+            )
+          )
           // Sending Email to the company saying which candidate applied to which offer.
           .then(
             api.sendEmail({
@@ -128,7 +133,11 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
   return (
     <>
       {!infoDataFiltered && infoDataNoFiltered && (
-        <Container sx={{ py: 8, textAlign: "center" }} maxWidth="xl">
+        <Container
+          className="animate__animated animate__fadeInUp"
+          sx={{ py: 8, textAlign: "center" }}
+          maxWidth="xl"
+        >
           <Grid container spacing={4}>
             {infoDataNoFiltered
               .slice((page - 1) * 9, page * 9)
