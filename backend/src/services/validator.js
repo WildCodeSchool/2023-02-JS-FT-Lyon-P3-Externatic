@@ -29,7 +29,7 @@ const validateCandidate = async (req, res, next) => {
     { abortEarly: false }
   );
   if (error) {
-    res.status(422).json({ validationErrros: error.details });
+    res.status(422).json({ validationErrors: error.details });
   } else {
     next();
   }
@@ -72,7 +72,7 @@ const validateCompany = async (req, res, next) => {
     { abortEarly: false }
   );
   if (error) {
-    res.status(422).json({ validationErrros: error.details });
+    res.status(422).json({ validationErrors: error.details });
   } else {
     next();
   }
@@ -98,7 +98,7 @@ const validateCandidateUpdate = async (req, res, next) => {
     { abortEarly: false }
   );
   if (error) {
-    res.status(422).json({ validationErrros: error.details });
+    res.status(422).json({ validationErrors: error.details });
   } else {
     next();
   }
@@ -134,7 +134,7 @@ const validateUpdateCompany = async (req, res, next) => {
     { abortEarly: false }
   );
   if (error) {
-    res.status(422).json({ validationErrros: error.details });
+    res.status(422).json({ validationErrors: error.details });
   } else {
     next();
   }

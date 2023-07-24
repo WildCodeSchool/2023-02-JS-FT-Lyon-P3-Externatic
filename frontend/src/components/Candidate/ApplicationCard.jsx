@@ -61,10 +61,10 @@ export default function ApplicationCard({ candidateApplication }) {
       <Card sx={{ maxWidth: "100%" }}>
         <CardContent sx={{ m: 2 }}>
           <Typography variant="body1" color="text.secondary" gutterBottom>
-            Titre de l'annonce : {candidateApplication.title}
+            Nom de l'Entreprise : {candidateApplication.name}
           </Typography>
           <Typography variant="body1" color="text.secondary" gutterBottom>
-            Nome de l'Entreprise : {candidateApplication.name}
+            Titre de l'annonce : {candidateApplication.title}
           </Typography>
           <Typography variant="body1" color="text.secondary">
             Candidature du : {formattedDate}

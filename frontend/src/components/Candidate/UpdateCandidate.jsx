@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { toast } from "react-toastify";
-import Container from "@mui/material/Container";
-import { useCandidateContext } from "../../Contexts/CandidateContext";
+import { instance } from "../../services/api";
+
 import { ValidateFormUpdateCandidate } from "../ValidateForm";
 
-function UpdateCandidate() {
+function UpdateCandidate({ candidate, handleUpdateClose }) {
   const notifyCreation = () => toast("Votre compte a bien été modifié !");
 
-  const { candidate, loginCandidate } = useCandidateContext();
   const [validateInput, setValidateInput] = useState({});
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -53,22 +53,15 @@ function UpdateCandidate() {
     event.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
-      axios
+      instance
         .put(
           `${BACKEND_URL}/candidates/${candidate.id}`,
           { ...formData },
           { withCredentials: true }
         )
-        .then((response) => {
+        .then(() => {
           notifyCreation();
-          loginCandidate({
-            ...candidate,
-            firstname: response.data.firstname,
-            lastname: response.data.lastname,
-            city: response.data.city,
-            phone: response.data.phone,
-            email: response.data.email,
-          });
+          handleUpdateClose();
         })
         .catch((err) => {
           console.error(err);
@@ -80,7 +73,7 @@ function UpdateCandidate() {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     validateForm();
   }, [handleSubmit, handleInputChange]);
 
@@ -213,5 +206,20 @@ function UpdateCandidate() {
     </Container>
   );
 }
+
+UpdateCandidate.propTypes = {
+  handleUpdateClose: PropTypes.func.isRequired,
+  candidate: PropTypes.shape({
+    id: PropTypes.number,
+    user_id: PropTypes.number,
+    cv: PropTypes.string,
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
+    profile_picture: PropTypes.string,
+    city: PropTypes.string,
+    email: PropTypes.string,
+    phone: PropTypes.string,
+  }).isRequired,
+};
 
 export default UpdateCandidate;
