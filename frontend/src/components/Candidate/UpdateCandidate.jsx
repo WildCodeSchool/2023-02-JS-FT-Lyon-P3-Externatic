@@ -8,11 +8,11 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { toast } from "react-toastify";
 import { instance } from "../../services/api";
-
 import { ValidateFormUpdateCandidate } from "../ValidateForm";
 
 function UpdateCandidate({ candidate, handleUpdateClose }) {
   const notifyCreation = () => toast("Votre compte a bien été modifié !");
+  const notifyError = () => toast("Erreur lors de la Modification !");
 
   const [validateInput, setValidateInput] = useState({});
 
@@ -64,6 +64,7 @@ function UpdateCandidate({ candidate, handleUpdateClose }) {
           handleUpdateClose();
         })
         .catch((err) => {
+          notifyError();
           console.error(err);
         });
     } else {
@@ -79,7 +80,7 @@ function UpdateCandidate({ candidate, handleUpdateClose }) {
 
   return (
     <Container maxWidth="md">
-      <Paper elevation={4} sx={{ p: 2 }}>
+      <Paper elevation={4} sx={{ p: 2, zIndex: 2000 }}>
         <Box
           component="form"
           noValidate

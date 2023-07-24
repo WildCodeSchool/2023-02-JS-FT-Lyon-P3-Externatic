@@ -138,7 +138,10 @@ export default function CompanyCard({ company }) {
                 justifyContent: "center",
               }}
             >
-              <UpdateCompany handleUpdateClose={handleUpdateClose} />
+              <UpdateCompany
+                company={company}
+                handleUpdateClose={handleUpdateClose}
+              />
               <Button
                 size="small"
                 variant="contained"
@@ -164,16 +167,5 @@ CompanyCard.propTypes = {
     email: PropTypes.string,
     city: PropTypes.string,
     picture: PropTypes.string,
-  }),
-};
-
-CompanyCard.defaultProps = {
-  company: {
-    name: "Nom de l'Entreprise",
-    contact: "nom du contact",
-    phone: "0102030405",
-    email: "entreprise@mail.com",
-    city: "Paris",
-    picture: "../../assets/profilePicture.jpg",
-  },
+  }).isRequired,
 };
