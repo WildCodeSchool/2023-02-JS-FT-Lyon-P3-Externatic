@@ -6,12 +6,14 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import { toast } from "react-toastify";
 import Container from "@mui/material/Container";
+import { toast } from "react-toastify";
+import { useCompanyContext } from "../../Contexts/CompanyContext";
 
 function UpdateCompany({ company, handleUpdateClose }) {
   const notifyUpdate = () => toast("Votre compte a bien été modifié !");
   const notifyError = () => toast.error("Erreur lors de la modification !");
+  const { loginCompany } = useCompanyContext();
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -46,9 +48,19 @@ function UpdateCompany({ company, handleUpdateClose }) {
           { ...formData },
           { withCredentials: true }
         )
-        .then(() => {
+        .then((response) => {
           notifyUpdate();
           handleUpdateClose();
+          loginCompany({
+            ...company,
+            name: response.data.name,
+            contact: response.data.contact,
+            description: response.data.description,
+            website: response.data.website,
+            city: response.data.city,
+            phone: response.data.phone,
+            email: response.data.email,
+          });
         })
         .catch((err) => {
           notifyError();
