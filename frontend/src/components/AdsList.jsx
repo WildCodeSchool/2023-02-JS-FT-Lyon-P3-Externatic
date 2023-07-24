@@ -1,12 +1,9 @@
 import { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "@mui/material/Button";
-import Backdrop from "@mui/material/Backdrop";
-import Link from "@mui/material/Link";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
+import Box from "@mui/material/Box";
+import Backdrop from "@mui/material/Backdrop";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -14,24 +11,32 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Pagination from "@mui/material/Pagination";
-import Avatar from "@mui/material/Avatar";
 import { PropTypes } from "prop-types";
-import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import CandidateContext from "../Contexts/CandidateContext";
 import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import CandidateContext from "../Contexts/CandidateContext";
 import { api } from "./api";
+import JobBackdrop from "./JobBackdrop";
 
 export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-  const { ids } = useParams();
-  const [open, setOpen] = useState(false);
+  const [openJobDetails, setOpenJobDetails] = useState(false);
   const [page, setPage] = useState(1);
   const [selectedJob, setSelectedJob] = useState(null);
   const [favorites, setFavorites] = useState(
     JSON.parse(localStorage.getItem("favoriteJobs") || "[]")
   );
+
+  const handleOpen = (jobOffer) => {
+    setOpenJobDetails(true);
+    setSelectedJob(jobOffer);
+  };
+
+  const handleCloseJobDetails = () => {
+    setOpenJobDetails(false);
+  };
 
   const handlePaginationChange = (event, value) => {
     setPage(value); // Update the current page number
@@ -56,29 +61,6 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
     }
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = (job) => {
-    setSelectedJob(job);
-    setOpen(true);
-  };
-
-  useEffect(() => {
-    if (ids) {
-      axios
-        .get(`${BACKEND_URL}/jobs/${ids}`)
-        .then((response) => {
-          setSelectedJob(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  }, [ids]);
-
-  // Post offer in the database
   const { candidate } = useContext(CandidateContext);
 
   const [openSubscribeModal, setOpenSubscribeModal] = useState(false);
@@ -114,9 +96,9 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
               to: jobOffer.email,
               subject: `${candidate.firstname} a postulé  à l'une de vos offres.`,
               text: `  
-              ${candidate.firstname} a postulé à votre offre de ${jobOffer.title} à ${jobOffer.name} - Email: ${candidate.email}`,
+                ${candidate.firstname} a postulé à votre offre de ${jobOffer.title} à ${jobOffer.name} - Email: ${candidate.email}`,
               html: ` 
-              ${candidate.firstname} a postulé à votre offre de ${jobOffer.title} à ${jobOffer.name} -  (Email: ${candidate.email}, Phone:${candidate.phone})`,
+                ${candidate.firstname} a postulé à votre offre de ${jobOffer.title} à ${jobOffer.name} -  (Email: ${candidate.email}, Phone:${candidate.phone})`,
             })
           )
           .catch((error) => {
@@ -177,7 +159,6 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                 </Grid>
               ))}
           </Grid>
-          {/* Subscribe modal annoncement */}
           {openSubscribeModal && (
             <Backdrop
               sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -205,7 +186,6 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
               </Box>
             </Backdrop>
           )}
-
           <Pagination
             count={Math.ceil(infoDataNoFiltered.length / 9)} // Calculate the total number of pages
             color="primary"
@@ -213,199 +193,15 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
             page={page} // Pass the current page number
             sx={{ display: "flex", justifyContent: "center", mt: "2rem" }}
           />
-          <Backdrop
-            sx={{
-              color: "#fff",
-              zIndex: (theme) => theme.zIndex.drawer + 1,
-            }}
-            open={open}
-            onClick={handleClose}
-          >
-            <Box
-              sx={{
-                backgroundColor: "white",
-                color: "black",
-                marginRight: "1rem",
-                marginLeft: "1rem",
-                overflow: "auto",
-                maxHeight: "600px",
-                scrollbarWidth: "thin",
-                scrollbarColor: "#888888 #f5f5f5",
-                "&::-webkit-scrollbar": {
-                  width: "6px",
-                },
-                "&::-webkit-scrollbar-track": {
-                  backgroundColor: "#f5f5f5",
-                },
-                "&::-webkit-scrollbar-thumb": {
-                  backgroundColor: "#888888",
-                  borderRadius: "3px",
-                },
-                "@media (min-width: 768px)": {
-                  marginRight: "3rem",
-                  marginLeft: "3rem",
-                },
-              }}
-            >
-              {selectedJob && (
-                <Box
-                  sx={{
-                    "@media (min-width: 768px)": {
-                      display: "flex",
-                    },
-                  }}
-                >
-                  <CardContent>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/1.jpg"
-                      sx={{
-                        height: "77px",
-                        width: "77px",
-                        position: "absolute",
-                        mt: "-50px",
-                        mx: "auto",
-                        left: 0,
-                        right: 0,
-                      }}
-                    />
-                    <Button
-                      onClick={() => handleToggleFavorite(selectedJob)}
-                      sx={{ display: "flex", justifyContent: "start" }}
-                    >
-                      {checkIsFavorite(selectedJob)
-                        ? "Retirer des favoris"
-                        : "Ajouter aux favoris"}
-                    </Button>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {selectedJob.name}
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="h3">
-                      {selectedJob.title}
-                    </Typography>
-                    <ReactQuill
-                      theme="bubble"
-                      value={selectedJob.description}
-                      readOnly
-                    />
-                    <ReactQuill
-                      theme="bubble"
-                      value={selectedJob.requirements}
-                      readOnly
-                    />
-                    <Button
-                      variant="contained"
-                      size="large"
-                      sx={{ marginTop: "1rem" }}
-                      onClick={() => {
-                        handlePostOffer(selectedJob);
-                      }}
-                    >
-                      Postuler
-                    </Button>
-                  </CardContent>
-                  <CardContent sx={{ mr: "1rem" }}>
-                    <Paper
-                      sx={{
-                        borderRadius: "0.8rem",
-                        border: "0.1px solid grey",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          marginBottom: "0.2rem",
-                        }}
-                      >
-                        {selectedJob.category}
-                      </Typography>
-                    </Paper>
-                    <Paper
-                      sx={{
-                        borderRadius: "0.8rem",
-                        border: "0.1px solid grey",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      <Typography sx={{ marginBottom: "0.2rem" }}>
-                        {selectedJob.location}
-                      </Typography>
-                    </Paper>
-                    <Paper
-                      sx={{
-                        borderRadius: "0.8rem",
-                        border: "0.1px solid grey",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      <Typography sx={{ marginBottom: "0.2rem" }}>
-                        {selectedJob.type}
-                      </Typography>
-                    </Paper>
-                    <Paper
-                      sx={{
-                        borderRadius: "0.8rem",
-                        border: "0.1px solid grey",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      <Typography sx={{ marginBottom: "0.2rem" }}>
-                        {selectedJob.remote}
-                      </Typography>
-                    </Paper>
-                    <Paper
-                      sx={{
-                        borderRadius: "0.8rem",
-                        border: "0.1px solid grey",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      <Typography sx={{ marginBottom: "0.2rem" }}>
-                        {selectedJob.salary}
-                      </Typography>
-                    </Paper>
-                    <Paper
-                      sx={{
-                        borderRadius: "0.8rem",
-                        border: "0.1px solid grey",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      <Typography
-                        sx={{ marginLeft: "1rem", marginRight: "1rem" }}
-                      >
-                        {new Date(
-                          selectedJob.posting_date
-                        ).toLocaleDateString()}
-                      </Typography>
-                    </Paper>
-                    <Link
-                      href={selectedJob.website}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <Button
-                        variant="contained"
-                        size="small"
-                        sx={{ marginTop: "1rem" }}
-                      >
-                        Site Web
-                      </Button>
-                    </Link>
-
-                    <Button
-                      href={`mailto:${selectedJob.email}`}
-                      variant="contained"
-                      size="small"
-                      sx={{ marginTop: "1rem", marginLeft: "0.5rem" }}
-                    >
-                      Nous contacter
-                    </Button>
-                  </CardContent>
-                </Box>
-              )}
-            </Box>
-          </Backdrop>
+          {openJobDetails && (
+            <JobBackdrop
+              open={openJobDetails}
+              handleClose={handleCloseJobDetails}
+              selectedJob={selectedJob}
+              handleToggleFavorite={handleToggleFavorite}
+              handlePostOffer={handlePostOffer}
+            />
+          )}
         </Container>
       )}
       {infoDataFiltered && (
@@ -449,11 +245,45 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                           ? "Retirer des favoris"
                           : "Ajouter aux favoris"}
                       </Button>
+                      <Button
+                        onClick={() => {
+                          handlePostOffer(selectedJob);
+                        }}
+                      >
+                        Apply
+                      </Button>
                     </CardActions>
                   </Card>
                 </Grid>
               ))}
           </Grid>
+          {openSubscribeModal && (
+            <Backdrop
+              sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              open={openSubscribeModal}
+              onClick={() => {
+                setOpenSubscribeModal(false);
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "white",
+                  color: "black",
+                  width: "40%",
+                  height: "40%",
+                  borderRadius: "1em",
+                }}
+              >
+                <Typography gutterBottom variant="h5" component="h2">
+                  Vous devez être connecté comme Candidat pour postuler à une
+                  offre.
+                </Typography>
+              </Box>
+            </Backdrop>
+          )}
           <Pagination
             count={Math.ceil(infoDataFiltered.length / 9)} // Calculate the total number of pages
             color="primary"
@@ -461,189 +291,15 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
             page={page} // Pass the current page number
             sx={{ display: "flex", justifyContent: "center", mt: "2rem" }}
           />
-          <Backdrop
-            sx={{
-              color: "#fff",
-              zIndex: (theme) => theme.zIndex.drawer + 1,
-            }}
-            open={open}
-            onClick={handleClose}
-          >
-            <Box
-              sx={{
-                backgroundColor: "white",
-                color: "black",
-                marginRight: "1rem",
-                marginLeft: "1rem",
-                overflow: "auto",
-                maxHeight: "600px",
-                scrollbarWidth: "thin",
-                scrollbarColor: "#888888 #f5f5f5",
-                "&::-webkit-scrollbar": {
-                  width: "6px",
-                },
-                "&::-webkit-scrollbar-track": {
-                  backgroundColor: "#f5f5f5",
-                },
-                "&::-webkit-scrollbar-thumb": {
-                  backgroundColor: "#888888",
-                  borderRadius: "3px",
-                },
-              }}
-            >
-              {selectedJob && (
-                <Box
-                  sx={{
-                    "@media (min-width: 768px)": {
-                      display: "flex",
-                    },
-                  }}
-                >
-                  <CardContent>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/1.jpg"
-                      sx={{
-                        height: "77px",
-                        width: "77px",
-                        position: "absolute",
-                        mt: "-50px",
-                        mx: "auto",
-                        left: 0,
-                        right: 0,
-                      }}
-                    />
-                    <Button
-                      onClick={() => handleToggleFavorite(selectedJob)}
-                      sx={{ display: "flex", justifyContent: "start" }}
-                    >
-                      {checkIsFavorite(selectedJob)
-                        ? "Retirer des favoris"
-                        : "Ajouter aux favoris"}
-                    </Button>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {selectedJob.name}
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="h3">
-                      {selectedJob.title}
-                    </Typography>
-                    <ReactQuill
-                      theme="bubble"
-                      value={selectedJob.description}
-                      readOnly
-                    />
-
-                    <ReactQuill
-                      theme="bubble"
-                      value={selectedJob.requirements}
-                      readOnly
-                    />
-                    <Button
-                      variant="contained"
-                      size="large"
-                      sx={{ marginTop: "1rem" }}
-                      onClick={() => {
-                        handlePostOffer(selectedJob);
-                      }}
-                    >
-                      Postuler
-                    </Button>
-                  </CardContent>
-                  <CardContent>
-                    <Paper
-                      sx={{
-                        borderRadius: "0.8rem",
-                        border: "0.1px solid grey",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          marginBottom: "0.2rem",
-                          marginLeft: "0.5rem",
-                          marginRight: "0.5rem",
-                        }}
-                      >
-                        {selectedJob.category}
-                      </Typography>
-                    </Paper>
-                    <Paper
-                      sx={{
-                        borderRadius: "0.8rem",
-                        border: "0.1px solid grey",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      <Typography sx={{ marginBottom: "0.2rem" }}>
-                        {selectedJob.location}
-                      </Typography>
-                    </Paper>
-                    <Paper
-                      sx={{
-                        borderRadius: "0.8rem",
-                        border: "0.1px solid grey",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      <Typography sx={{ marginBottom: "0.2rem" }}>
-                        {selectedJob.type}
-                      </Typography>
-                    </Paper>
-                    <Paper
-                      sx={{
-                        borderRadius: "0.8rem",
-                        border: "0.1px solid grey",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      <Typography sx={{ marginBottom: "0.2rem" }}>
-                        {selectedJob.remote}
-                      </Typography>
-                    </Paper>
-                    <Paper
-                      sx={{
-                        borderRadius: "0.8rem",
-                        border: "0.1px solid grey",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      <Typography sx={{ marginBottom: "0.2rem" }}>
-                        {selectedJob.salary}
-                      </Typography>
-                    </Paper>
-                    <Paper
-                      sx={{
-                        borderRadius: "0.8rem",
-                        border: "0.1px solid grey",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      <Typography
-                        sx={{ marginLeft: "1rem", marginRight: "1rem" }}
-                      >
-                        {new Date(
-                          selectedJob.posting_date
-                        ).toLocaleDateString()}
-                      </Typography>
-                    </Paper>
-                    <Link
-                      href={selectedJob.website}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <Button
-                        variant="contained"
-                        size="small"
-                        sx={{ marginTop: "1rem" }}
-                      >
-                        Site Web
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Box>
-              )}
-            </Box>
-          </Backdrop>
+          {openJobDetails && (
+            <JobBackdrop
+              open={openJobDetails}
+              onClose={handleCloseJobDetails}
+              selectedJob={selectedJob}
+              handleToggleFavorite={handleToggleFavorite}
+              handlePostOffer={handlePostOffer}
+            />
+          )}
         </Container>
       )}
     </>
