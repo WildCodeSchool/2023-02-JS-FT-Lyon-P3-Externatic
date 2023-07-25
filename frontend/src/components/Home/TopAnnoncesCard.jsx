@@ -112,7 +112,7 @@ export default function TopAnnoncesCard() {
                     maxWidth: 335,
                     minWidth: 280,
                     m: 2,
-                    height: 450,
+                    height: 400,
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
