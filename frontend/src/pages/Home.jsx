@@ -92,6 +92,7 @@ export default function Home() {
               md: {
                 variant: "h3",
                 margin: "20px",
+                fontSize: "1.5rem",
               },
             }}
             align="center"
@@ -175,9 +176,10 @@ export default function Home() {
               sx={{
                 variant: {
                   xs: "h3",
-                  md: "h2",
+                  md: "h1",
                 },
                 margin: 5,
+                fontWeight: "bold",
               }}
               align="center"
               color="text.primary"
@@ -190,7 +192,7 @@ export default function Home() {
               sx={{
                 variant: {
                   xs: "h4",
-                  md: "h3",
+                  md: "h2",
                 },
                 margin: 3,
               }}
