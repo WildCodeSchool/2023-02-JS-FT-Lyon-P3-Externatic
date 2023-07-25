@@ -78,7 +78,7 @@ export default function CompanyOffers() {
 
   useEffect(() => {
     getCompanyOffers();
-  }, []);
+  }, [companyOffers]);
 
   return (
     <Box sx={{ borderRadius: "1rem" }}>

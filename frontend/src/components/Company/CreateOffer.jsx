@@ -83,7 +83,7 @@ export default function CreateOffer() {
     "image",
   ];
 
-  const notifyCreation = () => toast.success("Nouvelle offre d'emploi posté!");
+  const notifyCreation = () => toast.success("Nouvelle offre d'emploi postée!");
   const notifyCreationError = () =>
     toast.error("Problème lors de la publication");
   const date = new Date();
