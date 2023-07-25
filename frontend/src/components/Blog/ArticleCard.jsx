@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
@@ -16,8 +16,16 @@ import Typography from "@mui/material/Typography";
 const MEDIASTACK_API_KEY = import.meta.env.VITE_MEDIASTACK_API_KEY;
 
 function ArticleCard() {
-  const notify = () => toast.error("Désolé! Aucune Info pour le moment");
   const [news, setNews] = useState(null);
+  const errorShownRef = useRef(false); // useRef to track if error is shown
+
+  const notify = () => {
+    if (!errorShownRef.current) {
+      toast.error("Désolé! Aucune Info pour le moment");
+      errorShownRef.current = true; // Mark error as shown
+    }
+  };
+
   const getNews = () => {
     axios
       .get(
@@ -31,7 +39,10 @@ function ArticleCard() {
       });
   };
 
-  useEffect(getNews, []);
+  useEffect(() => {
+    errorShownRef.current = false; // Reset errorShownRef on every useEffect call
+    getNews();
+  }, []);
 
   const [newsIndex, setNewsIndex] = useState(0);
   const handlePrevious = () => {

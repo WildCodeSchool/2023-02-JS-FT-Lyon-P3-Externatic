@@ -136,6 +136,11 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
     return undefined;
   };
 
+  const isDataFilteredEmpty =
+    infoDataFiltered !== null &&
+    infoDataFiltered !== undefined &&
+    infoDataFiltered.length === 0;
+
   return (
     <>
       {infoDataNoFiltered && (
@@ -595,7 +600,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
           />
         </Container>
       )}
-      {infoDataFiltered && (
+      {infoDataFiltered && infoDataFiltered.length > 0 ? (
         <Container sx={{ py: 8, textAlign: "center" }} maxWidth="xl">
           <Grid container spacing={4}>
             {infoDataFiltered
@@ -648,6 +653,14 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
             page={page} // Pass the current page number
             sx={{ display: "flex", justifyContent: "center", mt: "2rem" }}
           />
+        </Container>
+      ) : null}
+      {isDataFilteredEmpty && (
+        // Displayed when infoDataFiltered is empty after filtering
+        <Container sx={{ py: 8, textAlign: "center" }} maxWidth="xl">
+          <Typography variant="h4" gutterBottom>
+            Aucun résultat trouvé.
+          </Typography>
         </Container>
       )}
     </>
