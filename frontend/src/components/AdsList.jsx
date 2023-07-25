@@ -525,6 +525,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
           <Box
             sx={{
               display: "flex",
+              textAlign: "center",
               alignItems: "center",
               justifyContent: "center",
               backgroundColor: "white",

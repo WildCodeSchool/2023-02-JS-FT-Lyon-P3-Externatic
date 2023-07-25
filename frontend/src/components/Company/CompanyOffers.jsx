@@ -180,12 +180,13 @@ export default function CompanyOffers() {
                 {selectedJob && (
                   <Box
                     sx={{
+                      mt: 2,
                       "@media (min-width: 768px)": {
                         display: "flex",
                       },
                     }}
                   >
-                    <CardContent>
+                    <CardContent sx={{ p: 2 }}>
                       <Avatar
                         alt="Remy Sharp"
                         src="/static/images/avatar/1.jpg"
@@ -193,7 +194,7 @@ export default function CompanyOffers() {
                           height: "77px",
                           width: "77px",
                           position: "absolute",
-                          mt: "-50px",
+                          mt: "-80px",
                           mx: "auto",
                           left: 0,
                           right: 0,
@@ -219,7 +220,7 @@ export default function CompanyOffers() {
                         Supprimer l'offre
                       </Button>
                     </CardContent>
-                    <CardContent>
+                    <CardContent sx={{ p: 2 }}>
                       <Paper
                         sx={{
                           borderRadius: "0.8rem",
