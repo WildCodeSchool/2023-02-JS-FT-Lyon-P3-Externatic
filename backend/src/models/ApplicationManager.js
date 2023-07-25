@@ -18,13 +18,15 @@ class ApplicationManager extends AbstractManager {
     );
   }
 
-  findApplicationsByUserId(userId) {
+  findApplicationsByUserId(candidateId) {
     return this.database.query(
-      `SELECT * FROM ${this.table} AS app
-       JOIN job_posting AS jp ON app.job_posting_id = jp.id
-       JOIN company AS co ON jp.company_id = co.id
-       WHERE app.candidate_id = ?`,
-      [userId]
+      `SELECT app.*, jp.company_id, jp.job_location_id, jp.description, jp.requirements, co.name
+      FROM job_posting AS jp
+      JOIN company AS co ON jp.company_id = co.id
+      JOIN ${this.table} AS app ON app.job_posting_id = jp.id
+      WHERE app.candidate_id = ?
+      `,
+      [candidateId]
     );
   }
 
@@ -52,10 +54,9 @@ class ApplicationManager extends AbstractManager {
   }
 
   delete(applicationId) {
-    return this.database.query(
-      `DELETE FROM ${this.table} WHERE candidate_id = ?`,
-      [applicationId]
-    );
+    return this.database.query(`DELETE FROM ${this.table} WHERE id = ?`, [
+      applicationId,
+    ]);
   }
 }
 
