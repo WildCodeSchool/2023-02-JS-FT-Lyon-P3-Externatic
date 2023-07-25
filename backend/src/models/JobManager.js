@@ -83,7 +83,7 @@ class JobManager extends AbstractManager {
 
   update(job) {
     return this.database.query(
-      `update ${this.table} set company_id = ? , user_id = ? , job_category_id = ? , job_type_id = ? , job_location_id = ? , title = ?, description = ?, requirements = ?, remote = ?, salary = ?, posting_date = ?, archived = ? where id = ${job.id}`,
+      `update ${this.table} set company_id = ? , user_id = ? , job_category_id = ? , job_type_id = ? , job_location_id = ? , title = ?, description = ?, requirements = ?, remote = ?, salary = ?, posting_date = ?, archived = ? where id = ?`,
       [
         job.company_id,
         job.user_id,
@@ -97,6 +97,7 @@ class JobManager extends AbstractManager {
         job.salary,
         job.posting_date,
         job.archived,
+        job.id,
       ]
     );
   }

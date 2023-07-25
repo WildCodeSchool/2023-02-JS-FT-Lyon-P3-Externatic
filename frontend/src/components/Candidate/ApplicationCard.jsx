@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
@@ -30,12 +30,9 @@ export default function ApplicationCard({ candidateApplication }) {
 
     if (candidateApplication.candidate_id && confirmation) {
       axios
-        .delete(
-          `${BACKEND_URL}/applications/${candidateApplication.candidate_id}`,
-          {
-            withCredentials: true,
-          }
-        )
+        .delete(`${BACKEND_URL}/applications/${candidateApplication.id}`, {
+          withCredentials: true,
+        })
         .then(() => {
           setConfirmation(false);
           notifyDeletion();
@@ -43,8 +40,6 @@ export default function ApplicationCard({ candidateApplication }) {
         .catch(() => notifyErrorDeletion());
     }
   };
-
-  useEffect(() => {}, [candidateApplication]);
 
   const options = {
     weekday: "long",
@@ -115,6 +110,7 @@ export default function ApplicationCard({ candidateApplication }) {
 
 ApplicationCard.propTypes = {
   candidateApplication: PropTypes.shape({
+    id: PropTypes.number,
     candidate_id: PropTypes.number,
     title: PropTypes.string,
     date: PropTypes.string,
