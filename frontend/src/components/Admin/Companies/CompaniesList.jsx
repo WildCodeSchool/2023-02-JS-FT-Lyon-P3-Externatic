@@ -44,7 +44,7 @@ export default function CompaniesList() {
         setCompanies((prevCompanies) =>
           prevCompanies.filter((company) => company.id !== selectedCompanyId)
         );
-        toast.success("L'Entreprise'a bien été effacée");
+        toast.success(`L'Entreprise ${selectedCompanyId} bien été effacée`);
       })
       .catch((error) => {
         notifyError();

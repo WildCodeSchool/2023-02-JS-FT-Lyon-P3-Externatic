@@ -19,6 +19,7 @@ export default function CandidateCard({ candidate }) {
   const [openCv, setOpenCV] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
   const [openPhoto, setOpenPhoto] = React.useState(false);
+  const uploadedImageName = candidate.picture.slice(37);
 
   const handleCvClose = () => {
     setOpenCV(false);
@@ -136,7 +137,7 @@ export default function CandidateCard({ candidate }) {
             <Button size="small" onClick={handleCvClick}>
               <TopicIcon sx={{ mr: 1 }} />
               <Typography variant="body2" color="text.secondary">
-                Changer le CV
+                {uploadedImageName}
               </Typography>
             </Button>
           )}

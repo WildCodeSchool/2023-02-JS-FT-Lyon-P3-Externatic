@@ -4,9 +4,29 @@ const multer = require("multer");
 const routerUser = express.Router();
 const { verifyToken } = require("../services/auth");
 
-const uploadPicture = multer({
+// File type validation for multer
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/gif"
+  ) {
+    cb(null, true);
+  } else {
+    cb(new Error("Invalid file type."));
+  }
+};
+
+// File size validation for multer
+const maxSize = 5 * 1024 * 1024; // 5MB
+
+const upload = multer({
   dest: "./public/picture/",
-  limits: { fileSize: 5000000000000 }, // limit file size to 5000000000000bytes
+  limits: {
+    fileSize: maxSize,
+  },
+  fileFilter,
 });
 
 const userControllers = require("../controllers/userControllers");
@@ -14,7 +34,7 @@ const userControllers = require("../controllers/userControllers");
 routerUser.post(
   "/maPhoto",
   verifyToken,
-  uploadPicture.single("maPhoto"),
+  upload.single("maPhoto"),
   userControllers.uploadPhoto
 );
 
