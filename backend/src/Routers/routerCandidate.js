@@ -1,11 +1,25 @@
 const express = require("express");
 const multer = require("multer");
 
-const uploadCV = multer({
-  dest: "./public/cv/",
-  limits: { fileSize: 5000000000000 },
-});
+// File type validation for multer
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === "application/pdf") {
+    cb(null, true);
+  } else {
+    cb(new Error("Invalid file type. Only PDF files are allowed."));
+  }
+};
 
+// File size validation for multer
+const maxSize = 5 * 1024 * 1024; // 5MB
+
+const upload = multer({
+  dest: "./public/cv/",
+  limits: {
+    fileSize: maxSize,
+  },
+  fileFilter,
+});
 const {
   hashPassword,
   verifyCandidatePassword,
@@ -47,7 +61,7 @@ routerCandidate.get(
 routerCandidate.post(
   "/monCV",
   verifyToken,
-  uploadCV.single("monCV"),
+  upload.single("monCV"),
   candidateControllers.uploadCV
 );
 routerCandidate.put(
