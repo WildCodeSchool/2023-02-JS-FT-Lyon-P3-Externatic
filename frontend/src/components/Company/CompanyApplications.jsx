@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { toast } from "react-toastify";
 import ApplicationCard from "./CompanyApplicationCard";
@@ -41,21 +42,34 @@ export default function CompanyApplications() {
 
   return (
     <Box sx={{ borderRadius: "1rem" }}>
-      <Typography
-        variant="h6"
-        color="initial"
-        sx={{
-          p: 2,
-          backgroundColor: "primary.main",
-          color: "white",
-          borderRadius: 2,
-        }}
-      >
-        Candidatures sur les offres de {company.name}
-      </Typography>
-      {companyApplications.map((companyApplication) => (
-        <ApplicationCard key={uuidv4} companyApplication={companyApplication} />
-      ))}
+      <Paper sx={{ height: "100%" }}>
+        <Typography
+          variant="h6"
+          color="initial"
+          sx={{
+            p: 2,
+            backgroundColor: "primary.main",
+            color: "white",
+            borderRadius: 2,
+          }}
+        >
+          Candidatures sur les offres de {company.name}
+        </Typography>
+        {companyApplications.length === 0 ? (
+          <Typography variant="body1" sx={{ p: 2 }}>
+            Aucune candidature disponible.
+          </Typography>
+        ) : (
+          <Box>
+            {companyApplications.map((companyApplication) => (
+              <ApplicationCard
+                key={uuidv4}
+                companyApplication={companyApplication}
+              />
+            ))}
+          </Box>
+        )}
+      </Paper>
     </Box>
   );
 }

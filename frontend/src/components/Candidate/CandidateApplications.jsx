@@ -50,12 +50,20 @@ export default function CandidateApplications() {
       >
         Mes Candidatures :
       </Typography>
-      {candidateApplications.map((candidateApplication) => (
-        <ApplicationCard
-          key={candidateApplication.id}
-          candidateApplication={candidateApplication}
-        />
-      ))}
+      {candidateApplications.length === 0 ? (
+        <Typography variant="body1" sx={{ p: 2 }}>
+          Aucune candidature disponible.
+        </Typography>
+      ) : (
+        <Box>
+          {candidateApplications.map((candidateApplication) => (
+            <ApplicationCard
+              key={candidateApplication.id}
+              candidateApplication={candidateApplication}
+            />
+          ))}
+        </Box>
+      )}
     </Box>
   );
 }

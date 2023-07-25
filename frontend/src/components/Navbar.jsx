@@ -104,7 +104,14 @@ export default function Navbar({ toggleColorMode }) {
   return (
     <AppBar position="sticky" color="secondary">
       <Container maxWidth="xxl">
-        <Toolbar disableGutters>
+        <Toolbar
+          disableGutters
+          sx={{
+            "@media (max-width: 768px)": {
+              justifyContent: "space-evenly",
+            },
+          }}
+        >
           <Box sx={{ display: { xs: "none", lg: "flex" } }}>
             <img src={logo} alt="logo" width="200px" />
           </Box>
@@ -120,7 +127,9 @@ export default function Navbar({ toggleColorMode }) {
               <MenuIcon />
             </IconButton>
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{
+                mt: "45px",
+              }}
               id="NavMenu"
               anchorEl={anchorElNavMenu}
               anchorOrigin={{
@@ -234,87 +243,96 @@ export default function Navbar({ toggleColorMode }) {
               </Button>
             ) : null}
           </Box>
-          <IconButton
-            size="large"
-            aria-label="colorMode"
-            onClick={toggleColorMode}
-            color="primary"
+          <Box
+            sx={{
+              display: "flex",
+              "@media (max-width: 768px)": {
+                marginRight: "1rem",
+              },
+            }}
           >
-            {theme.palette.mode === "dark" ? (
-              <Brightness7Icon />
-            ) : (
-              <Brightness4Icon sx={{ color: "white" }} />
-            )}
-          </IconButton>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Espace Utilisateur">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar
-                  src={imagePath}
-                  alt="Avatar"
-                  sx={{ maxWidth: "100%" }}
-                />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+            <IconButton
+              size="large"
+              aria-label="colorMode"
+              onClick={toggleColorMode}
+              color="primary"
             >
-              {candidate.id ? (
-                <MenuItem onClick={handleLinkUser}>
-                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                    Espace Candidat
-                  </Typography>
-                </MenuItem>
-              ) : null}
-              {company.id ? (
-                <MenuItem onClick={handleLinkCompany}>
-                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                    Espace Pro
-                  </Typography>
-                </MenuItem>
-              ) : null}
-              {candidate.admin === 1 || company.admin === 1 ? (
-                <MenuItem onClick={handleLinkAdmin}>
-                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                    Espace Admin
-                  </Typography>
-                </MenuItem>
-              ) : null}
-              {candidate.id ? (
-                <MenuItem onClick={handleLogoutCandidate}>
-                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                    Logout
-                  </Typography>
-                </MenuItem>
-              ) : null}
-              {company.id ? (
-                <MenuItem onClick={handleLogoutCompany}>
-                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                    Logout
-                  </Typography>
-                </MenuItem>
-              ) : null}
-              {!candidate.id && !company.id ? (
-                <MenuItem onClick={handleLinkLogin}>
-                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                    Login
-                  </Typography>
-                </MenuItem>
-              ) : null}
-            </Menu>
+              {theme.palette.mode === "dark" ? (
+                <Brightness7Icon />
+              ) : (
+                <Brightness4Icon sx={{ color: "white" }} />
+              )}
+            </IconButton>
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Espace Utilisateur">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar
+                    src={imagePath}
+                    alt="Avatar"
+                    sx={{ maxWidth: "100%" }}
+                  />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {candidate.id ? (
+                  <MenuItem onClick={handleLinkUser}>
+                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                      Espace Candidat
+                    </Typography>
+                  </MenuItem>
+                ) : null}
+                {company.id ? (
+                  <MenuItem onClick={handleLinkCompany}>
+                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                      Espace Pro
+                    </Typography>
+                  </MenuItem>
+                ) : null}
+                {candidate.admin === 1 || company.admin === 1 ? (
+                  <MenuItem onClick={handleLinkAdmin}>
+                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                      Espace Admin
+                    </Typography>
+                  </MenuItem>
+                ) : null}
+                {candidate.id ? (
+                  <MenuItem onClick={handleLogoutCandidate}>
+                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                      Logout
+                    </Typography>
+                  </MenuItem>
+                ) : null}
+                {company.id ? (
+                  <MenuItem onClick={handleLogoutCompany}>
+                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                      Logout
+                    </Typography>
+                  </MenuItem>
+                ) : null}
+                {!candidate.id && !company.id ? (
+                  <MenuItem onClick={handleLinkLogin}>
+                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                      Login
+                    </Typography>
+                  </MenuItem>
+                ) : null}
+              </Menu>
+            </Box>
           </Box>
         </Toolbar>
       </Container>
