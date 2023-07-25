@@ -70,7 +70,9 @@ export default function PhotoUpload({ handlePhotoClose }) {
       });
   };
 
-  const uploadedImageName = candidate.picture.slice(37);
+  const uploadedImageName = candidate.picture
+    ? candidate.picture.slice(37)
+    : null;
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
