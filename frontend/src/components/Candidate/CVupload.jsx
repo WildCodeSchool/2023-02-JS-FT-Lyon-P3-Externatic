@@ -52,7 +52,7 @@ export default function CVupload({ candidate, handleCvClose }) {
       });
   };
 
-  const uploadedCv = candidate.cv.slice(37);
+  const uploadedCv = candidate.cv ? candidate.cv.slice(37) : null;
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
