@@ -20,6 +20,7 @@ const upload = multer({
   },
   fileFilter,
 });
+
 const {
   hashPassword,
   verifyCandidatePassword,

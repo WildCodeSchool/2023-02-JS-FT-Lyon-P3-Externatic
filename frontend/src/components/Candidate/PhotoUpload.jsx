@@ -15,6 +15,12 @@ export default function PhotoUpload({ handlePhotoClose }) {
   const notifyUpload = () =>
     toast.success("Votre Photo a bien été enregistrée !");
   const notifyUploadError = () => toast.error("Problème à l'enregistrement !");
+  const notifyFileSizeError = () =>
+    toast.error("Le fichier est trop volumineux !");
+  const notifyFileTypeError = () =>
+    toast.error("Le fichier doit être conforme aux formats acceptés!");
+  const handleNullFileError = () =>
+    toast.error("Vous devez sélectionner un fichier");
 
   const { candidate, loginCandidate } = useCandidateContext();
 
@@ -23,8 +29,33 @@ export default function PhotoUpload({ handlePhotoClose }) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
+    const file = inputRef.current.files[0];
+
+    // Check if the file is an accepted type
+    if (file) {
+      if (
+        file.type !== "image/jpg" &&
+        file.type !== "image/jpeg" &&
+        file.type !== "image/png" &&
+        file.type !== "image/gif"
+      ) {
+        notifyFileTypeError();
+        return;
+      }
+    } else {
+      // Handle the case when the file object is null or undefined
+      handleNullFileError();
+      return;
+    }
+
+    // Check file size (5MB limit)
+    if (file && file.size > 5 * 1024 * 1024) {
+      notifyFileSizeError();
+      return;
+    }
+
     const formData = new FormData();
-    formData.append("maPhoto", inputRef.current.files[0]);
+    formData.append("maPhoto", file);
 
     axios
       .post(`${BACKEND_URL}/maPhoto`, formData, { withCredentials: true })
@@ -38,6 +69,8 @@ export default function PhotoUpload({ handlePhotoClose }) {
         notifyUploadError();
       });
   };
+
+  const uploadedImageName = candidate.picture.slice(37);
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -56,14 +89,32 @@ export default function PhotoUpload({ handlePhotoClose }) {
         <Typography variant="body1" color="initial">
           Choisissez un fichier pour votre photo de profil
         </Typography>
+        {candidate.picture ? (
+          <Typography variant="body1">
+            Votre Photo actuelle: {uploadedImageName}
+          </Typography>
+        ) : (
+          <Typography variant="body1">
+            Aucun Photo de Profil pour le moment
+          </Typography>
+        )}
         <form encType="multipart/form-data" onSubmit={handleSubmit}>
-          <Input type="file" name="monCV" inputRef={inputRef} sx={{ mr: 2 }} />
+          <Input
+            type="file"
+            name="monCV"
+            inputRef={inputRef}
+            accept=".jpg, .jpeg, .png, .gif"
+            sx={{ mr: 2 }}
+          />
           <Button type="submit" variant="outlined">
             Envoyer
           </Button>
         </form>
         <Typography variant="body2" color="grey">
           Le fichier doit être inférieur à 5Mo
+        </Typography>
+        <Typography variant="body2" color="grey">
+          Types de fichiers acceptés : .jpg .jpeg .png .gif
         </Typography>
       </Paper>
     </Box>

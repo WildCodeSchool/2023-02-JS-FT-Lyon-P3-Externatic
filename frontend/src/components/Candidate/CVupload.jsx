@@ -51,6 +51,9 @@ export default function CVupload({ candidate, handleCvClose }) {
         notifyUploadError();
       });
   };
+
+  const uploadedCv = candidate.cv.slice(37);
+
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
       <Paper
@@ -70,7 +73,7 @@ export default function CVupload({ candidate, handleCvClose }) {
           recruteurs.
         </Typography>
         {candidate.cv ? (
-          <Typography variant="body1">Votre CV: {candidate.cv}</Typography>
+          <Typography variant="body1">Votre CV: {uploadedCv}</Typography>
         ) : (
           <Typography variant="body1">
             Aucun CV chargé pour le moment
