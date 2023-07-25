@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import PhotoUploadCompany from "./PhotoUploadCompany";
 import UpdateCompany from "./UpdateCompany";
+import avatar from "../../assets/userAvatar.svg";
 
 export default function CompanyCard({ company }) {
   const [openPhoto, setOpenPhoto] = React.useState(false);
@@ -53,11 +54,19 @@ export default function CompanyCard({ company }) {
             alignItems: "center",
           }}
         >
-          <Avatar
-            alt="Company Picture"
-            src={imagePath}
-            sx={{ width: 150, height: 150 }}
-          />
+          {company.picture !== null ? (
+            <Avatar
+              alt="company Picture"
+              src={imagePath}
+              sx={{ width: 150, height: 150 }}
+            />
+          ) : (
+            <Avatar
+              alt="company Picture"
+              src={avatar}
+              sx={{ width: 150, height: 150 }}
+            />
+          )}
           <Button
             variant="text"
             color="primary"

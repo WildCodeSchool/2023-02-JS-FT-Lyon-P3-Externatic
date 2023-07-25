@@ -93,9 +93,9 @@ export default function Navbar({ toggleColorMode }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   let imagePath;
-  if (candidate.id) {
+  if (candidate.id && candidate.picture) {
     imagePath = `${BACKEND_URL}/picture/${candidate.picture}`;
-  } else if (company.id) {
+  } else if (company.id && company.picture) {
     imagePath = `${BACKEND_URL}/picture/${company.picture}`;
   } else {
     imagePath = null;

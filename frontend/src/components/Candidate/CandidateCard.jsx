@@ -14,12 +14,13 @@ import TopicIcon from "@mui/icons-material/Topic";
 import CVupload from "./CVupload";
 import PhotoUpload from "./PhotoUpload";
 import UpdateCandidate from "./UpdateCandidate";
+import avatar from "../../assets/userAvatar.svg";
 
 export default function CandidateCard({ candidate }) {
   const [openCv, setOpenCV] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
   const [openPhoto, setOpenPhoto] = React.useState(false);
-  const uploadedImageName = candidate.picture.slice(37);
+  const uploadedCVName = candidate.cv ? candidate.cv.slice(37) : null;
 
   const handleCvClose = () => {
     setOpenCV(false);
@@ -65,10 +66,16 @@ export default function CandidateCard({ candidate }) {
             alignItems: "center",
           }}
         >
-          {imagePath && (
+          {candidate.picture !== null ? (
             <Avatar
               alt="candidate Picture"
               src={imagePath}
+              sx={{ width: 150, height: 150 }}
+            />
+          ) : (
+            <Avatar
+              alt="candidate Picture"
+              src={avatar}
               sx={{ width: 150, height: 150 }}
             />
           )}
@@ -137,7 +144,7 @@ export default function CandidateCard({ candidate }) {
             <Button size="small" onClick={handleCvClick}>
               <TopicIcon sx={{ mr: 1 }} />
               <Typography variant="body2" color="text.secondary">
-                {uploadedImageName}
+                {uploadedCVName}
               </Typography>
             </Button>
           )}
