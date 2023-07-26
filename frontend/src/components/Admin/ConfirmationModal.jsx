@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 export default function ConfirmationModal({ open, onClose, onConfirm }) {
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Delete User</DialogTitle>
+      <DialogTitle>Supprimer utilisateur</DialogTitle>
       <DialogContent>
         <DialogContentText>Êtes-vous sûr ?</DialogContentText>
       </DialogContent>

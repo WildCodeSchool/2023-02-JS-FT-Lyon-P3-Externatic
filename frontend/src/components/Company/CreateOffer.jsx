@@ -130,11 +130,11 @@ export default function CreateOffer() {
       )
       .then(() => {
         setFormData({
-          company_id: null,
-          user_id: null,
-          job_category_id: null,
-          job_type_id: null,
-          job_location_id: null,
+          company_id: "",
+          user_id: "",
+          job_category_id: "",
+          job_type_id: "",
+          job_location_id: "",
           title: "",
           remote: "",
           salary: "",

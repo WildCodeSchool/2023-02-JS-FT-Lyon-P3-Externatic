@@ -113,7 +113,7 @@ export default function AdminCreateCandidate() {
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="Prénom"
                   autoFocus
                   onChange={handleInputChange}
                   value={formData.firstname}
@@ -132,7 +132,7 @@ export default function AdminCreateCandidate() {
                   required
                   fullWidth
                   id="lastname"
-                  label="Last Name"
+                  label="Nom"
                   name="lastname"
                   autoComplete="family-name"
                   onChange={handleInputChange}
@@ -154,7 +154,7 @@ export default function AdminCreateCandidate() {
                   required
                   fullWidth
                   id="candidate-city"
-                  label="City"
+                  label="Ville"
                   autoFocus
                   onChange={handleInputChange}
                   value={formData.city}
@@ -173,7 +173,7 @@ export default function AdminCreateCandidate() {
                   required
                   fullWidth
                   id="candidate-phone"
-                  label="Phone Number"
+                  label="Téléphone"
                   name="phone"
                   autoComplete="phone"
                   onChange={handleInputChange}
@@ -193,7 +193,7 @@ export default function AdminCreateCandidate() {
                   required
                   fullWidth
                   id="candidate-email"
-                  label="Email Address"
+                  label="Adresse email"
                   name="email"
                   autoComplete="email"
                   onChange={handleInputChange}
@@ -213,7 +213,7 @@ export default function AdminCreateCandidate() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="Mot de passe"
                   type="password"
                   id="candidate-password"
                   autoComplete="password"
