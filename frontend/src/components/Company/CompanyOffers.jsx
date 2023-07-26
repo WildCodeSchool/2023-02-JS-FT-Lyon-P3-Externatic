@@ -78,12 +78,12 @@ export default function CompanyOffers() {
 
   useEffect(() => {
     getCompanyOffers();
-  }, [companyOffers]);
+  }, [company]);
 
   return (
     <Box sx={{ borderRadius: "1rem" }}>
       <Grid container spacing={4} justifyContent="flex-end">
-        <Grid item xl={16} lg={12} elevation={3}>
+        <Grid item xs={12} lg={12} elevation={3}>
           <Paper sx={{ height: "100%" }}>
             <Typography
               variant="h6"

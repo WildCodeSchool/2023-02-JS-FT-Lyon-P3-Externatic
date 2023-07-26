@@ -80,8 +80,8 @@ export default function JobsList() {
     { field: "salary", headerName: "Salaire", width: 100 },
     { field: "remote", headerName: "Remote", width: 100 },
     {
-      field: "delete",
-      headerName: "Delete",
+      field: "supprimer",
+      headerName: "Supprimer",
       width: 100,
       renderCell: (params) => (
         <Button
@@ -89,7 +89,7 @@ export default function JobsList() {
           color="error"
           onClick={() => handleDelete(params.row.id)}
         >
-          Delete
+          Supprimer
         </Button>
       ),
     },

@@ -108,7 +108,7 @@ function UpdateCompany({ company, handleUpdateClose }) {
                   required
                   fullWidth
                   id="name"
-                  label="Company Name"
+                  label="Nom entreprise"
                   autoFocus
                   onChange={handleInputChange}
                   value={formData.name}
@@ -127,7 +127,7 @@ function UpdateCompany({ company, handleUpdateClose }) {
                   required
                   fullWidth
                   id="contact"
-                  label="Contact Name"
+                  label="Nom du contact"
                   name="contact"
                   autoComplete="contact-name"
                   onChange={handleInputChange}
@@ -174,7 +174,7 @@ function UpdateCompany({ company, handleUpdateClose }) {
                   required
                   fullWidth
                   id="website"
-                  label="website"
+                  label="Site internet"
                   autoFocus
                   onChange={handleInputChange}
                   value={formData.website}
@@ -197,7 +197,7 @@ function UpdateCompany({ company, handleUpdateClose }) {
                   required
                   fullWidth
                   id="city"
-                  label="City"
+                  label="Ville"
                   autoFocus
                   onChange={handleInputChange}
                   value={formData.city}
@@ -216,7 +216,7 @@ function UpdateCompany({ company, handleUpdateClose }) {
                   required
                   fullWidth
                   id="phone"
-                  label="Phone Number"
+                  label="Téléphone"
                   name="phone"
                   autoComplete="phone"
                   onChange={handleInputChange}
@@ -236,7 +236,7 @@ function UpdateCompany({ company, handleUpdateClose }) {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Adresse email"
                   name="email"
                   autoComplete="email"
                   onChange={handleInputChange}

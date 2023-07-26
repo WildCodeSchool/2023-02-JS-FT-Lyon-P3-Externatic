@@ -48,15 +48,13 @@ export default function CandidateProfile() {
       });
   };
 
-  useEffect(getCandidate, [loggedCandidate]);
-
   useEffect(() => {
     if (!candidate?.id) {
       navigate("/login");
     } else {
       getCandidate();
     }
-  }, [loggedCandidate, navigate]);
+  }, [candidate, navigate]);
 
   useEffect(() => {
     localStorage.setItem("favoriteJobs", JSON.stringify(favorites));
