@@ -25,7 +25,7 @@ app.use(
 );
 
 // import and mount the API routes
-
+const routerSendemail = require("./Routers/routerSendEmail");
 const router = require("./Routers/router");
 const routerUsers = require("./Routers/routerUser");
 const routerApplication = require("./Routers/routerApplications");
@@ -45,7 +45,7 @@ app.use(routerCompany);
 app.use(routerJobType);
 app.use(routerJobLocation);
 app.use(routerJobCategory);
-
+app.use(routerSendemail);
 // serve the `backend/public` folder for public resources
 
 app.use(express.static(path.join(__dirname, "../public")));

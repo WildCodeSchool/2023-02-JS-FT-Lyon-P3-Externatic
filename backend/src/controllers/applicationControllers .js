@@ -12,9 +12,21 @@ const browse = (req, res) => {
     });
 };
 
-const browseById = (req, res) => {
+const browseByCandidateId = (req, res) => {
   models.application
     .findApplicationsByUserId(req.params.id)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const browseByCompanyId = (req, res) => {
+  models.application
+    .findApplicationsByCompanyId(req.params.id)
     .then(([rows]) => {
       res.send(rows);
     })
@@ -43,8 +55,6 @@ const read = (req, res) => {
 const edit = (req, res) => {
   const application = req.body;
 
-  // TODO validations (length, format...)
-
   application.id = parseInt(req.params.id, 10);
 
   models.application
@@ -65,12 +75,10 @@ const edit = (req, res) => {
 const add = (req, res) => {
   const application = req.body;
 
-  // TODO validations (length, format...)
-
   models.application
     .insert(application)
     .then(([result]) => {
-      res.location(`/items/${result.insertId}`).sendStatus(201);
+      res.location(`/applications/${result.insertId}`).sendStatus(201);
     })
     .catch((err) => {
       console.error(err);
@@ -96,7 +104,8 @@ const destroy = (req, res) => {
 
 module.exports = {
   browse,
-  browseById,
+  browseByCandidateId,
+  browseByCompanyId,
   read,
   edit,
   add,

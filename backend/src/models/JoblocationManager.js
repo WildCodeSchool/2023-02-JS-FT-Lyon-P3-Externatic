@@ -13,7 +13,7 @@ class JoblocationManager extends AbstractManager {
 
   update(jobLocation) {
     return this.database.query(
-      `UPDATE ${this.table} set name = ? where id = ${jobLocation.id}`,
+      `UPDATE ${this.table} set name = ? where id = ?`,
       [jobLocation.name, jobLocation.id]
     );
   }

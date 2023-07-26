@@ -3,12 +3,15 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { toast } from "react-toastify";
 import ApplicationCard from "./ApplicationCard";
 import CandidateContext from "../../Contexts/CandidateContext";
 
 export default function CandidateApplications() {
   const [candidateApplications, setCandidateApplications] = useState([]);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const notifyError = () =>
+    toast.error("Problème de récupération des applications..");
 
   const { candidate } = useContext(CandidateContext);
 
@@ -19,20 +22,19 @@ export default function CandidateApplications() {
     headers: {},
   };
 
-  const getCandidateApplications = () => {
-    axios
-      .request(config)
-      .then((response) => {
-        setCandidateApplications(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  const getCandidateApplications = async () => {
+    try {
+      const response = await axios.request(config);
+      setCandidateApplications(response.data);
+    } catch (error) {
+      console.error(error);
+      notifyError();
+    }
   };
 
   useEffect(() => {
     getCandidateApplications();
-  }, []);
+  }, [candidateApplications]);
 
   return (
     <Box sx={{ borderRadius: "1rem" }}>
@@ -48,12 +50,20 @@ export default function CandidateApplications() {
       >
         Mes Candidatures :
       </Typography>
-      {candidateApplications.map((candidateApplication) => (
-        <ApplicationCard
-          key={candidateApplication.id}
-          candidateApplication={candidateApplication}
-        />
-      ))}
+      {candidateApplications.length === 0 ? (
+        <Typography variant="body1" sx={{ p: 2 }}>
+          Aucune candidature disponible.
+        </Typography>
+      ) : (
+        <Box>
+          {candidateApplications.map((candidateApplication) => (
+            <ApplicationCard
+              key={candidateApplication.id}
+              candidateApplication={candidateApplication}
+            />
+          ))}
+        </Box>
+      )}
     </Box>
   );
 }

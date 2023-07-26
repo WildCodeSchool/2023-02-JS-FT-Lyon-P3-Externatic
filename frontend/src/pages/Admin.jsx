@@ -1,25 +1,24 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Navbar from "../components/Navbar";
+import AdminNav from "../components/Admin/NavAdmin";
 import AdminCreate from "../components/Admin/AdminCreate";
-import CandidatesTable from "../components/Admin/CandidatesTable";
-import CompaniesTable from "../components/Admin/CompaniesTable";
-import AdminDelete from "../components/Admin/AdminDelete";
 
-export default function Admin() {
+function Admin() {
   return (
-    <>
-      <Navbar />
-      <Container maxWidth="lg" sx={{ mt: 2 }}>
-        <Typography variant="h3" color="initial">
-          Page Administrateur
-        </Typography>
-        <AdminCreate />
-        <AdminDelete />
-        <CandidatesTable />
-        <CompaniesTable />
-      </Container>
-    </>
+    <Container maxWidth="xl" sx={{ mt: 2, textAlign: "center" }}>
+      <Typography variant="h4" color="text.main" sx={{ py: 2 }}>
+        Page Administrateur
+      </Typography>
+      <AdminCreate />
+      <Box fullwidth>
+        <AdminNav />
+      </Box>
+      <Outlet />
+    </Container>
   );
 }
+
+export default Admin;

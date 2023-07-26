@@ -4,8 +4,6 @@ import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -15,6 +13,7 @@ import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ValidateFormCandidate } from "../components/ValidateForm";
 import logo from "../assets/externatic-logo.png";
 import accueil from "../assets/accueil.jpg";
 
@@ -33,42 +32,71 @@ function Copyright() {
 export default function Register() {
   const navigate = useNavigate();
   const notifyCreation = () => toast.success("Votre compte a bien été créé !");
-
+  const notifyError = () =>
+    toast.error("Problème d'enregistrement du compte'..");
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const [validateInput, setValidateInput] = useState({});
 
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
     email: "",
     password: "",
+    city: "",
+    phone: "",
     terms: false,
   });
-
-  const validateForm = () => {
-    // add email Validation
-    return true;
-  };
 
   const handleInputChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
+  const validateForm = () => {
+    // add email Validation
+    const { error } = ValidateFormCandidate.validate(
+      { ...formData, terms: undefined },
+      {
+        abortEarly: false,
+        allowUnknown: true,
+      }
+    );
+    if (error) {
+      const validationErrors = {};
+      error.details.forEach((err) => {
+        validationErrors[err.context.key] = err.message;
+      });
+      return validationErrors;
+    }
+    return {};
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.warn(formData);
-    if (validateForm) {
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length === 0) {
+      // The form is valid, proceed with form submission
       axios
-        .post(`${BACKEND_URL}/register`, { ...formData })
+        .post(`${BACKEND_URL}/register-candidate`, { ...formData })
         .then(() => {
           notifyCreation();
-        })
-        .then(() => {
-          navigate("/");
+          navigate("/login-candidate");
         })
         .catch((err) => {
           console.error(err);
+          notifyError();
         });
+    } else {
+      // The form is invalid, handle validation errors
+      setValidateInput({ ...validationErrors });
+      console.error("Validation Errors:", validationErrors);
     }
+  };
+
+  React.useEffect(() => {
+    validateForm();
+  }, [handleSubmit, handleInputChange]);
+  const handleLinkLogin = () => {
+    navigate("/login-candidate");
   };
 
   return (
@@ -107,7 +135,7 @@ export default function Register() {
             sx={{ m: 1, bgcolor: "secondary.main" }}
           />
           <Typography component="h1" variant="h5">
-            Créer mon Profil
+            Créer mon Profil Candidat
           </Typography>
           <Box
             component="form"
@@ -126,7 +154,13 @@ export default function Register() {
                   label="Prénom"
                   autoFocus
                   onChange={handleInputChange}
+                  value={formData.firstname}
                 />
+                <Box color="primary.main">
+                  {formData.firstname.length > 2
+                    ? undefined
+                    : validateInput.firstname}
+                </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -137,7 +171,13 @@ export default function Register() {
                   name="lastname"
                   autoComplete="family-name"
                   onChange={handleInputChange}
+                  value={formData.lastname}
                 />
+                <Box color="primary.main">
+                  {formData.lastname.length > 2
+                    ? undefined
+                    : validateInput.lastname}
+                </Box>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -148,7 +188,11 @@ export default function Register() {
                   name="city"
                   autoComplete="city"
                   onChange={handleInputChange}
+                  value={formData.city}
                 />
+                <Box color="primary.main">
+                  {formData.city.length > 2 ? undefined : validateInput.city}
+                </Box>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -159,18 +203,24 @@ export default function Register() {
                   name="phone"
                   autoComplete="phone"
                   onChange={handleInputChange}
+                  value={formData.phone}
                 />
+                <Box color="primary.main">
+                  {formData.phone.length > 9 ? undefined : validateInput.phone}
+                </Box>
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
                   id="email"
-                  label="Adresse Mail"
+                  label="Adresse e-mail"
                   name="email"
                   autoComplete="email"
                   onChange={handleInputChange}
+                  value={formData.email}
                 />
+                <Box color="primary.main">{validateInput.email}</Box>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -182,15 +232,9 @@ export default function Register() {
                   id="password"
                   autoComplete="new-password"
                   onChange={handleInputChange}
+                  value={formData.password}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="Je veux recevoir les offres d'emploi par mail"
-                />
+                <Box color="primary.main">{validateInput.password}</Box>
               </Grid>
             </Grid>
             <Button
@@ -204,9 +248,9 @@ export default function Register() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Button onClick={handleLinkLogin} variant="text">
                   Vous avez déja un compte? Accéder au Login
-                </Link>
+                </Button>
               </Grid>
             </Grid>
           </Box>

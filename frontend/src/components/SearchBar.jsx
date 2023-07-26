@@ -9,8 +9,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
+import { toast } from "react-toastify";
 import AdsList from "./AdsList";
-import { api } from "./api";
+import { api } from "../services/api";
+import "animate.css";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -26,7 +28,10 @@ const MenuProps = {
 };
 
 export default function SearchBar() {
+  const notifyError = () =>
+    toast.error("Problème lors de l'utilisation des filtres..");
   //
+  const [filtersActive, setFiltersActive] = useState(false);
   const [filterOptions, setFilterOptions] = useState({
     jobsTitle: [],
     jobsType: [],
@@ -48,6 +53,7 @@ export default function SearchBar() {
         });
       } catch (error) {
         console.error(error);
+        notifyError();
       }
     };
     fetchDetails();
@@ -75,6 +81,7 @@ export default function SearchBar() {
       setInfoDataNoFiltered(res.data);
     } catch (error) {
       console.error(error);
+      notifyError();
     }
   };
 
@@ -87,23 +94,35 @@ export default function SearchBar() {
       const res = await axios.get(`${BACKEND_URL}/jobs`);
       const filteredData = res.data.filter((job) => {
         const titleMatch =
-          !inputFilter.jobTitle || job.title === inputFilter.jobTitle;
+          !inputFilter.jobTitle || job.category === inputFilter.jobTitle;
         const typeMatch =
-          !inputFilter.jobType || job.contract_type === inputFilter.jobType;
+          !inputFilter.jobType || job.type === inputFilter.jobType;
         const locationMatch =
           !inputFilter.jobLocation || job.location === inputFilter.jobLocation;
         return titleMatch && typeMatch && locationMatch;
       });
       setInfoDataFiltered(filteredData);
       setInfoDataNoFiltered(res.data);
+      setFiltersActive(true);
     } catch (error) {
       console.error(error);
+      notifyError();
     }
+  };
+
+  const handleClearFilters = () => {
+    setInputFilter({
+      jobType: "",
+      jobTitle: "",
+      jobLocation: "",
+    });
+    setFiltersActive(false); // Set filters as inactive
   };
 
   return (
     <>
       <Box
+        className="animate__animated animate__fadeInDown"
         component="form"
         sx={{
           "& .MuiTextField-root": { m: 1, width: "25ch" },
@@ -128,7 +147,11 @@ export default function SearchBar() {
           >
             Annonces
           </Typography>
-          <Box>
+          <Box
+            sx={{
+              textAlign: "center",
+            }}
+          >
             <FormControl sx={{ m: 1, width: 250 }}>
               <InputLabel id="demo-multiple-checkbox-label">
                 Type de poste
@@ -139,6 +162,7 @@ export default function SearchBar() {
                 name="jobTitle"
                 value={inputFilter.jobTitle}
                 onChange={handleChange}
+                label="Type de poste"
                 MenuProps={MenuProps}
               >
                 {filterOptions.jobsTitle.map((title) => (
@@ -158,6 +182,7 @@ export default function SearchBar() {
                 name="jobType"
                 value={inputFilter.jobType}
                 onChange={handleChange}
+                label="Type de contrat"
                 MenuProps={MenuProps}
               >
                 {filterOptions.jobsType.map((job) => (
@@ -177,6 +202,7 @@ export default function SearchBar() {
                 name="jobLocation"
                 value={inputFilter.jobLocation}
                 onChange={handleChange}
+                label="Localisation"
                 MenuProps={MenuProps}
               >
                 {filterOptions.citiesAvailable.map((city) => (
@@ -187,14 +213,26 @@ export default function SearchBar() {
               </Select>
             </FormControl>
           </Box>
-          <Button onClick={handleFilterData} variant="contained" sx={{ mt: 2 }}>
-            Rechercher
-          </Button>
+          <Box>
+            <Button
+              onClick={handleFilterData}
+              variant="contained"
+              sx={{ mt: 2 }}
+            >
+              Rechercher
+            </Button>
+            <Button
+              onClick={handleClearFilters}
+              variant="outlined"
+              sx={{ mt: 2, ml: 2 }}
+            >
+              Effacer les filtres
+            </Button>
+          </Box>
         </Container>
       </Box>
-      {infoDataFiltered && <AdsList infoDataFiltered={infoDataFiltered} />}
-      {infoDataFiltered ? (
-        ""
+      {filtersActive ? (
+        <AdsList infoDataFiltered={infoDataFiltered} />
       ) : (
         <AdsList infoDataNoFiltered={infoDataNoFiltered} />
       )}

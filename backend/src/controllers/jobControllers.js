@@ -12,6 +12,30 @@ const browse = (req, res) => {
     });
 };
 
+const browseByUserId = (req, res) => {
+  models.job
+    .findJobsByUserId(req.params.id)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const browseByCompanyId = (req, res) => {
+  models.job
+    .findJobsByCompanyId(req.params.id)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 const read = (req, res) => {
   models.job
     .find(req.params.id)
@@ -52,7 +76,8 @@ const edit = (req, res) => {
 
 const add = (req, res) => {
   const job = req.body;
-
+  job.company_id = req.payloads.sub;
+  job.user_id = req.payloads.sub;
   // TODO validations (length, format...)
 
   models.job
@@ -84,6 +109,8 @@ const destroy = (req, res) => {
 
 module.exports = {
   browse,
+  browseByUserId,
+  browseByCompanyId,
   read,
   edit,
   add,

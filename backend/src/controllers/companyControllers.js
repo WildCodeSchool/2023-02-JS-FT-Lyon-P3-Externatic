@@ -30,16 +30,9 @@ const read = (req, res) => {
 
 const edit = async (req, res) => {
   try {
-    const {
-      email,
-      phone,
-      city,
-      password,
-      name,
-      contact,
-      description,
-      website,
-    } = req.body;
+    const { email, phone, city, name, contact, description, website } =
+      req.body;
+
     const userId = req.body.user_id;
     const companyId = parseInt(req.params.id, 10);
 
@@ -51,7 +44,6 @@ const edit = async (req, res) => {
       email,
       phone,
       city,
-      password,
     });
 
     // Update company information
@@ -64,47 +56,7 @@ const edit = async (req, res) => {
       website,
     });
 
-    res.sendStatus(200);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-};
-
-const add = async (req, res) => {
-  try {
-    const {
-      email,
-      phone,
-      city,
-      password,
-      name,
-      contact,
-      description,
-      website,
-    } = req.body;
-
-    // TODO: Add validations for email, phone, city, password, name, contact, description, website
-
-    // Create a new user entry
-    const [userResult] = await models.user.insert({
-      email,
-      phone,
-      city,
-      password,
-    });
-    const userId = userResult.insertId;
-
-    // Create a new company entry
-    const [companyResult] = await models.company.insert({
-      user_id: userId,
-      name,
-      contact,
-      description,
-      website,
-    });
-
-    res.location(`/companies/${companyResult.insertId}`).sendStatus(201);
+    res.send({ email, phone, city, name, contact, description, website });
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
@@ -127,10 +79,27 @@ const destroy = (req, res) => {
     });
 };
 
+const profile = (req, res) => {
+  const id = req.payloads.sub;
+  models.company
+    .find(id)
+    .then(([companies]) => {
+      if (companies[0] == null) {
+        res.sendStatus(404);
+      } else {
+        res.send(companies[0]);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
   edit,
-  add,
   destroy,
+  profile,
 };

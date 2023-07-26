@@ -1,4 +1,6 @@
 import * as React from "react";
+import PropTypes from "prop-types";
+import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,13 +17,17 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/externatic-logo-long.png";
 import { useCandidateContext } from "../Contexts/CandidateContext";
+import { useCompanyContext } from "../Contexts/CompanyContext";
 
-export default function Navbar() {
-  const { candidate, logout } = useCandidateContext();
-
+export default function Navbar({ toggleColorMode }) {
+  const { candidate, logoutCandidate } = useCandidateContext();
+  const { company, logoutCompany } = useCompanyContext();
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -45,28 +51,67 @@ export default function Navbar() {
 
   const handleLinkHome = () => {
     navigate("/");
+    setAnchorElNavMenu(null);
   };
   const handleLinkAdds = () => {
     navigate("/annonces");
+    setAnchorElNavMenu(null);
   };
   const handleLinkBlog = () => {
     navigate("/blog");
+    setAnchorElNavMenu(null);
   };
   const handleLinkLogin = () => {
+    setAnchorElUser(null);
     navigate("/login");
+  };
+  const handleLogoutCandidate = () => {
+    logoutCandidate();
+    setAnchorElUser(null);
+  };
+  const handleLogoutCompany = () => {
+    logoutCompany();
+    setAnchorElUser(null);
   };
 
   const handleLinkUser = () => {
     navigate("/espace-candidat");
+    setAnchorElUser(null);
   };
+
+  const handleLinkCompany = () => {
+    navigate("/espace-pro");
+    setAnchorElUser(null);
+  };
+
   const handleLinkAdmin = () => {
     navigate("/admin");
+    setAnchorElUser(null);
+    setAnchorElNavMenu(null);
   };
+
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+  let imagePath;
+  if (candidate.id && candidate.picture) {
+    imagePath = `${BACKEND_URL}/picture/${candidate.picture}`;
+  } else if (company.id && company.picture) {
+    imagePath = `${BACKEND_URL}/picture/${company.picture}`;
+  } else {
+    imagePath = null;
+  }
 
   return (
     <AppBar position="sticky" color="secondary">
       <Container maxWidth="xxl">
-        <Toolbar disableGutters>
+        <Toolbar
+          disableGutters
+          sx={{
+            "@media (max-width: 768px)": {
+              justifyContent: "space-evenly",
+            },
+          }}
+        >
           <Box sx={{ display: { xs: "none", lg: "flex" } }}>
             <img src={logo} alt="logo" width="200px" />
           </Box>
@@ -82,7 +127,9 @@ export default function Navbar() {
               <MenuIcon />
             </IconButton>
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{
+                mt: "45px",
+              }}
               id="NavMenu"
               anchorEl={anchorElNavMenu}
               anchorOrigin={{
@@ -115,7 +162,7 @@ export default function Navbar() {
               {candidate.admin === 1 ? (
                 <MenuItem onClick={handleLinkAdmin}>
                   <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                    Admin
+                    Espace Admin
                   </Typography>
                 </MenuItem>
               ) : null}
@@ -148,7 +195,6 @@ export default function Navbar() {
                 <Typography sx={{ ml: 1 }}>Accueil</Typography>
               </Box>
             </Button>
-
             <Button
               onClick={handleLinkAdds}
               sx={{ my: 2, color: "white", display: "block" }}
@@ -165,7 +211,7 @@ export default function Navbar() {
               </Box>
             </Button>
             <Button
-              onClick={handleLinkAdds}
+              onClick={handleLinkBlog}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               <Box
@@ -179,7 +225,7 @@ export default function Navbar() {
                 <Typography sx={{ ml: 1 }}>Blog</Typography>
               </Box>
             </Button>
-            {candidate.admin === 1 ? (
+            {candidate.admin === 1 || company.admin === 1 ? (
               <Button
                 onClick={handleLinkAdmin}
                 sx={{ my: 2, color: "white", display: "block" }}
@@ -198,54 +244,102 @@ export default function Navbar() {
             ) : null}
           </Box>
           <Box
-            sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}
+            sx={{
+              display: "flex",
+              "@media (max-width: 768px)": {
+                marginRight: "1rem",
+              },
+            }}
           >
-            <Tooltip title="Espace Utilisateur">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar src={candidate.picture} alt="Avatar" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+            <IconButton
+              size="large"
+              aria-label="colorMode"
+              onClick={toggleColorMode}
+              color="primary"
             >
-              {candidate.id ? (
-                <MenuItem onClick={handleLinkUser}>
-                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                    Espace Candidat
-                  </Typography>
-                </MenuItem>
-              ) : null}
-              {candidate.id ? (
-                <MenuItem onClick={logout}>
-                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                    Logout
-                  </Typography>
-                </MenuItem>
-              ) : null}
-              {!candidate.id ? (
-                <MenuItem onClick={handleLinkLogin}>
-                  <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
-                    Login
-                  </Typography>
-                </MenuItem>
-              ) : null}
-            </Menu>
+              {theme.palette.mode === "dark" ? (
+                <Brightness7Icon />
+              ) : (
+                <Brightness4Icon sx={{ color: "white" }} />
+              )}
+            </IconButton>
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Espace Utilisateur">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar
+                    src={imagePath}
+                    alt="Avatar"
+                    sx={{ maxWidth: "100%" }}
+                  />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {candidate.id ? (
+                  <MenuItem onClick={handleLinkUser}>
+                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                      Espace Candidat
+                    </Typography>
+                  </MenuItem>
+                ) : null}
+                {company.id ? (
+                  <MenuItem onClick={handleLinkCompany}>
+                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                      Espace Pro
+                    </Typography>
+                  </MenuItem>
+                ) : null}
+                {candidate.admin === 1 || company.admin === 1 ? (
+                  <MenuItem onClick={handleLinkAdmin}>
+                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                      Espace Admin
+                    </Typography>
+                  </MenuItem>
+                ) : null}
+                {candidate.id ? (
+                  <MenuItem onClick={handleLogoutCandidate}>
+                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                      Logout
+                    </Typography>
+                  </MenuItem>
+                ) : null}
+                {company.id ? (
+                  <MenuItem onClick={handleLogoutCompany}>
+                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                      Logout
+                    </Typography>
+                  </MenuItem>
+                ) : null}
+                {!candidate.id && !company.id ? (
+                  <MenuItem onClick={handleLinkLogin}>
+                    <Typography textAlign="center" variant="h6" sx={{ p: 2 }}>
+                      Login
+                    </Typography>
+                  </MenuItem>
+                ) : null}
+              </Menu>
+            </Box>
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
+
+Navbar.propTypes = {
+  toggleColorMode: PropTypes.func.isRequired,
+};

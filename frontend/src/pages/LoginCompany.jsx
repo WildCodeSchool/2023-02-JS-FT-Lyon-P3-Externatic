@@ -1,27 +1,26 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { toast } from "react-toastify";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
 import logo from "../assets/externatic-logo.png";
 import accueil from "../assets/accueil.jpg";
-import { useCandidateContext } from "../Contexts/CandidateContext";
+import { useCompanyContext } from "../Contexts/CompanyContext";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        DevPaf
+        Externatic / Team PAF
       </Link>{" "}
       {new Date().getFullYear()}
     </Typography>
@@ -31,8 +30,10 @@ function Copyright() {
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function Login() {
-  const { login } = useCandidateContext();
+  const { loginCompany } = useCompanyContext();
   const [msg, setMsg] = useState("");
+  const notifyCreation = () => toast.success("Vous êtes bien connecté!");
+  const notifyError = () => toast.error("La connexion a echoué..");
   const [userInfos, setUserInfos] = useState({
     email: "",
     password: "",
@@ -44,21 +45,30 @@ export default function Login() {
     return true;
   };
 
+  const handleLinkRegister = () => {
+    navigate("/register-company");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm) {
       axios
-        .post(`${BACKEND_URL}/login`, userInfos, { withCredentials: true })
-        .then(({ data: candidate }) => {
-          login(candidate);
+        .post(`${BACKEND_URL}/login-company`, userInfos, {
+          withCredentials: true,
+        })
+        .then(({ data: company }) => {
+          loginCompany(company);
+          notifyCreation();
           navigate("/");
         })
         .catch((error) => {
           if (error.response?.status === 401) setMsg("Wrong credentials");
           else setMsg("Try again later.");
+          notifyError();
         });
     } else {
       setMsg("Unvalid form");
+      notifyError();
     }
   };
 
@@ -90,7 +100,7 @@ export default function Login() {
       <Grid item xs={12} sm={12} md={5} component={Paper} elevation={6} square>
         <Box
           sx={{
-            my: 6,
+            my: 3,
             mx: 5,
             display: "flex",
             flexDirection: "column",
@@ -104,7 +114,7 @@ export default function Login() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Login
+            Login Pro
           </Typography>
           {msg && (
             <Typography variant="body2" color="error">
@@ -139,10 +149,6 @@ export default function Login() {
               autoComplete="current-password"
               onChange={handleChange}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -152,15 +158,10 @@ export default function Login() {
               Login
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="/register" variant="body2">
-                  Mot de Passe Oublié?
-                </Link>
-              </Grid>
               <Grid item>
-                <Link href="/register" variant="body2">
+                <Button onClick={handleLinkRegister} variant="text">
                   "Nouveau chez nous? Créer un compte"
-                </Link>
+                </Button>
               </Grid>
             </Grid>
             <Copyright sx={{ mt: 5 }} />
