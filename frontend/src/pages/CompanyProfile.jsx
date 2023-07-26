@@ -6,7 +6,6 @@ import Grid from "@mui/material/Grid";
 import CompanyCard from "../components/Company/CompanyCard";
 import CreateOffer from "../components/Company/CreateOffer";
 import CompanyApplications from "../components/Company/CompanyApplications";
-import CompanyOffers from "../components/Company/CompanyOffers";
 import { useCompanyContext } from "../Contexts/CompanyContext";
 
 export default function CompanyProfile() {
@@ -42,9 +41,6 @@ export default function CompanyProfile() {
         <Grid container spacing={4} justifyContent="flex-end">
           <Grid item xs={12} lg={7} elevation={3}>
             <CreateOffer />
-          </Grid>
-          <Grid item xs={12} lg={7} elevation={3}>
-            <CompanyOffers />
           </Grid>
           <Grid item xs={12} lg={7} elevation={3}>
             <CompanyApplications />
