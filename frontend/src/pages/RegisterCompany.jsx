@@ -158,7 +158,7 @@ export default function Register() {
                   value={formData.name}
                 />
                 <Box color="primary.main">
-                  {formData.name ? undefined : validateInput.name}
+                  {formData.name.length > 2 ? undefined : validateInput.name}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -173,7 +173,9 @@ export default function Register() {
                   value={formData.contact}
                 />
                 <Box color="primary.main">
-                  {formData.contact ? undefined : validateInput.contact}
+                  {formData.contact.length > 2
+                    ? undefined
+                    : validateInput.contact}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -189,7 +191,9 @@ export default function Register() {
                   value={formData.description}
                 />
                 <Box color="primary.main">
-                  {formData.description ? undefined : validateInput.description}
+                  {formData.description.length > 9
+                    ? undefined
+                    : validateInput.description}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -205,7 +209,9 @@ export default function Register() {
                   value={formData.website}
                 />
                 <Box color="primary.main">
-                  {formData.website ? undefined : validateInput.website}
+                  {formData.website.length > 5
+                    ? undefined
+                    : validateInput.website}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -221,7 +227,7 @@ export default function Register() {
                   value={formData.city}
                 />
                 <Box color="primary.main">
-                  {formData.city ? undefined : validateInput.city}
+                  {formData.city.length > 2 ? undefined : validateInput.city}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -262,7 +268,11 @@ export default function Register() {
                   onChange={handleInputChange}
                   value={formData.password}
                 />
-                <Box color="primary.main">{validateInput.password}</Box>
+                <Box color="primary.main">
+                  {formData.password.length > 5
+                    ? undefined
+                    : validateInput.password}
+                </Box>
               </Grid>
             </Grid>
             <Button

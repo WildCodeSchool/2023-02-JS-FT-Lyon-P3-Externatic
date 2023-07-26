@@ -155,7 +155,9 @@ export default function Register() {
                   value={formData.firstname}
                 />
                 <Box color="primary.main">
-                  {formData.firstname ? undefined : validateInput.firstname}
+                  {formData.firstname.length > 2
+                    ? undefined
+                    : validateInput.firstname}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -170,7 +172,9 @@ export default function Register() {
                   value={formData.lastname}
                 />
                 <Box color="primary.main">
-                  {formData.lastname ? undefined : validateInput.lastname}
+                  {formData.lastname.length > 2
+                    ? undefined
+                    : validateInput.lastname}
                 </Box>
               </Grid>
               <Grid item xs={12}>
@@ -185,7 +189,7 @@ export default function Register() {
                   value={formData.city}
                 />
                 <Box color="primary.main">
-                  {formData.city ? undefined : validateInput.city}
+                  {formData.city.length > 2 ? undefined : validateInput.city}
                 </Box>
               </Grid>
               <Grid item xs={12}>
@@ -199,7 +203,9 @@ export default function Register() {
                   onChange={handleInputChange}
                   value={formData.phone}
                 />
-                <Box color="primary.main">{validateInput.phone}</Box>
+                <Box color="primary.main">
+                  {formData.phone.length > 9 ? undefined : validateInput.phone}
+                </Box>
               </Grid>
               <Grid item xs={12}>
                 <TextField

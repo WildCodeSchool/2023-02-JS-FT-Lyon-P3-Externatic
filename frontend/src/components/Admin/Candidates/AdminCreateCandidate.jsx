@@ -124,7 +124,9 @@ export default function AdminCreateCandidate() {
                     textAlign: "left",
                   }}
                 >
-                  {validateInputCandidate.firstname}
+                  {formData.firstname.length > 2
+                    ? undefined
+                    : validateInputCandidate.firstname}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -144,7 +146,9 @@ export default function AdminCreateCandidate() {
                     textAlign: "left",
                   }}
                 >
-                  {validateInputCandidate.lastname}
+                  {formData.lastname.length > 2
+                    ? undefined
+                    : validateInputCandidate.lastname}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -165,7 +169,9 @@ export default function AdminCreateCandidate() {
                     textAlign: "left",
                   }}
                 >
-                  {validateInputCandidate.city}
+                  {formData.city.length > 3
+                    ? undefined
+                    : validateInputCandidate.city}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>

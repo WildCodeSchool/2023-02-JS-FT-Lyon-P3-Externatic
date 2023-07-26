@@ -132,7 +132,9 @@ export default function AdminCreateCompany() {
                     textAlign: "left",
                   }}
                 >
-                  {validateInputCompany.name}
+                  {formDataCompany.name.length > 2
+                    ? undefined
+                    : validateInputCompany.name}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -152,7 +154,9 @@ export default function AdminCreateCompany() {
                     textAlign: "left",
                   }}
                 >
-                  {validateInputCompany.contact}
+                  {formDataCompany.contact.length > 2
+                    ? undefined
+                    : validateInputCompany.contact}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -173,7 +177,9 @@ export default function AdminCreateCompany() {
                     textAlign: "left",
                   }}
                 >
-                  {validateInputCompany.description}
+                  {formDataCompany.description.length > 5
+                    ? undefined
+                    : validateInputCompany.description}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>

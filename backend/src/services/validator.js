@@ -5,11 +5,7 @@ const candidateSchema = Joi.object({
   lastname: Joi.string().min(1).required(),
   phone: Joi.string()
     .pattern(/^[0-9]+$/)
-    .min(9)
-    .messages({
-      "string.min": "Phone must be a valid phone",
-      "any.required": "phone is required",
-    })
+    .min(10)
     .required(),
   city: Joi.string().min(1).required(),
   email: Joi.string().email().required(),
@@ -39,9 +35,16 @@ const companySchema = Joi.object({
   name: Joi.string().min(1).required(),
   contact: Joi.string().min(1).required(),
   description: Joi.string().min(1).required(),
-  website: Joi.string().min(1).required(),
+  website: Joi.string()
+    .messages({
+      "any.required": "Site Web est requis",
+      "string.empty": "Site Web est requis",
+      "string.pattern.base": "Site Web valide est requis",
+      "string.min": "Decription doit contenir un site web valide ",
+    })
+    .required(),
   phone: Joi.string()
-    .min(9)
+    .min(10)
     .pattern(/^[0-9]+$/)
     .required(),
   city: Joi.string().min(1).required(),
@@ -83,7 +86,7 @@ const candidateUpdateSchema = Joi.object({
   lastname: Joi.string().min(1).required(),
   phone: Joi.string()
     .pattern(/^[0-9]+$/)
-    .min(9)
+    .min(10)
     .required(),
   city: Joi.string().min(1).required(),
   email: Joi.string().email().required(),
@@ -110,7 +113,7 @@ const companyUpdateSchema = Joi.object({
   description: Joi.string().min(1).required(),
   website: Joi.string().min(1).required(),
   phone: Joi.string()
-    .min(9)
+    .min(10)
     .pattern(/^[0-9]+$/)
     .required(),
   city: Joi.string().min(1).required(),
