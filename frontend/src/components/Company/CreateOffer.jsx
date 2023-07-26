@@ -24,6 +24,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { ValidateFormCreateOffer } from "../ValidateForm";
+import CompanyOffers from "./CompanyOffers";
 
 const isRemote = [
   {
@@ -44,6 +45,7 @@ export default function CreateOffer() {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [description, setDescription] = useState("");
   const [requirements, setRequirements] = useState("");
+  const [newOffer, setNewOffer] = useState(false);
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -148,6 +150,7 @@ export default function CreateOffer() {
           { withCredentials: true }
         )
         .then(() => {
+          setNewOffer(!newOffer);
           setFormData({
             company_id: "",
             user_id: "",
@@ -503,6 +506,7 @@ export default function CreateOffer() {
           </Box>
         </AccordionDetails>
       </Accordion>
+      <CompanyOffers props={newOffer} />
     </Container>
   );
 }
