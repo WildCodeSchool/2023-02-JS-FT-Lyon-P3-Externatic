@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -15,10 +15,6 @@ export function CompanyContextProvider({ children }) {
   );
   const navigate = useNavigate();
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
-  useEffect(() => {
-    if (!company.id) navigate("/");
-  }, [company.id]);
 
   const logoutCompany = async () => {
     try {
