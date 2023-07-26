@@ -292,7 +292,9 @@ export default function CompanyOffers() {
                         <Typography
                           sx={{ marginLeft: "1rem", marginRight: "1rem" }}
                         >
-                          {selectedJob.posting_date}
+                          {new Date(
+                            selectedJob.posting_date
+                          ).toLocaleDateString("fr-FR")}
                         </Typography>
                       </Paper>
                       <Link
