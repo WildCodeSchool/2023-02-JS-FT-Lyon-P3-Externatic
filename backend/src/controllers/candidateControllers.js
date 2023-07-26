@@ -49,35 +49,6 @@ const read = (req, res) => {
     });
 };
 
-const add = async (req, res) => {
-  try {
-    const { email, phone, city, hashedPassword, firstname, lastname, admin } =
-      req.body;
-
-    // Créer une nouvelle insertion dans User
-    const [userResult] = await models.user.insert({
-      email,
-      phone,
-      city,
-      hashedPassword,
-      admin,
-    });
-    const userId = userResult.insertId;
-
-    // Créer une nouvelle insertion dans Candidate
-    const [candidateResult] = await models.candidate.insert({
-      user_id: userId,
-      firstname,
-      lastname,
-    });
-
-    res.location(`/candidates/${candidateResult.insertId}`).sendStatus(201);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-};
-
 const edit = async (req, res) => {
   try {
     const { email, phone, city, firstname, lastname } = req.body;
@@ -151,7 +122,6 @@ module.exports = {
   browse,
   read,
   edit,
-  add,
   destroy,
   profile,
   uploadCV,

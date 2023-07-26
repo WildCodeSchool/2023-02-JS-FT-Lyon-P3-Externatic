@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { toast } from "react-toastify";
 import styles from "./JobByTypeCard.module.css";
 import cardJobPosting from "../../assets/cardJobPosting.jpg";
 import { api } from "../../services/api";
 
 export default function JobByTypeCard({ jobTypes }) {
   const [jobTypeCount, setJobTypeCount] = useState(0);
-
+  const notifyError = () =>
+    toast.error("Problème de récupération des applications..");
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -20,6 +22,7 @@ export default function JobByTypeCard({ jobTypes }) {
         setJobTypeCount(count);
       } catch (error) {
         console.error(error);
+        notifyError();
       }
     };
 

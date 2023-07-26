@@ -13,8 +13,8 @@ class JobCategoryManager extends AbstractManager {
 
   update(category) {
     return this.database.query(
-      `UPDATE ${this.table} set name = ?, where id = ${category.id}`,
-      [category.name]
+      `UPDATE ${this.table} set name = ?, where id = ?`,
+      [category.name, category.id]
     );
   }
 }

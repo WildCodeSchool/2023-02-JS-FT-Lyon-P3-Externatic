@@ -19,7 +19,6 @@ import "react-quill/dist/quill.snow.css";
 import { Navigation, Pagination, Scrollbar } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import cardJobPosting from "../../assets/cardJobPosting.jpg";
-
 // Import Swiper styles
 
 // eslint-disable-next-line import/no-unresolved
@@ -78,34 +77,47 @@ export default function TopAnnoncesCard() {
       <Stack
         sx={{ pt: 1, m: 0 }}
         display="flex"
+        alignItems="center"
+        justifyContent="center"
         direction="row"
         spacing={1}
-        justifyContent="center"
         minWidth="1200"
-        // flexWrap="wrap"
+        margin="auto"
       >
         <Swiper
           // install Swiper modules
           modules={[Navigation, Pagination, Scrollbar]}
           spaceBetween={40}
-          slidesPerView={3}
+          slidesPerView={1}
           navigation
           pagination={{ clickable: true }}
           scrollbar={{ draggable: false }}
+          breakpoints={{
+            // When window width is >= 768px
+            768: {
+              slidesPerView: 2,
+            },
+            // When window width is >= 1024px
+            1024: {
+              slidesPerView: 3,
+            },
+            // More breakpoints...
+          }}
         >
           {jobPosting &&
-            jobPosting.map((jobs) => (
+            jobPosting.slice(0, 6).map((jobs) => (
               <SwiperSlide key={jobs.id} className="">
                 <Card
                   sx={{
                     maxWidth: 335,
                     minWidth: 280,
                     m: 2,
-                    height: 450,
+                    height: 400,
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
                     textAlign: "center",
+                    margin: "auto",
                   }}
                 >
                   <CardMedia

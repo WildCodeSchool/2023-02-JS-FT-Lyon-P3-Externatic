@@ -84,7 +84,7 @@ export default function CreateOffer() {
     "image",
   ];
 
-  const notifyCreation = () => toast.success("Nouvelle offre d'emploi posté!");
+  const notifyCreation = () => toast.success("Nouvelle offre d'emploi postée!");
   const notifyCreationError = () =>
     toast.error("Problème lors de la publication");
   const date = new Date();
@@ -179,7 +179,7 @@ export default function CreateOffer() {
   const [jobTitles, setJobTitles] = useState([]);
   const [jobTypes, setJobTypes] = useState([]);
   const [jobLocations, setJobLocations] = useState([]);
-
+  const notifyError = () => toast.error("Problème de sélection des filtres..");
   useEffect(() => {
     axios
       .get(`${BACKEND_URL}/categories`)
@@ -188,6 +188,7 @@ export default function CreateOffer() {
       })
       .catch((error) => {
         console.error(error);
+        notifyError();
       });
 
     axios
@@ -197,6 +198,7 @@ export default function CreateOffer() {
       })
       .catch((error) => {
         console.error(error);
+        notifyError();
       });
 
     axios
@@ -206,6 +208,7 @@ export default function CreateOffer() {
       })
       .catch((error) => {
         console.error(error);
+        notifyError();
       });
   }, []);
 

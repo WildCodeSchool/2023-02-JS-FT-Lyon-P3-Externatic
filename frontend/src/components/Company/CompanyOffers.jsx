@@ -13,6 +13,7 @@ import Link from "@mui/material/Link";
 import Avatar from "@mui/material/Avatar";
 import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
+import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -24,6 +25,9 @@ export default function CompanyOffers() {
   const [companyOffers, setCompanyOffers] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const notifyError = () => toast.error("Problème de suppression de l'offre.");
+  const getOffersError = () =>
+    toast.error("Problème de récupération de vos offres..");
 
   const handleClose = () => {
     setOpen(false);
@@ -49,6 +53,7 @@ export default function CompanyOffers() {
       })
       .catch((error) => {
         console.error(error);
+        notifyError();
       });
   };
 
@@ -67,12 +72,13 @@ export default function CompanyOffers() {
       })
       .catch((error) => {
         console.error(error);
+        getOffersError();
       });
   };
 
   useEffect(() => {
     getCompanyOffers();
-  }, []);
+  }, [companyOffers]);
 
   return (
     <Box sx={{ borderRadius: "1rem" }}>
@@ -174,12 +180,13 @@ export default function CompanyOffers() {
                 {selectedJob && (
                   <Box
                     sx={{
+                      mt: 2,
                       "@media (min-width: 768px)": {
                         display: "flex",
                       },
                     }}
                   >
-                    <CardContent>
+                    <CardContent sx={{ p: 2 }}>
                       <Avatar
                         alt="Remy Sharp"
                         src="/static/images/avatar/1.jpg"
@@ -187,7 +194,7 @@ export default function CompanyOffers() {
                           height: "77px",
                           width: "77px",
                           position: "absolute",
-                          mt: "-50px",
+                          mt: "-80px",
                           mx: "auto",
                           left: 0,
                           right: 0,
@@ -213,7 +220,7 @@ export default function CompanyOffers() {
                         Supprimer l'offre
                       </Button>
                     </CardContent>
-                    <CardContent>
+                    <CardContent sx={{ p: 2 }}>
                       <Paper
                         sx={{
                           borderRadius: "0.8rem",

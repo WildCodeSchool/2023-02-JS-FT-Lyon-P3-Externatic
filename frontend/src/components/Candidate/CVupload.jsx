@@ -13,14 +13,32 @@ export default function CVupload({ candidate, handleCvClose }) {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const notifyUpload = () => toast.success("Votre CV a bien été enregistré !");
   const notifyUploadError = () => toast.error("Problème à l'enregistrement !");
+  const notifyFileSizeError = () =>
+    toast.error("Le fichier est trop volumineux !");
+  const notifyFileTypeError = () =>
+    toast.error("Le fichier doit être au format PDF !");
 
   const inputRef = useRef();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
+    const file = inputRef.current.files[0];
+
+    // Check if the file is a PDF
+    if (file && file.type !== "application/pdf") {
+      notifyFileTypeError();
+      return;
+    }
+
+    // Check file size (5MB limit)
+    if (file && file.size > 5 * 1024 * 1024) {
+      notifyFileSizeError();
+      return;
+    }
+
     const formData = new FormData();
-    formData.append("monCV", inputRef.current.files[0]);
+    formData.append("monCV", file);
 
     instance
       .post(`${BACKEND_URL}/monCV`, formData, { withCredentials: true })
@@ -33,6 +51,8 @@ export default function CVupload({ candidate, handleCvClose }) {
         notifyUploadError();
       });
   };
+
+  const uploadedCv = candidate.cv ? candidate.cv.slice(37) : null;
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -53,20 +73,26 @@ export default function CVupload({ candidate, handleCvClose }) {
           recruteurs.
         </Typography>
         {candidate.cv ? (
-          <Typography variant="body1">Votre CV: {candidate.cv}</Typography>
+          <Typography variant="body1">Votre CV: {uploadedCv}</Typography>
         ) : (
           <Typography variant="body1">
             Aucun CV chargé pour le moment
           </Typography>
         )}
         <form encType="multipart/form-data" onSubmit={handleSubmit}>
-          <Input type="file" name="monCV" inputRef={inputRef} sx={{ m: 2 }} />
+          <Input
+            type="file"
+            name="monCV"
+            inputRef={inputRef}
+            accept=".pdf"
+            sx={{ m: 2 }}
+          />
           <Button type="submit" variant="outlined">
             Envoyer
           </Button>
         </form>
         <Typography variant="body2" color="grey">
-          Le fichier doit être inférieur à 5Mo
+          Le fichier doit être inférieur à 5Mo et au format PDF
         </Typography>
       </Paper>
     </Box>

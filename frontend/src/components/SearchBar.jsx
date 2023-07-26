@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
+import { toast } from "react-toastify";
 import AdsList from "./AdsList";
 import { api } from "../services/api";
 import "animate.css";
@@ -27,6 +28,8 @@ const MenuProps = {
 };
 
 export default function SearchBar() {
+  const notifyError = () =>
+    toast.error("Problème lors de l'utilisation des filtres..");
   //
   const [filtersActive, setFiltersActive] = useState(false);
   const [filterOptions, setFilterOptions] = useState({
@@ -50,6 +53,7 @@ export default function SearchBar() {
         });
       } catch (error) {
         console.error(error);
+        notifyError();
       }
     };
     fetchDetails();
@@ -77,6 +81,7 @@ export default function SearchBar() {
       setInfoDataNoFiltered(res.data);
     } catch (error) {
       console.error(error);
+      notifyError();
     }
   };
 
@@ -101,6 +106,7 @@ export default function SearchBar() {
       setFiltersActive(true);
     } catch (error) {
       console.error(error);
+      notifyError();
     }
   };
 
