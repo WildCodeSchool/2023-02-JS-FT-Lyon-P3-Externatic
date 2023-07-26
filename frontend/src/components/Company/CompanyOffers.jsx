@@ -279,7 +279,7 @@ export default function CompanyOffers({ props }) {
                         }}
                       >
                         <Typography sx={{ marginBottom: "0.2rem" }}>
-                          {selectedJob.salary}
+                          {selectedJob.salary} EUR
                         </Typography>
                       </Paper>
                       <Paper
@@ -292,7 +292,9 @@ export default function CompanyOffers({ props }) {
                         <Typography
                           sx={{ marginLeft: "1rem", marginRight: "1rem" }}
                         >
-                          {selectedJob.posting_date}
+                          {new Date(
+                            selectedJob.posting_date
+                          ).toLocaleDateString("fr-FR")}
                         </Typography>
                       </Paper>
                       <Link

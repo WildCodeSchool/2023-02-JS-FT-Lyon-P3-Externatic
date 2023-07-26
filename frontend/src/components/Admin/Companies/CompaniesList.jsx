@@ -74,8 +74,8 @@ export default function CompaniesList() {
     { field: "city", headerName: "City", width: 200 },
     { field: "phone", headerName: "Phone", width: 150 },
     {
-      field: "delete",
-      headerName: "Delete",
+      field: "supprimer",
+      headerName: "Supprimer",
       width: 100,
       renderCell: (params) => (
         <Button
@@ -83,7 +83,7 @@ export default function CompaniesList() {
           color="error"
           onClick={() => handleDelete(params.row.id)}
         >
-          Delete
+          Supprimer
         </Button>
       ),
     },

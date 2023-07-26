@@ -85,8 +85,8 @@ export default function CandidatesList() {
         `${params.row.firstname || ""} ${params.row.lastname || ""}`,
     },
     {
-      field: "delete",
-      headerName: "Delete",
+      field: "supprimer",
+      headerName: "Supprimer",
       width: 100,
       renderCell: (params) => (
         <Button
@@ -94,7 +94,7 @@ export default function CandidatesList() {
           color="error"
           onClick={() => handleDelete(params.row.id)}
         >
-          Delete
+          Supprimer
         </Button>
       ),
     },

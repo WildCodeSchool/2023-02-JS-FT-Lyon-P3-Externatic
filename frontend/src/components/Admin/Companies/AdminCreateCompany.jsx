@@ -121,7 +121,7 @@ export default function AdminCreateCompany() {
                   required
                   fullWidth
                   id="name"
-                  label="Company Name"
+                  label="Nom entreprise"
                   autoFocus
                   onChange={handleInputChangeCompany}
                   value={formDataCompany.name}
@@ -142,7 +142,7 @@ export default function AdminCreateCompany() {
                   required
                   fullWidth
                   id="contact"
-                  label="Contact Name"
+                  label="Nom du contact"
                   name="contact"
                   autoComplete="contact-name"
                   onChange={handleInputChangeCompany}
@@ -189,7 +189,7 @@ export default function AdminCreateCompany() {
                   required
                   fullWidth
                   id="website"
-                  label="Website"
+                  label="Site internet"
                   autoFocus
                   onChange={handleInputChangeCompany}
                   value={formDataCompany.website}
@@ -210,7 +210,7 @@ export default function AdminCreateCompany() {
                   required
                   fullWidth
                   id="city"
-                  label="City"
+                  label="Ville"
                   autoFocus
                   onChange={handleInputChangeCompany}
                   value={formDataCompany.city}
@@ -229,7 +229,7 @@ export default function AdminCreateCompany() {
                   required
                   fullWidth
                   id="phone"
-                  label="Phone Number"
+                  label="Téléphone"
                   name="phone"
                   autoComplete="phone"
                   onChange={handleInputChangeCompany}
@@ -249,7 +249,7 @@ export default function AdminCreateCompany() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Adresse email"
                   name="email"
                   autoComplete="email"
                   onChange={handleInputChangeCompany}
@@ -269,7 +269,7 @@ export default function AdminCreateCompany() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="Mot de passe"
                   type="password"
                   id="password"
                   autoComplete="new-password"
