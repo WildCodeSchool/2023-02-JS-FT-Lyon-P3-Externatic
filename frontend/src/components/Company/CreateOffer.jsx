@@ -23,6 +23,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { ValidateFormCreateOffer } from "../ValidateForm";
 
 const isRemote = [
   {
@@ -91,6 +92,7 @@ export default function CreateOffer() {
   const month = date.getMonth() + 1;
   const day = date.getUTCDate();
   const newDate = `${year}-${month}-${day}`;
+  const [validateInputCandidate, setValidateInputCandidate] = useState({});
   const [formData, setFormData] = useState({
     company_id: "",
     user_id: "",
@@ -120,34 +122,57 @@ export default function CreateOffer() {
     });
   };
 
+  const ValidateFormCreateCandidate = () => {
+    const { error } = ValidateFormCreateOffer.validate(formData, {
+      abortEarly: false,
+      allowUnknown: true,
+    });
+    if (error) {
+      const validationErrors = {};
+      error.details.forEach((err) => {
+        validationErrors[err.context.key] = err.message;
+      });
+      return validationErrors;
+    }
+    return {};
+  };
+
   const handleSubmitJobOffer = (event) => {
     event.preventDefault();
-    axios
-      .post(
-        `${BACKEND_URL}/jobs`,
-        { ...formData, description, requirements },
-        { withCredentials: true }
-      )
-      .then(() => {
-        setFormData({
-          company_id: "",
-          user_id: "",
-          job_category_id: "",
-          job_type_id: "",
-          job_location_id: "",
-          title: "",
-          remote: "",
-          salary: "",
-          description: "",
-          requirements: "",
-          posting_date: newDate,
+    const validationErrors = ValidateFormCreateCandidate();
+    if (Object.keys(validationErrors).length === 0) {
+      axios
+        .post(
+          `${BACKEND_URL}/jobs`,
+          { ...formData, description, requirements },
+          { withCredentials: true }
+        )
+        .then(() => {
+          setFormData({
+            company_id: "",
+            user_id: "",
+            job_category_id: "",
+            job_type_id: "",
+            job_location_id: "",
+            title: "",
+            remote: "",
+            salary: "",
+            description: "",
+            requirements: "",
+            posting_date: newDate,
+          });
+          setDescription("");
+          setRequirements("");
+          notifyCreation();
+        })
+        .catch((error) => {
+          console.error(error);
+          notifyCreationError();
         });
-        notifyCreation();
-      })
-      .catch((error) => {
-        console.error(error);
-        notifyCreationError();
-      });
+    } else {
+      setValidateInputCandidate({ ...validationErrors });
+      console.error("Validation Errors:", validationErrors);
+    }
   };
 
   // For the select button
@@ -186,6 +211,10 @@ export default function CreateOffer() {
         notifyError();
       });
   }, []);
+
+  useEffect(() => {
+    ValidateFormCreateCandidate();
+  }, [handleSubmitJobOffer, handleInputChange]);
 
   return (
     <Container
@@ -277,9 +306,21 @@ export default function CreateOffer() {
                     value={formData.title}
                     sx={{ m: 1, width: 250 }}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {formData.title.length > 2
+                      ? undefined
+                      : validateInputCandidate.title}
+                  </Box>
                 </Grid>
                 <Grid>
                   <TextField
+                    inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
                     name="salary"
                     required
                     fullWidth
@@ -290,6 +331,15 @@ export default function CreateOffer() {
                     value={formData.salary}
                     sx={{ m: 1, width: 250 }}
                   />
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {validateInputCandidate.salary}
+                  </Box>
                 </Grid>
                 <FormControl sx={{ m: 1, width: 250 }}>
                   <InputLabel id="demo-multiple-checkbox-label">
@@ -310,6 +360,16 @@ export default function CreateOffer() {
                       </MenuItem>
                     ))}
                   </Select>
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                      marginLeft: "10px",
+                      marginTop: "10px",
+                    }}
+                  >
+                    {validateInputCandidate.remote}
+                  </Box>
                 </FormControl>
                 <FormControl sx={{ m: 1, width: 250 }}>
                   <InputLabel id="demo-multiple-checkbox-label">
@@ -330,6 +390,15 @@ export default function CreateOffer() {
                       </MenuItem>
                     ))}
                   </Select>
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {validateInputCandidate.job_category_id}
+                  </Box>
                 </FormControl>
                 <FormControl sx={{ m: 1, width: 250 }}>
                   <InputLabel id="demo-multiple-checkbox-label">
@@ -350,6 +419,15 @@ export default function CreateOffer() {
                       </MenuItem>
                     ))}
                   </Select>
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {validateInputCandidate.job_type_id}
+                  </Box>
                 </FormControl>
                 <FormControl sx={{ m: 1, width: 250 }}>
                   <InputLabel id="demo-multiple-checkbox-label">
@@ -370,6 +448,15 @@ export default function CreateOffer() {
                       </MenuItem>
                     ))}
                   </Select>
+                  <Box
+                    color="primary.main"
+                    sx={{
+                      textAlign: "left",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {validateInputCandidate.job_location_id}
+                  </Box>
                 </FormControl>
               </Grid>
               <Box>

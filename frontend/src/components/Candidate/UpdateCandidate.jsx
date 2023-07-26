@@ -109,7 +109,9 @@ function UpdateCandidate({ candidate, handleUpdateClose }) {
                   textAlign: "left",
                 }}
               >
-                {formData.firstname ? undefined : validateInput.firstname}
+                {formData.firstname.length > 2
+                  ? undefined
+                  : validateInput.firstname}
               </Box>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -129,7 +131,9 @@ function UpdateCandidate({ candidate, handleUpdateClose }) {
                   textAlign: "left",
                 }}
               >
-                {formData.lastname ? undefined : validateInput.lastname}
+                {formData.lastname.length > 2
+                  ? undefined
+                  : validateInput.lastname}
               </Box>
             </Grid>
             <Grid item xs={12}>
@@ -149,7 +153,7 @@ function UpdateCandidate({ candidate, handleUpdateClose }) {
                   textAlign: "left",
                 }}
               >
-                {formData.city ? undefined : validateInput.city}
+                {formData.city.length > 2 ? undefined : validateInput.city}
               </Box>
             </Grid>
             <Grid item xs={12}>
