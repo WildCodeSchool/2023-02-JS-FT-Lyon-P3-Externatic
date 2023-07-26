@@ -293,7 +293,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                     }}
                   >
                     <Typography sx={{ marginBottom: "0.2rem" }}>
-                      {selectedJob.salary}
+                      {selectedJob.salary} EUR
                     </Typography>
                   </Paper>
                   <Paper
@@ -478,7 +478,7 @@ export default function AdsList({ infoDataFiltered, infoDataNoFiltered }) {
                     }}
                   >
                     <Typography sx={{ marginBottom: "0.2rem" }}>
-                      {selectedJob.salary}
+                      {selectedJob.salary} EUR
                     </Typography>
                   </Paper>
                   <Paper
