@@ -298,7 +298,7 @@ export default function TopAnnoncesCard() {
                   }}
                 >
                   <Typography sx={{ marginBottom: "0.2rem" }}>
-                    {selectedJob.salary}
+                    {selectedJob.salary} EUR
                   </Typography>
                 </Paper>
                 <Paper
