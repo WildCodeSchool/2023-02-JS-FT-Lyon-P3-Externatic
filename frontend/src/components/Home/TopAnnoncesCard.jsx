@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Navigation, Pagination, Scrollbar } from "swiper";
@@ -31,6 +32,10 @@ import "swiper/css/pagination";
 export default function TopAnnoncesCard() {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [jobPosting, setJobPosting] = useState();
+  const notifyFavorites = () =>
+    toast.success("L'offre a été ajoutée aux favoris..");
+  const notifyErrorFav = () =>
+    toast.error("L'offre a été retirée des favoris..");
   const [open, setOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
   const [favorites, setFavorites] = useState(
@@ -49,9 +54,11 @@ export default function TopAnnoncesCard() {
       const updatedFavorites = favorites.filter(
         (favoriteJob) => favoriteJob.id !== job.id
       );
+      notifyErrorFav();
       setFavorites(updatedFavorites);
     } else {
       const updatedFavorites = [...favorites, job];
+      notifyFavorites();
       setFavorites(updatedFavorites);
     }
   };
