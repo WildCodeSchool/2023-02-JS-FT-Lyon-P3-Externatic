@@ -27,6 +27,8 @@ export default function CandidateProfile() {
   const [loggedCandidate, setLoggedCandidate] = useState(null);
   const [loading, setLoading] = useState(true);
   const notifyError = () => toast("Erreur lors de du chargement du profil");
+  const notifyErrorFav = () =>
+    toast.error("L'offre a été retirée des favoris..");
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -68,6 +70,7 @@ export default function CandidateProfile() {
       const updatedFavorites = favorites.filter(
         (favoriteJob) => favoriteJob.id !== job.id
       );
+      notifyErrorFav();
       setFavorites(updatedFavorites);
     } else {
       const updatedFavorites = [...favorites, job];
@@ -163,6 +166,14 @@ export default function CandidateProfile() {
                               onClick={() => handleOpen(favorite)}
                             >
                               View
+                            </Button>
+                            <Button
+                              onClick={() => handleToggleFavorite(favorite)}
+                              sx={{ display: "flex", justifyContent: "start" }}
+                            >
+                              {checkIsFavorite(favorite)
+                                ? "Retirer des favoris"
+                                : "Ajouter aux favoris"}
                             </Button>
                           </CardActions>
                         </Card>
