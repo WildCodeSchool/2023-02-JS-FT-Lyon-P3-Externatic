@@ -19,7 +19,7 @@ import "react-quill/dist/quill.snow.css";
 
 import CompanyContext from "../../Contexts/CompanyContext";
 
-export default function CompanyOffers() {
+export default function CompanyOffers({ props }) {
   const { company } = useContext(CompanyContext);
   const [open, setOpen] = useState(false);
   const [companyOffers, setCompanyOffers] = useState([]);
@@ -78,10 +78,10 @@ export default function CompanyOffers() {
 
   useEffect(() => {
     getCompanyOffers();
-  }, [company]);
+  }, [company, props]);
 
   return (
-    <Box sx={{ borderRadius: "1rem" }}>
+    <Box sx={{ borderRadius: "1rem", mt: 2 }}>
       <Grid container spacing={4} justifyContent="flex-end">
         <Grid item xs={12} lg={12} elevation={3}>
           <Paper sx={{ height: "100%" }}>
@@ -292,7 +292,9 @@ export default function CompanyOffers() {
                         <Typography
                           sx={{ marginLeft: "1rem", marginRight: "1rem" }}
                         >
-                          {selectedJob.posting_date}
+                          {new Date(
+                            selectedJob.posting_date
+                          ).toLocaleDateString("fr-FR")}
                         </Typography>
                       </Paper>
                       <Link
